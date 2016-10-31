@@ -5,7 +5,6 @@ function updateToLunchMoney(sheets, auth, record){
 	sheets.spreadsheets.values.append({
 	    auth: auth,
 	    spreadsheetId: lunchMoneyId,
-	    range: '2016!A277:AT',
 	    valueInputOption: 'USER_ENTERED',
 	    resource: {
 	    	values: [record],
