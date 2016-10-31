@@ -4,6 +4,7 @@ var google = require('googleapis');
 var googleAuth = require('google-auth-library');
 
 var parseNBUI = require(`${__dirname}/parseNuiBayUtIt`);
+var updateToLunchMoney = require(`${__dirname}/updateToLunchMoney`);
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/sheets.googleapis.com-nodejs-quickstart.json
@@ -100,7 +101,10 @@ function storeToken(token) {
 
 /**
  * Print the names and majors of students in a sample spreadsheet:
+ * Nui Bay Ut It
  * https://docs.google.com/spreadsheets/d/1osEF3thjxDgQiXk95N-xc9Ms9ZtgYI1CmZgKCLwIamY/edit
+ * Lunch Money : Manage Balance
+ * https://docs.google.com/spreadsheets/d/1CM6BNJn4K24JZbn5zJLwkcES9BZ4o9wzr8t9W6kNb-8/edit
  */
 function listMajors(auth) {
   var sheets = google.sheets('v4');
@@ -114,11 +118,13 @@ function listMajors(auth) {
       return;
     }
     var rows = response.values;
-    if (rows.length == 0) {
+    if (!rows || rows.length == 0) {
       console.log('No data found.');
     } else {
       console.log('Handle \'Nui Bay Ut It\'');
-      parseNBUI(rows);
+      let record = parseNBUI(rows);
+
+      updateToLunchMoney(sheets, auth, record);
     }
   });
 }
