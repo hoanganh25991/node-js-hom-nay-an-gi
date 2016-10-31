@@ -98,14 +98,14 @@ function storeToken(token) {
 
 /**
  * Print the names and majors of students in a sample spreadsheet:
- * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
+ * https://docs.google.com/spreadsheets/d/1osEF3thjxDgQiXk95N-xc9Ms9ZtgYI1CmZgKCLwIamY/edit
  */
 function listMajors(auth) {
   var sheets = google.sheets('v4');
   sheets.spreadsheets.values.get({
     auth: auth,
-    spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-    range: 'Class Data!A2:B',
+    spreadsheetId: '1osEF3thjxDgQiXk95N-xc9Ms9ZtgYI1CmZgKCLwIamY',
+    range: 'Gia chanh Cam Tuyet!A558:E581',
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
