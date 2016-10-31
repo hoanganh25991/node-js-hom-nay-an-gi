@@ -94,5 +94,63 @@ oauth2Promise
     console.log('\033[32mChunk rows\033[0m: success');
     console.log(chunkedRows[0]);
 
-    
+    let dateMenus = chunkedRows.map(dateMenu => {
+    	// dateMenu[0] Menu: [menu, 'mon 1', 'mon 2', 'mon 3']
+    	// dateMenu[1] Price: [price, '29000', '17000']
+    	// dateMenu[2] Date: [mon 1st Oct, 'Tu, Anh, Quoi', 'Bao, Minh, Binh']
+    	// dateMenu[3] Order: not important
+    	// dateMenu[4] Total: not important
+    	let menu = {
+    		date: '',
+    		dishes: []
+    	};
+
+    	dateMenu.forEach((val, index) => {
+    		switch(index){
+    			case 0:
+    				//remove header 'menu'
+    				val.splice(0, 1);
+    				val.forEach(dishName => {
+    					let dish = {name: '', price: '', users: []};
+    					dish.name = dishName;
+    					menu.dishes.push(dish);
+    				});
+
+    				break;
+    			case 1:
+    				val.splice(0, 1);
+    				val.forEach((dishPrice, index) => {
+    					let dish = menu.dishes[index];
+    					dish.price = dishPrice;
+    					// console.log(dishPrice);
+    				});
+
+    				break;
+  				case 2:
+  					//store menu-date
+  					var date = val[0]; // 'mon (31 Oct)'
+  					//parse menu-date
+  					date = date.substr(5, date.length - 5 - 1);
+  					date = new Date(`${date} ${new Date().getFullYear()}`);
+  					console.log(date);
+  					menu.date = date;
+  					
+  					val.splice(0, 1);
+  					val.forEach((users, index) => {
+  						// console.log(users);
+  						users = users.split(',')
+												.map(user => user.trim())
+												.filter(notEmpty => notEmpty);
+							let dish = menu.dishes[index];
+							dish.users = users;
+  					});
+
+  					break;
+    		}
+    	});
+
+    	return menu;
+    });
+
+    console.log('\033[32mdateMenus\033[0m: success', dateMenus[0]['dishes']);
   });
