@@ -51,7 +51,7 @@ oauth2Promise
     }
     //["", "Hoan", "Loc", "Duy", "Hoang", "Vinh", "Toan web", "Nam", "D. Vu"]
     globalUsers = rows[0];
-    // console.log(users);
+    console.log(globalUsers);
 
     let getMenuInWeek = new Promise((resolve, reject) => {
       sheets.spreadsheets.values.get({
@@ -168,5 +168,78 @@ oauth2Promise
   	console.log('\033[32mdateMenus pass through promise\033[0m: success');
   	console.log('dateMenus.length', dateMenus.length);
 
-  	
+  	let records = [];
+  	// Build emptyRow & balanceRow into records
+  	let emptyRow = [];
+  	let balanceRow = [];
+  	let i;
+  	for(i = 0; i < globalUsers.length; i++){
+  		emptyRow.push(null);
+  		balanceRow.push(0);
+  	}
+  	dateMenus.forEach(menu => {
+  		let recordMenuX = [];
+  		// Col-1: menu-date
+  		// Col-x: user-dishPrice
+  		globalUsers.forEach((userName, index) => {
+  			// Col-1: menu-date
+  			if(userName == '')
+  				recordMenuX.push(menu.date);
+  			// Check this user in menu.dishes.users
+  			// If he's there, input the price
+  			let price = null;
+  			menu.dishes.forEach(dish => {
+  				dish.users.forEach(user => {
+  					if(user == userName){
+  						price = dish.price;
+  						//update userPay balance
+  						balanceRow[index] += dish.price;
+  					}
+  				});
+  			})
+
+  			recordMenuX.push(price);
+  		});
+
+  		records.push(recordMenuX);
+  		balanceRow = balanceRow.map(val => {
+  			return val != 0 ? val : null;
+  		});
+
+  		records.push(emptyRow);
+  		records.push(balanceRow);
+  	});
+
+  	console.log('\033[32mBuild records success\033[0m', records.length);
+  	console.log('\033[32mrecords[0]\033[0m', records[0]);
+
+
+
+  	let updateLunchMoney = new Promise((resolve, reject)=>{
+  		sheets.spreadsheets.values.append({
+		    auth: globalAuth,
+		    spreadsheetId: lunchMoneyId,
+		    valueInputOption: 'USER_ENTERED',
+		    range: '2016!A277:AU',
+		    resource: {
+		    	values: records,
+		    	majorDimension: 'ROWS'
+		    }
+		  }, function(err, res) {
+		    if (err) {
+		      reject('The API returned an error: ' + err);
+		    }
+		    
+		    resolve(res);
+		  });
+  	});
+
+  	return updateLunchMoney;
+  })
+  .then(res => {
+  	console.log('update success');
+  	console.log(res);
+  })
+  .catch(err => {
+  	console.log(err);
   });
