@@ -105,7 +105,7 @@ function listMajors(auth) {
   sheets.spreadsheets.values.get({
     auth: auth,
     spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-    range: 'Class Data!A2:E',
+    range: 'Class Data!A2:B',
   }, function(err, response) {
     if (err) {
       console.log('The API returned an error: ' + err);
@@ -119,7 +119,7 @@ function listMajors(auth) {
       for (var i = 0; i < rows.length; i++) {
         var row = rows[i];
         // Print columns A and E, which correspond to indices 0 and 4.
-        console.log('%s, %s', row[0], row[4]);
+        console.log('%s, %s', row[0], row[1]);
       }
     }
   });
