@@ -84,7 +84,7 @@ oauth2Promise
     let chunkedRows = [];
     let currentChunkPos = -1;
     let i;
-    for(i = 0; i < rows.length; i++){
+    for(i = 0; i < rows.length + 1; i++){
     	if(i % 6 == 5){
     		chunkedRows.push(rows.slice(currentChunkPos + 1, i));
     		currentChunkPos = i;
@@ -121,7 +121,8 @@ oauth2Promise
     				val.splice(0, 1);
     				val.forEach((dishPrice, index) => {
     					let dish = menu.dishes[index];
-    					dish.price = dishPrice;
+    					dishPrice = dishPrice.replace(',000', '');
+    					dish.price = parseInt(dishPrice, 10);
     					// console.log(dishPrice);
     				});
 
@@ -130,10 +131,9 @@ oauth2Promise
   					//store menu-date
   					var date = val[0]; // 'mon (31 Oct)'
   					//parse menu-date
-  					date = date.substr(5, date.length - 5 - 1);
-  					date = new Date(`${date} ${new Date().getFullYear()}`);
-  					console.log(date);
-  					menu.date = date;
+  					date = date.substr(5, date.length - 5 - 1).replace(/\s/g, '-');
+  					menu.date = `${date}-2016`;
+  					console.log(menu.date);
   					
   					val.splice(0, 1);
   					val.forEach((users, index) => {
@@ -149,8 +149,24 @@ oauth2Promise
     		}
     	});
 
+    	menu.dishes = menu.dishes.filter(dish => dish.name);
+
     	return menu;
     });
 
-    console.log('\033[32mdateMenus\033[0m: success', dateMenus[0]['dishes']);
+    // let dateMenusPromise = new Promise((resolve, reject) => {
+    // 	resolve(dateMenus);
+    // });
+     let dateMenusPromise = new Promise(resolve => resolve(dateMenus));
+
+    // console.log('\033[32mdateMenus\033[0m: success', dateMenus[0]['dishes']);
+    console.log('\033[32mdateMenus\033[0m: success', dateMenus.length);
+    console.log('\033[32mdateMenus[0]\033[0m: ', dateMenus[0]);
+
+    return dateMenusPromise;
+  }).then(dateMenus => {
+  	console.log('\033[32mdateMenus pass through promise\033[0m: success');
+  	console.log('dateMenus.length', dateMenus.length);
+
+  	
   });
