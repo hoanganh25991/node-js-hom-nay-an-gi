@@ -6,6 +6,7 @@ function updateToLunchMoney(sheets, auth, record){
 	    auth: auth,
 	    spreadsheetId: lunchMoneyId,
 	    valueInputOption: 'USER_ENTERED',
+	    range: '2016!A278:AT',
 	    resource: {
 	    	values: [record],
 	    	range: '2016!A277:AT',
