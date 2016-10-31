@@ -57,7 +57,8 @@ oauth2Promise
       sheets.spreadsheets.values.get({
         auth: globalAuth,
         spreadsheetId: nuiBayUtItId,
-        range: 'Gia chanh Cam Tuyet!A558:AD581'
+        range: 'Gia chanh Cam Tuyet!A558:AD581',
+        majorDimension: 'COLUMNS',
       }, (err, res) => {
         if (err) {
           reject('The API returned an error: ' + err);
@@ -72,6 +73,26 @@ oauth2Promise
   .then(res => {
     console.log('\033[32mGot menu\033[0m: success');
     // console.log(res);
-    console.log(res.values[0]);
+
+    // console.log(res.values[0]);
     // console.log(globalUsers);
+    let rows = res.values;
+    if (!rows || rows.length == 0) {
+      reject('Fail to menu from getMenuInWeek_res');
+    }
+
+    let chunkedRows = [];
+    let currentChunkPos = -1;
+    let i;
+    for(i = 0; i < rows.length; i++){
+    	if(i % 6 == 5){
+    		chunkedRows.push(rows.slice(currentChunkPos + 1, i));
+    		currentChunkPos = i;
+    	}
+    }
+
+    console.log('\033[32mChunk rows\033[0m: success');
+    console.log(chunkedRows[0]);
+
+    
   });
