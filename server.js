@@ -9,7 +9,15 @@ if(process.argv[2] == 'production'){
 	var privateKey = fs.readFileSync('/etc/letsencrypt/live/tinker.press/privkey.pem');
 	var certificate = fs.readFileSync('/etc/letsencrypt/live/tinker.press/cert.pem');
 	var credentials = {key: privateKey, cert: certificate};
+	var https = require('https');
+	var httpsPort = 3000;
 	var app = express.createServer(credentials);
+	var secureServer = https.createServer(credentials, app).listen(httpsPort);
+	app.set(httpsPort);
+}else{
+	app.listen(3000, function () {
+		console.log('Example app listening on port 3000!');
+	});
 }
 
 app.use(bodyParser.json()); // for parsing application/json
@@ -61,10 +69,6 @@ app.get('/menu', function (req, res) {
 
   	res.send(JSON.stringify(menu[0]));
   });
-});
-
-app.listen(3000, function () {
-  console.log('Example app listening on port 3000!');
 });
 
 function loadMenu(userTextArr){
