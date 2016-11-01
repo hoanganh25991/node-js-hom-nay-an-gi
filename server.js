@@ -100,7 +100,7 @@ function loadMenu(userTextArr){
 		let thisWeek = _.getWeekNumber(new Date());
 		let menuJsonCreatedWeek = _.getWeekNumber(mtime);
 
-		let outdated = (thisWeek <= menuJsonCreatedWeek);
+		let outdated = (thisWeek > menuJsonCreatedWeek);
 		return new Promise(resolve => resolve(outdated));
 	})
 	.catch(err => {
