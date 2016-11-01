@@ -43,6 +43,7 @@ app.get('/', function(req, res){
 	userTextArr['user_name'] = userName;
 	// Build up default response
 	let response = {text: 'i hear you'};
+	let resPromise;
 	// Switch case on user command
 	switch(userTextArr[0]){
 		case 'menu':
@@ -50,14 +51,16 @@ app.get('/', function(req, res){
 				userTextArr[1] = 'today';
 			}
 			// load menu return menu-info promise
-			loadMenu(userTextArr).then(slackMsg => res.send(slackMsg));
+			resPromise = loadMenu(userTextArr);
 			break;
 		case 'order':
 			response = 'in develop process';
 			break;
 	}
 
-	res.send(response);
+	resPromise.then(slackMsg => {
+		res.send(slackMsg);
+	});
 });
 
 app.get('/menu', function(req, res){
@@ -80,7 +83,6 @@ app.get('/menu', function(req, res){
 
 function loadMenu(userTextArr){
 	let fs = require('fs');
-	let today =  new Date();
 
 	let statMenusJsonPromise = new Promise(resolve => {
 		fs.stat(`${__dirname}/menus.json`, function(err, stats){
@@ -90,7 +92,7 @@ function loadMenu(userTextArr){
 	});
 
 	let checkOutdatedPromise = statMenusJsonPromise.then(mtime => {
-		let thisWeek = _.getWeekNumber(today);
+		let thisWeek = _.getWeekNumber(new Date());
 		let menuJsonCreatedWeek = _.getWeekNumber(mtime);
 
 		let outdated = (thisWeek <= menuJsonCreatedWeek);
@@ -110,7 +112,7 @@ function loadMenu(userTextArr){
 		return promise;
 	});
 
-	getDateMenusPromise.then(menus => {
+	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		let dayOfWeek = new Date().getDay() - 1;
 		let menu = menus[dayOfWeek];
 		
@@ -146,4 +148,6 @@ function loadMenu(userTextArr){
 
 		return new Promise(resolve => resolve(slackMsg));
 	});
+
+	return slackMsgPromise;
 }
