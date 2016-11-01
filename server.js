@@ -11,7 +11,6 @@ if(process.argv[2] == 'production'){
 	var credentials = {key: privateKey, cert: certificate};
 	var https = require('https');
 	var httpsPort = 3000;
-	var app = express.createServer(credentials);
 	var secureServer = https.createServer(credentials, app).listen(httpsPort);
 	app.set(httpsPort);
 }else{
