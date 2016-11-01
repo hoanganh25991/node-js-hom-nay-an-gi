@@ -83,27 +83,32 @@ function loadMenu(userTextArr){
 	let today =  new Date();
 
 	let statMenusJsonPromise = new Promise(resolve => {
-		fs.stat(path, function(err, stats){
+		fs.stat(`${__dirname}/menus.json`, function(err, stats){
 			var mtime = new Date(stats.mtime);
 			resolve(mtime);
 		});
 	});
 
-	statMenusJsonPromise.then(mtime => {
+	let checkOutdatedPromise = statMenusJsonPromise.then(mtime => {
 		let thisWeek = _.getWeekNumber(today);
 		let menuJsonCreatedWeek = _.getWeekNumber(mtime);
 
 		let outdated = (thisWeek <= menuJsonCreatedWeek);
+		return new Promise(resolve => resolve(outdated));
 	});
 
-	let getDateMenusPromise;
-	if(!outdated){
-		getDateMenusPromise = new Promise(resolve => {
-			resolve(JSON.parse(fs.readFileSync('menus.json').toString()));
-		});
-	}else{
-		getDateMenusPromise = require(`${__dirname}/getMenu`);
-	}
+	let getDateMenusPromise = checkOutdatedPromise.then(outdated => {
+		let promise;
+		if(!outdated){
+			promise = new Promise(resolve => {
+				resolve(JSON.parse(fs.readFileSync('menus.json').toString()));
+			});
+		}else{
+			promise = require(`${__dirname}/getMenu`);
+		}
+
+		return promise;
+	});
 
 	getDateMenusPromise.then(menus => {
 		let dayOfWeek = new Date().getDay() - 1;
