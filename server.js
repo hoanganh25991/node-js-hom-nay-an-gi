@@ -4,7 +4,13 @@ var multer = require('multer'); // v1.0.5
 var upload = multer(); // for parsing multipart/form-data
 
 var app = require('express')();
-if(process.argv[2] == 'production'){
+var config = {mode: 'dev'};
+try{
+	config = require(`${__dirname}/config`);
+}catch (err){
+	console.log('no config file supported, default mode [dev]');
+}
+if(config.mode == 'production'){
 	var fs = require('fs');
 	var privateKey = fs.readFileSync('/etc/letsencrypt/live/tinker.press/privkey.pem');
 	var certificate = fs.readFileSync('/etc/letsencrypt/live/tinker.press/cert.pem');
