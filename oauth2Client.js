@@ -5,8 +5,9 @@ let getOauth2Client = function() {
     var googleAuth = require('google-auth-library');
 
     var SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
-    var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
-        process.env.USERPROFILE) + '/.credentials/';
+    // var TOKEN_DIR = (process.env.HOME || process.env.HOMEPATH ||
+    //     process.env.USERPROFILE) + '/.credentials/';
+    var TOKEN_DIR = `${__dirname}/.credentials/`;
     var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
 
     // Load client secrets from a local file.

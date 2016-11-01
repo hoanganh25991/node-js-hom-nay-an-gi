@@ -9,8 +9,11 @@
   "author": "Anh Le Hoang",
   "license": "MIT",
   "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
     "google-auth-library": "^0.9.9",
     "googleapis": "^14.1.0",
+    "multer": "^1.2.0",
     "natural": "^0.4.0"
   }
 }
