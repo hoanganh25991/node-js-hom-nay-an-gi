@@ -162,6 +162,8 @@ oauth2Promise
 		// let dateMenusPromise = new Promise((resolve, reject) => {
 		// 	resolve(dateMenus);
 		// });
+		let fs = require('fs');
+		fs.writeFile('menus.json', JSON.stringify(dateMenus));
 		let dateMenusPromise = new Promise(resolve => resolve(dateMenus));
 
 		// console.log('\033[32mdateMenus\033[0m: success', dateMenus[0]['dishes']);
