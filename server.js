@@ -1,117 +1,144 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var multer = require('multer'); // v1.0.5
-var upload = multer(); // for parsing multipart/form-data
-
-var app = require('express')();
-var config = {mode: 'dev'};
+let bodyParser = require('body-parser');
+let app = require('express')();
+let _ = require(`${__dirname}/lib/util`);
+// Detect mode
+let config = {mode: 'dev'};
 try{
 	config = require(`${__dirname}/config`);
-}catch (err){
-	console.log('no config file supported, default mode [dev]');
+}catch(err){
+	console.log(`No config file supported${_.eol}Default mode: dev`);
 }
+
 if(config.mode == 'production'){
-	var fs = require('fs');
-	var privateKey = fs.readFileSync('/etc/letsencrypt/live/tinker.press/privkey.pem');
-	var certificate = fs.readFileSync('/etc/letsencrypt/live/tinker.press/cert.pem');
-	var credentials = {key: privateKey, cert: certificate};
-	var https = require('https');
-	var httpsPort = 3000;
-	var secureServer = https.createServer(credentials, app).listen(httpsPort);
-	app.set(httpsPort);
+	let fs = require('fs');
+	let privateKey = fs.readFileSync('/etc/letsencrypt/live/tinker.press/privkey.pem');
+	let certificate = fs.readFileSync('/etc/letsencrypt/live/tinker.press/cert.pem');
+	let credentials = {key: privateKey, cert: certificate};
+	let https = require('https');
+	let httpsPort = 3000;
+	https.createServer(credentials, app).listen(httpsPort, function(){
+		console.log('HTTPS server listening on port 3000!');
+	});
 }else{
-	app.listen(3000, function () {
-		console.log('Example app listening on port 3000!');
+	app.listen(3000, function(){
+		console.log('Server listening on port 3000!');
 	});
 }
 
 app.use(bodyParser.json()); // for parsing application/json
-app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
 
-app.get('/', function (req, res) {
-	let userName = req.param('user_name', 'Hoang Anh');
-	let acceptedUserCommand = ['menu', 'order'];
+app.get('/', function(req, res){
+	// userTextArr as destination
+	// Contain any useful info from user
+	let userName = req.param('user_name');
+	const acceptedUserCommand = ['menu', 'order'];
 	let userText = req.param('text').replace(/\s+/g, ' ');
+	// read user text
 	let userTextArr = userText.split(' ');
 	if(!acceptedUserCommand.includes(userTextArr[0])){
 		userTextArr = ['menu', 'today'];
 	}
+	// store user name
 	userTextArr['user_name'] = userName;
-
-	let response = {text : 'i hear you'};
+	// Build up default response
+	let response = {text: 'i hear you'};
+	// Switch case on user command
 	switch(userTextArr[0]){
 		case 'menu':
 			if(!(userTextArr[1])){
 				userTextArr[1] = 'today';
 			}
-
-			response = loadMenu(userTextArr);
+			// load menu return menu-info promise
+			loadMenu(userTextArr).then(slackMsg => res.send(slackMsg));
 			break;
 		case 'order':
 			response = 'in develop process';
 			break;
 	}
 
-  	res.send(response);
+	res.send(response);
 });
 
-app.post('/', function (req, res) {
-	let userName = req.param('user_name', 'Hoang Anh');
-  	res.send(userName);
-});
+app.get('/menu', function(req, res){
+	let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	getDateMenusPromise.then(dateMenus =>{
+		let menu = dateMenus.filter(dateMenu =>{
+			let date = new Date().getDate();
+			console.log(date);
+			let menuDate = new Date(dateMenu.date).getDate();
+			console.log(menuDate);
 
-app.get('/menu', function (req, res) {
-  let getDateMenusPromise = require(`${__dirname}/getMenu`);
-  getDateMenusPromise.then(dateMenus => {
-  	let menu = dateMenus.filter(dateMenu => {
-  		let date = new Date().getDate();console.log(date);
-  		let menuDate = new Date(dateMenu.date).getDate();console.log(menuDate);
+			return date == menuDate;
+		});
+		if(menu.length == 0)
+			menu[0] = dateMenus[0];
 
-  		return date == menuDate;
-  	});
-  	if(menu.length == 0)
-  		menu[0] = dateMenus[0];
-
-  	res.send(JSON.stringify(menu[0]));
-  });
+		res.send(JSON.stringify(menu[0]));
+	});
 });
 
 function loadMenu(userTextArr){
 	let fs = require('fs');
-	let menus = JSON.parse(fs.readFileSync('menus.json').toString());
-	// console.log(menus);
-	let menu = menus[0];
-	let dishesV2 = [];
-	menu.dishes.forEach((dish, index) => {
-		let tmp = {
-			value: `[${index}] ${dish.name}`,
-			short: true
-		};
-		dishesV2.push(tmp);
+	let today =  new Date();
 
-		tmp = {
-			value: `${dish.price},000`,
-			short: true
-		};
-		dishesV2.push(tmp);
+	let statMenusJsonPromise = new Promise(resolve => {
+		fs.stat(path, function(err, stats){
+			var mtime = new Date(stats.mtime);
+			resolve(mtime);
+		});
 	});
 
-	let slackMsg = {
-		text: `Hi, @${userTextArr['user_name']}, menu for ${userTextArr[1]}`,
-		attachments: [
-			{
-				title: 'Quan Chanh Cam Tuyet',
-				title_link: 'https://api.slack.com/',
-				fields: dishesV2,
-				color: '#3AA3E3',
-				footer: 'Type `/lunch order [num]` to order',
-				footer_icon: 'https://tinker.press/favicon-64x64.png',
-            	ts: Math.floor(new Date().getTime()/1000)
-			}
-		]
-	};
+	statMenusJsonPromise.then(mtime => {
+		let thisWeek = _.getWeekNumber(today);
+		let menuJsonCreatedWeek = _.getWeekNumber(mtime);
 
-	console.log(slackMsg);
+		let outdated = (thisWeek <= menuJsonCreatedWeek);
+	});
 
-	return slackMsg;
+	let getDateMenusPromise;
+	if(!outdated){
+		getDateMenusPromise = new Promise(resolve => {
+			resolve(JSON.parse(fs.readFileSync('menus.json').toString()));
+		});
+	}else{
+		getDateMenusPromise = require(`${__dirname}/getMenu`);
+	}
+
+	getDateMenusPromise.then(menus => {
+		let dayOfWeek = new Date().getDay() - 1;
+		let menu = menus[dayOfWeek];
+		
+		let dishesV2 = [];
+		menu.dishes.forEach((dish, index) =>{
+			let tmp = {
+				value: `[${index}] ${dish.name}`,
+				short: true
+			};
+			dishesV2.push(tmp);
+
+			tmp = {
+				value: `${dish.price},000`,
+				short: true
+			};
+			dishesV2.push(tmp);
+		});
+
+		let slackMsg = {
+			text: `Hi, @${userTextArr['user_name']}, menu for ${userTextArr[1]}`,
+			attachments: [
+				{
+					title: 'Quan Chanh Cam Tuyet',
+					title_link: 'https://api.slack.com/',
+					fields: dishesV2,
+					color: '#3AA3E3',
+					footer: 'Type `/lunch order [num]` to order',
+					footer_icon: 'https://tinker.press/favicon-64x64.png',
+					ts: Math.floor(new Date().getTime() / 1000)
+				}
+			]
+		};
+
+		return new Promise(resolve => resolve(slackMsg));
+	});
 }
