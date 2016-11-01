@@ -85,10 +85,14 @@ app.get('/menu', function(req, res){
 function loadMenu(userTextArr){
 	let fs = require('fs');
 
-	let statMenusJsonPromise = new Promise(resolve => {
+	let statMenusJsonPromise = new Promise((resolve, reject) => {
 		fs.stat(`${__dirname}/menus.json`, function(err, stats){
-			var mtime = new Date(stats.mtime);
-			resolve(mtime);
+			if(err){
+				reject(err);
+			}else{
+				let mtime = new Date(stats.mtime);
+				resolve(mtime);
+			}
 		});
 	});
 
@@ -98,15 +102,23 @@ function loadMenu(userTextArr){
 
 		let outdated = (thisWeek <= menuJsonCreatedWeek);
 		return new Promise(resolve => resolve(outdated));
+	})
+	.catch(err => {
+		return new Promise(resolve => resolve(true));
 	});
 
 	let getDateMenusPromise = checkOutdatedPromise.then(outdated => {
+		console.log('move to outdated');
+		console.log(outdated);
 		let promise;
 		if(!outdated){
 			promise = new Promise(resolve => {
 				resolve(JSON.parse(fs.readFileSync('menus.json').toString()));
 			});
 		}else{
+			// promise = require(`${__dirname}/getMenu`).then(dateMenus => {
+			// 	return new Promise(resolve => resolve(dateMenus));
+			// });
 			promise = require(`${__dirname}/getMenu`);
 		}
 
@@ -148,6 +160,9 @@ function loadMenu(userTextArr){
 		};
 
 		return new Promise(resolve => resolve(slackMsg));
+	})
+	.catch(err => {
+		console.log(err);
 	});
 
 	return slackMsgPromise;

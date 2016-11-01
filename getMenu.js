@@ -3,7 +3,6 @@ let google = require('googleapis');
 let natural = require('natural');
 
 const nuiBayUtItId = '1osEF3thjxDgQiXk95N-xc9Ms9ZtgYI1CmZgKCLwIamY';
-const lunchMoneyId = '1CM6BNJn4K24JZbn5zJLwkcES9BZ4o9wzr8t9W6kNb-8';
 
 let sheets = google.sheets('v4');
 
@@ -27,7 +26,7 @@ let getDatesMenuPromise = oauth2Promise
 				spreadsheetId: nuiBayUtItId,
 				range: 'Gia chanh Cam Tuyet!A558:AD581',
 				majorDimension: 'COLUMNS',
-			}, (err, res) => {
+			}, function (err, res){
 				if (err) {
 					reject('The API returned an error: ' + err);
 				}
@@ -38,7 +37,7 @@ let getDatesMenuPromise = oauth2Promise
 
 		return getMenuInWeek;
 	})
-	.then(res => {
+	.then((res, reject) => {
 		console.log('Get menu success');
 		let rows = res.values;
 		if (!rows || rows.length == 0) {
