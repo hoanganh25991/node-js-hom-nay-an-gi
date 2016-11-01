@@ -55,6 +55,7 @@ app.get('/', function(req, res){
 			break;
 		case 'order':
 			response = 'in develop process';
+			resPromise = new Promise(resolve => resolve(response));
 			break;
 	}
 
