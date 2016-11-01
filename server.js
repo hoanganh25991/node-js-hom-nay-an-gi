@@ -5,6 +5,7 @@ var upload = multer(); // for parsing multipart/form-data
 
 var app = require('express')();
 if(process.argv[2] == 'production'){
+	var fs = require('fs');
 	var privateKey = fs.readFileSync('/etc/letsencrypt/live/tinker.press/privkey.pem');
 	var certificate = fs.readFileSync('/etc/letsencrypt/live/tinker.press/cert.pem');
 	var credentials = {key: privateKey, cert: certificate};
