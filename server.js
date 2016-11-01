@@ -1,7 +1,15 @@
-var app = require('express')();
+var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer'); // v1.0.5
 var upload = multer(); // for parsing multipart/form-data
+
+var app = require('express')();
+if(process.argv[2] == 'production'){
+	var privateKey = fs.readFileSync('/etc/letsencrypt/live/tinker.press/privkey.pem');
+	var certificate = fs.readFileSync('/etc/letsencrypt/live/tinker.press/cert.pem');
+	var credentials = {key: privateKey, cert: certificate};
+	var app = express.createServer(credentials);
+}
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
