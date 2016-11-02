@@ -1,8 +1,9 @@
-let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
+let relavtivePath = '.';
+let nBUUConfig = require(`${relavtivePath}/lib/nuiBayUtItConfig`);
 
 let updateOrderToSheet = function(cellAddress, cellVal){
 	// Open google sheet to update
-	let oauth2Promise = require(`${__dirname}/oauth2Client`)();
+	let oauth2Promise = require(`${relavtivePath}/oauth2Client`)();
 	let google = require('googleapis');
 	let sheets = google.sheets('v4');
 
