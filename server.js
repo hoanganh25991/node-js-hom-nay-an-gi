@@ -32,7 +32,7 @@ app.get('/', function(req, res){
 	// Contain any useful info from user
 	// let userName = req.param('user_name');
 	let userName = req.query['user_name'];
-	const acceptedUserCommand = ['menu', 'order', 'batchFix'];
+	const acceptedUserCommand = ['menu', 'order', 'batchFix', 'view'];
 	// let userText = req.param('text').replace(/\s+/g, ' ');
 	let userText = req.query['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
@@ -43,6 +43,12 @@ app.get('/', function(req, res){
 	}
 	// store user name
 	userTextArr['user_name'] = userName;
+	let mapName = require(`${__dirname}/lib/mapName`);
+	let userNameInSheet = mapName[userTextArr['user_name']];
+	if(!userNameInSheet)
+		userNameInSheet = userTextArr['user_name'];
+	// ReAdd back to userTextArr
+	userTextArr['sheet_name'] = userNameInSheet;
 	// userTextArr['response_url'] = responseUrl;
 	console.log(userTextArr);
 	// Build up default response
@@ -65,7 +71,7 @@ app.get('/', function(req, res){
 			// we need to callback to NuiBayUtIt sheet
 			// get updated info
 			// batchUpdate
-			let updatePromise = updateOrderToSheet(userTextArr);
+			let updatePromise = updateOrder(userTextArr);
 			updatePromise.then(msg => {
 				// TRY TO BUILD MUTIPLE RES for slack-cmd
 				// console.log(userTextArr['response_url']);
@@ -126,9 +132,9 @@ app.get('/', function(req, res){
 					resolve(slackMsg);
 				});
 			}
-
-
 			break;
+		case 'view':
+			resPromise = slackMsgView(userTextArr);
 	}
 
 	resPromise.then(slackMsg => {
@@ -347,15 +353,7 @@ function slackMsgOrder(userTextArr){
 	return slackMsgPromise;
 }
 
-function updateOrderToSheet(userTextArr){
-	// Have to use userName in sheet, which different from slackName
-	let mapName = require(`${__dirname}/lib/mapName`);
-	let userNameInSheet = mapName[userTextArr['user_name']];
-	if(!userNameInSheet)
-		userNameInSheet = userTextArr['user_name'];
-	// ReAdd back to userTextArr
-	userTextArr['sheet_name'] = userNameInSheet;
-
+function updateOrder(userTextArr){
 	let getDateMenusPromise = require(`${__dirname}/getMenu`);
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 		let selectedDishIndex = userTextArr[1];
@@ -452,4 +450,44 @@ function buildCell(menu, dish){
 	console.log('build Cell', cellAddress, cellVal);
 
 	return {cellAddress, cellVal};
+}
+
+function slackMsgView(userTextArr){
+	let getDateMenusPromise = loadMenu();
+
+	let slackMsgPromise = getDateMenusPromise.then(menus => {
+		let dayOfWeek = new Date().getDay() - 1;
+		let menu = menus[dayOfWeek];
+
+		let orderedDish = 'You haven\'t order dish'
+		menu.dishes.forEach(dish => {
+			dish.users.forEach(userName => {
+				if(userName == userTextArr['sheet_name'])
+					orderedDish = dish['name'];
+			});
+		});
+
+		let slackMsg = {
+			text: `Hi @${userTextArr['user_name']}`,
+			attachments: [
+				{
+					title: 'Review Order',
+					fields: [
+						{
+							value: `${orderedDish}`,
+							short: true,
+							color: '#3AA3E3',
+							footer: 'Type /lunch order [dish num], to order',
+							footer_icon: 'https://tinker.press/favicon-64x64.png',
+							ts: Math.floor(new Date().getTime() / 1000)
+						}
+					]
+				}
+			]
+		};
+
+		return new Promise(resolve => resolve(slackMsg));
+	});
+
+	return slackMsgPromise;
 }
