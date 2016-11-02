@@ -5,6 +5,8 @@ let natural = require('natural');
 const nuiBayUtItId = '1osEF3thjxDgQiXk95N-xc9Ms9ZtgYI1CmZgKCLwIamY';
 
 let sheets = google.sheets('v4');
+let config = require(`${__dirname}/lib/nuiBayUtItConfig`);
+console.log(`${config['sheet_name']}!${config['menu_range']}`);
 
 // Open 'lunchMoneyId', get out users
 // Open 'nuiBayUtItId', get menu on each day of week
@@ -24,10 +26,12 @@ let getDatesMenuPromise = oauth2Promise
 			sheets.spreadsheets.values.get({
 				auth: globalAuth,
 				spreadsheetId: nuiBayUtItId,
-				range: 'Gia chanh Cam Tuyet!A558:AD581',
+				// range: 'Gia chanh Cam Tuyet!A558:AD581',
+				range: `${config['sheet_name']}!${config['menu_range']}`,
 				majorDimension: 'COLUMNS',
 			}, function (err, res){
 				if (err) {
+					console.log('The API returned an error: ' + err);
 					reject('The API returned an error: ' + err);
 				}
 
@@ -41,6 +45,7 @@ let getDatesMenuPromise = oauth2Promise
 		console.log('Get menu success');
 		let rows = res.values;
 		if (!rows || rows.length == 0) {
+			console.log('Fail to menu from getMenuInWeek_res');
 			reject('Fail to menu from getMenuInWeek_res');
 		}
 
@@ -57,13 +62,14 @@ let getDatesMenuPromise = oauth2Promise
 		console.log('\033[32mChunk rows\033[0m: success');
 		console.log(chunkedRows[0]);
 
-		let dateMenus = chunkedRows.map(dateMenu => {
+		let dateMenus = chunkedRows.map((dateMenu, col) => {
 			// dateMenu[0] Menu: [menu, 'mon 1', 'mon 2', 'mon 3']
 			// dateMenu[1] Price: [price, '29000', '17000']
 			// dateMenu[2] Date: [mon 1st Oct, 'Tu, Anh, Quoi', 'Bao, Minh, Binh']
 			// dateMenu[3] Order: not important
 			// dateMenu[4] Total: not important
 			let menu = {
+				col: col * 6 + 1,
 				date: '',
 				dishes: []
 			};
@@ -73,8 +79,9 @@ let getDatesMenuPromise = oauth2Promise
 					case 0:
 						//remove header 'menu'
 						val.splice(0, 1);
-						val.forEach(dishName => {
+						val.forEach((dishName, index) => {
 							let dish = {
+								row: index + 1,
 								name: '',
 								price: '',
 								users: []

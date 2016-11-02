@@ -156,12 +156,15 @@ function slackMsgMenu(userTextArr){
 			dishesV2.push(tmp);
 		});
 
+		// let today = new Date();
 		let slackMsg = {
-			text: `Hi, @${userTextArr['user_name']}, menu for ${userTextArr[1]}`,
+			// text: `Hi, @${userTextArr['user_name']}, menu for ${userTextArr[1]}`,
+			text: `Hi, @${userTextArr['user_name']}, menu ${userTextArr[1]} ${new Date().toString().substr(0,10)}`,
 			attachments: [
 				{
 					title: 'Quan Chanh Cam Tuyet',
-					title_link: 'https://api.slack.com/',
+					// title_link: 'https://api.slack.com/',
+					title_link: 'https://tinker.press/good-food-good-life.jpg',
 					fields: dishesV2,
 					color: '#3AA3E3',
 					footer: 'Type `/lunch order [num]` to order',
@@ -187,13 +190,15 @@ function slackMsgOrder(userTextArr){
 		let dayOfWeek = new Date().getDay() - 1;
 		let menu = menus[dayOfWeek];
 
-		let dishIndex = Number(userTextArr[1]);
+		let dishIndex = parseInt(userTextArr[1], 10);
 		if(isNaN(dishIndex)){
 			dishIndex = 0;
 		}
 
 		let dish = menu.dishes[dishIndex];
-		let otherUsersBookDish = dish.users.join(', ');
+		let otherUsersBookDish = 'No one';
+		if(dish.users.length > 0)
+			otherUsersBookDish = dish.users.join(', ');
 
 		let slackMsg = {
 			text: `Hi @${userTextArr['user_name']}`,
@@ -220,7 +225,7 @@ function slackMsgOrder(userTextArr){
 						}
 					],
 					color: '#3AA3E3',
-					footer: 'Type `/lunch order [num]` to order',
+					footer: 'ReType `/lunch order [num]` to reorder\nChúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 					footer_icon: 'https://tinker.press/favicon-64x64.png',
 					ts: Math.floor(new Date().getTime() / 1000)
 				}
