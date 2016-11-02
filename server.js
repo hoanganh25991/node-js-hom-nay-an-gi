@@ -51,11 +51,16 @@ app.get('/', function(req, res){
 				userTextArr[1] = 'today';
 			}
 			// load menu return menu-info promise
-			resPromise = loadMenu(userTextArr);
+			resPromise = slackMsgMenu(userTextArr);
 			break;
 		case 'order':
-			response = 'in develop process';
-			resPromise = new Promise(resolve => resolve(response));
+			// response = 'in develop process';
+			// resPromise = new Promise(resolve => resolve(response));
+			resPromise = slackMsgOrder(userTextArr);
+			// right after res
+			// we need to callback to NuiBayUtIt sheet
+			// get updated info
+			// batchUpdate
 			break;
 	}
 
@@ -82,7 +87,7 @@ app.get('/menu', function(req, res){
 	});
 });
 
-function loadMenu(userTextArr){
+function loadMenu(){
 	let fs = require('fs');
 
 	let statMenusJsonPromise = new Promise((resolve, reject) => {
@@ -103,7 +108,8 @@ function loadMenu(userTextArr){
 		let outdated = (thisWeek > menuJsonCreatedWeek);
 		return new Promise(resolve => resolve(outdated));
 	})
-	.catch(err => {
+    .catch(err => {
+		console.log(err);
 		return new Promise(resolve => resolve(true));
 	});
 
@@ -124,6 +130,12 @@ function loadMenu(userTextArr){
 
 		return promise;
 	});
+
+	return getDateMenusPromise;
+}
+
+function slackMsgMenu(userTextArr){
+	let getDateMenusPromise = loadMenu();
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		let dayOfWeek = new Date().getDay() - 1;
@@ -163,6 +175,59 @@ function loadMenu(userTextArr){
 	})
 	.catch(err => {
 		console.log(err);
+	});
+
+	return slackMsgPromise;
+}
+
+function slackMsgOrder(userTextArr){
+	let getDateMenusPromise = loadMenu();
+
+	let slackMsgPromise = getDateMenusPromise.then(menus => {
+		let dayOfWeek = new Date().getDay() - 1;
+		let menu = menus[dayOfWeek];
+
+		let dishIndex = Number(userTextArr[1]);
+		if(isNaN(dishIndex)){
+			dishIndex = 0;
+		}
+
+		let dish = menu.dishes[dishIndex];
+		let otherUsersBookDish = dish.users.join(', ');
+
+		let slackMsg = {
+			text: `Hi @${userTextArr['user_name']}`,
+			attachments: [
+				{
+					title: 'Quan Chanh Cam Tuyet',
+					title_link: 'https://api.slack.com/',
+					fields: [
+						{
+							value: `You have ordered: \`${dish['name']}\``,
+							short: true
+						},
+						{
+							value: `${dish['price']}k`,
+							short: true
+						},
+						{
+							value: `Other users:`,
+							short: true
+						},
+						{
+							value: `${otherUsersBookDish}`,
+							short: true
+						}
+					],
+					color: '#3AA3E3',
+					footer: 'Type `/lunch order [num]` to order',
+					footer_icon: 'https://tinker.press/favicon-64x64.png',
+					ts: Math.floor(new Date().getTime() / 1000)
+				}
+			]
+		};
+
+		return new Promise(resolve => resolve(slackMsg));
 	});
 
 	return slackMsgPromise;
