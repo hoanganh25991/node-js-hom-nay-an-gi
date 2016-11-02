@@ -345,6 +345,7 @@ function updateOrderToSheet(userTextArr){
 				dish.users.push(userTextArr['sheet_name']);
 				let cell = buildCell(menu, dish);
 
+				console.log(`${__dirname}/updateOrderToSheet`);
 				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
 				updatePromise.then(msg => console.log(msg));
 
