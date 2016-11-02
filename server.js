@@ -1,11 +1,11 @@
 let bodyParser = require('body-parser');
 let app = require('express')();
-let relativePath = '.';
-let _ = require(`${relativePath}/lib/util`);
+console.log(`${__dirname}/lib/util`);
+let _ = require(`${__dirname}/lib/util`);
 // Detect mode
 let config = {mode: 'dev'};
 try{
-	config = require(`${relativePath}/config`);
+	config = require(`${__dirname}/config`);
 }catch(err){
 	console.log(`No config file supported${_.eol}Default mode: dev`);
 }
@@ -83,7 +83,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/menu', function(req, res){
-	let getDateMenusPromise = require(`${relativePath}/getMenu`);
+	let getDateMenusPromise = require(`${__dirname}/getMenu`);
 	getDateMenusPromise.then(dateMenus =>{
 		let menu = dateMenus.filter(dateMenu =>{
 			let date = new Date().getDate();
@@ -104,7 +104,7 @@ function loadMenu(){
 	let fs = require('fs');
 
 	let statMenusJsonPromise = new Promise((resolve, reject) => {
-		fs.stat(`${relativePath}/menus.json`, function(err, stats){
+		fs.stat(`${__dirname}/menus.json`, function(err, stats){
 			if(err){
 				reject(err);
 			}else{
@@ -135,10 +135,10 @@ function loadMenu(){
 				resolve(JSON.parse(fs.readFileSync('menus.json').toString()));
 			});
 		}else{
-			// promise = require(`${relativePath}/getMenu`).then(dateMenus => {
+			// promise = require(`${__dirname}/getMenu`).then(dateMenus => {
 			// 	return new Promise(resolve => resolve(dateMenus));
 			// });
-			promise = require(`${relativePath}/getMenu`);
+			promise = require(`${__dirname}/getMenu`);
 		}
 
 		return promise;
@@ -276,14 +276,14 @@ function slackMsgOrder(userTextArr){
 
 function updateOrderToSheet(userTextArr){
 	// Have to use userName in sheet, which different from slackName
-	let mapName = require(`${relativePath}/lib/mapName`);
+	let mapName = require(`${__dirname}/lib/mapName`);
 	let userNameInSheet = mapName[userTextArr['user_name']];
 	if(!userNameInSheet)
 		userNameInSheet = userTextArr['user_name'];
 	// ReAdd back to userTextArr
 	userTextArr['sheet_name'] = userNameInSheet;
 
-	let getDateMenusPromise = require(`${relativePath}/getMenu`);
+	let getDateMenusPromise = require(`${__dirname}/getMenu`);
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 		let selectedDishIndex = userTextArr[1];
 		// console.log(userTextArr);
@@ -327,7 +327,7 @@ function updateOrderToSheet(userTextArr){
 			let preOrderDish = menu.dishes[preOrderDishIndex];
 			let cell = buildCell(menu, preOrderDish);
 
-			let updatePromise = require(`${relativePath}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
+			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
 			updatePromise
 				.then(msg => console.log(msg))
 				.catch(err => console.log(err));
@@ -346,8 +346,8 @@ function updateOrderToSheet(userTextArr){
 				dish.users.push(userTextArr['sheet_name']);
 				let cell = buildCell(menu, dish);
 
-				console.log(`${relativePath}/updateOrderToSheet`);
-				let updatePromise = require(`${relativePath}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
+				console.log(`${__dirname}/updateOrderToSheet`);
+				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
 				updatePromise.then(msg => console.log(msg));
 
 				return updatePromise;
@@ -363,7 +363,7 @@ function buildCell(menu, dish){
 	let row = dish.row;
 	// Build cell address, base on dish-row, menu-col
 	// Read out basic info from config
-	let nBUUConfig = require(`${relativePath}/lib/nuiBayUtItConfig`);
+	let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
 	// console.log(col, row, nBUUConfig);
 	// ONLY read out the first one A558:AD581
 	// Build up row, col logic
@@ -372,7 +372,7 @@ function buildCell(menu, dish){
 	row += startRow;
 	col += 2; //col for menu, +2 for userList
 	// Parse to A1 notation
-	let _ = require(`${relativePath}/lib/util`);
+	let _ = require(`${__dirname}/lib/util`);
 	let cellAddress = `${_.convertA1Notation(col).toUpperCase()}${row}`;
 	// Build up cellVal, update dish.users
 	let cellVal = dish.users.join(',');
