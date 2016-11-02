@@ -69,7 +69,8 @@ let getDatesMenuPromise = oauth2Promise
 			// dateMenu[3] Order: not important
 			// dateMenu[4] Total: not important
 			let menu = {
-				col: col * 6 + 1,
+				// col: col * 6 + 1,
+				col: col * 6,
 				date: '',
 				dishes: []
 			};

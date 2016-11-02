@@ -62,6 +62,9 @@ app.get('/', function(req, res){
 			// get updated info
 			// batchUpdate
 			let updatePromise = updateOrderToSheet(userTextArr);
+			updatePromise.then(msg => {
+				console.log(msg);
+			});
 			break;
 	}
 
@@ -270,10 +273,79 @@ function updateOrderToSheet(userTextArr){
 	userTextArr['sheet_name'] = userNameInSheet;
 
 	let getDateMenusPromise = require(`${__dirname}/getMenu`);
-	getDateMenusPromise.then(dateMenus => {
+	let updatePromise = getDateMenusPromise.then(dateMenus => {
 		let selectedDishIndex = userTextArr[1];
-		// console.log(selectedDishIndex);
-		
+		// console.log(userTextArr);
 
+		let dayOfWeek = new Date().getDay() - 1;
+		let menu = dateMenus[dayOfWeek];
+		let dish = menu.dishes[selectedDishIndex];
+		if(!dish){
+			return new Promise(resolve => resolve('User choose dishIndex, which not exist'));
+		}
+
+		// Build cell address, base on dish-row, menu-col
+		let cellAddress = '';
+		// Read out basic info from config
+		let col = menu.col;
+		let row = dish.row;
+		let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
+		console.log(col, row, nBUUConfig);
+		// ONLY read out the first one A558:AD581
+		// Build up row, col logic
+		let startRow = nBUUConfig['menu_range'].match(/\d+/);
+		startRow = parseInt(startRow, 10);
+		row += startRow;
+		col += 2; //col for menu, +2 for userList
+		// Parse to A1 notation
+		let _ = require(`${__dirname}/lib/util`);
+		cellAddress = `${_.convertA1Notation(col).toUpperCase()}${row}`;
+		// Build up cellVal, update dish.users
+		dish.users.push(userTextArr['sheet_name']);
+		let cellVal = dish.users.join(',')
+
+		console.log(cellAddress, cellVal);
+
+		// Open google sheet to update
+		let oauth2Promise = require(`${__dirname}/oauth2Client`)();
+		let google = require('googleapis');
+		let sheets = google.sheets('v4');
+
+		const nuiBayUtItId = '1osEF3thjxDgQiXk95N-xc9Ms9ZtgYI1CmZgKCLwIamY';
+
+		let globalAuth;
+		let promise = oauth2Promise
+			.then(auth =>{
+				console.log('Auth success\nStart open sheet to update');
+
+				globalAuth = auth;
+				let updatePromise = new Promise((resolve, reject) =>{
+					sheets.spreadsheets.values.batchUpdate({
+						auth: globalAuth,
+						spreadsheetId: nuiBayUtItId,
+						resource: {
+							valueInputOption: 'USER_ENTERED',
+							data: {
+								values: [[cellVal]],
+								range: `${nBUUConfig['sheet_name']}!${cellAddress}:${cellAddress}`,
+								majorDimension: 'ROWS'
+							}
+						}
+					}, function(err, res){
+						if(err){
+							console.log('The API returned an error: ' + err);
+							reject('The API returned an error: ' + err);
+						}
+
+						resolve(res);
+					});
+				});
+
+				return updatePromise;
+			});
+		// return new Promise(r => r('hello'));
+		return promise;
 	});
+
+	return updatePromise;
 }
