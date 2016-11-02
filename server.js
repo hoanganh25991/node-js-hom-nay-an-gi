@@ -284,27 +284,39 @@ function updateOrderToSheet(userTextArr){
 			return new Promise(resolve => resolve('User choose dishIndex, which not exist'));
 		}
 
-		// Build cell address, base on dish-row, menu-col
-		let cellAddress = '';
-		// Read out basic info from config
-		let col = menu.col;
-		let row = dish.row;
-		let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
-		console.log(col, row, nBUUConfig);
-		// ONLY read out the first one A558:AD581
-		// Build up row, col logic
-		let startRow = nBUUConfig['menu_range'].match(/\d+/);
-		startRow = parseInt(startRow, 10);
-		row += startRow;
-		col += 2; //col for menu, +2 for userList
-		// Parse to A1 notation
-		let _ = require(`${__dirname}/lib/util`);
-		cellAddress = `${_.convertA1Notation(col).toUpperCase()}${row}`;
-		// Build up cellVal, update dish.users
-		dish.users.push(userTextArr['sheet_name']);
-		let cellVal = dish.users.join(',')
 
-		console.log(cellAddress, cellVal);
+		/**
+		 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
+		 */
+		let removeDishIndexs = [];
+		// Only check ONE TIME
+		// If he append in mutilple row?
+		menu.dishes.forEach((dish, index) => {
+			let removeUserIndexs = [];
+			dish.users.forEach((userName, userIndex) => {
+				if(userName == userTextArr['sheet_name']){
+					removeDishIndexs.push(index);
+					removeUserIndexs.push(userIndex);
+				}
+			});
+
+			dish.users = dish.users.filter((val, index) => {
+				return !removeUserIndexs.includes(index);
+			});
+		});
+		console.log(removeDishIndexs);
+		console.log(menu.dishes[removeDishIndexs[0]]);
+		removeDishIndexs.forEach(removeDishIndex => {
+			// Build cellAddress, cellVal
+			// Run update in to sheet
+			// NEED PROMISE ALL
+		});
+
+		let cell = buildCell(menu.col, dish.row, dish, userTextArr);
+		console.log(cell);
+		let cellAddress = cell['cellAddress'];
+		let cellVal = cell['cellVal'];
+
 
 		let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cellAddress, cellVal);
 
@@ -312,4 +324,26 @@ function updateOrderToSheet(userTextArr){
 	});
 
 	return updatePromise;
+}
+
+function buildCell(col, row, dish, userTextArr){
+	// Build cell address, base on dish-row, menu-col
+	// Read out basic info from config
+	let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
+	console.log(col, row, nBUUConfig);
+	// ONLY read out the first one A558:AD581
+	// Build up row, col logic
+	let startRow = nBUUConfig['menu_range'].match(/\d+/);
+	startRow = parseInt(startRow, 10);
+	row += startRow;
+	col += 2; //col for menu, +2 for userList
+	// Parse to A1 notation
+	let _ = require(`${__dirname}/lib/util`);
+	let cellAddress = `${_.convertA1Notation(col).toUpperCase()}${row}`;
+	// Build up cellVal, update dish.users
+	dish.users.push(userTextArr['sheet_name']);
+	let cellVal = dish.users.join(',');
+	console.log(cellAddress, cellVal);
+
+	return {cellAddress, cellVal};
 }
