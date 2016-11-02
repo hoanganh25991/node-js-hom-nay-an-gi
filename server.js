@@ -106,6 +106,7 @@ function loadMenu(){
 	let statMenusJsonPromise = new Promise((resolve, reject) => {
 		fs.stat(`${__dirname}/menus.json`, function(err, stats){
 			if(err){
+				console.log(err);
 				reject(err);
 			}else{
 				let mtime = new Date(stats.mtime);
@@ -132,7 +133,7 @@ function loadMenu(){
 		let promise;
 		if(!outdated){
 			promise = new Promise(resolve => {
-				resolve(JSON.parse(fs.readFileSync('menus.json').toString()));
+				resolve(JSON.parse(fs.readFileSync(`${__dirname}/menus.json`).toString()));
 			});
 		}else{
 			// promise = require(`${__dirname}/getMenu`).then(dateMenus => {

@@ -12,7 +12,7 @@ let getOauth2Client = function() {
     var TOKEN_PATH = TOKEN_DIR + 'sheets.googleapis.com-nodejs-quickstart.json';
 
     // Load client secrets from a local file.
-    var secretFile = 'client_secret_sheet.json';
+    var secretFile = `${__dirname}/client_secret_sheet.json`;
 
     let getNewToken = function (oauth2Client) {
         var authUrl = oauth2Client.generateAuthUrl({
