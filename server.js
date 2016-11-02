@@ -287,7 +287,7 @@ function slackMsgOrder(userTextArr){
 			let menuDate = new Date(menu.date);
 			return (day == menuDate.getDate());
 		})[0];
-		
+
 		if(!menu){
 			return new Promise(resolve => {
 				let slackMsg = {
@@ -385,8 +385,20 @@ function updateOrder(userTextArr){
 		let selectedDishIndex = userTextArr[1];
 		// console.log(userTextArr);
 
-		let dayOfWeek = new Date().getDay() - 1;
-		let menu = dateMenus[dayOfWeek];
+		// let dayOfWeek = new Date().getDay() - 1;
+		// let menu = dateMenus[dayOfWeek];
+		// let dayOfWeek = new Date().getDay() - 1;
+		let day = new Date().getDate();
+		// let menu = menus[dayOfWeek];
+		// Better check menu by reading out
+		let menu = dateMenus.filter(menu =>{
+			let menuDate = new Date(menu.date);
+			return (day == menuDate.getDate());
+		})[0];
+		if(!menu){
+			return new Promise(resolve => resolve('No menu'));
+		}
+
 		let dish = menu.dishes[selectedDishIndex];
 		if(!dish){
 			return new Promise(resolve => resolve('User choose dishIndex, which not exist'));
@@ -516,4 +528,8 @@ function slackMsgView(userTextArr){
 	});
 
 	return slackMsgPromise;
+}
+
+function deleteOrder(userTextArr){
+
 }
