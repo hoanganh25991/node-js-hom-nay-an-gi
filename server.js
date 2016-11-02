@@ -295,7 +295,10 @@ function updateOrderToSheet(userTextArr){
 			let removeUserIndexs = [];
 			dish.users.forEach((userName, userIndex) => {
 				if(userName == userTextArr['sheet_name']){
-					removeDishIndexs.push(index);
+					// store which dish need UPDATE
+					if(!removeDishIndexs.includes(index))
+						removeDishIndexs.push(index);
+					// store which user need REMOVED
 					removeUserIndexs.push(userIndex);
 				}
 			});
@@ -305,22 +308,31 @@ function updateOrderToSheet(userTextArr){
 			});
 		});
 		console.log(removeDishIndexs);
-		console.log(menu.dishes[removeDishIndexs[0]]);
+
+		let removeDishPromises = [];
 		removeDishIndexs.forEach(removeDishIndex => {
 			// Build cellAddress, cellVal
 			// Run update in to sheet
 			// NEED PROMISE ALL
+			let dish = menu.dishes[removeDishIndex];
+			let cell = buildCell(menu.col, dish.row, dish, userTextArr);
+			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
+
+			removeDishPromises.push(updatePromise);
 		});
 
-		let cell = buildCell(menu.col, dish.row, dish, userTextArr);
-		console.log(cell);
-		let cellAddress = cell['cellAddress'];
-		let cellVal = cell['cellVal'];
+		// ONLY UPDATE NEW ONE after remove user from others
+		return Promise.all(removeDishPromises).then(()=>{
+			let cell = buildCell(menu.col, dish.row, dish, userTextArr);
+			console.log(cell);
+			let cellAddress = cell['cellAddress'];
+			let cellVal = cell['cellVal'];
 
 
-		let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cellAddress, cellVal);
+			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cellAddress, cellVal);
 
-		return updatePromise;
+			return updatePromise;
+		});
 	});
 
 	return updatePromise;
