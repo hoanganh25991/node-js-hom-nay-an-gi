@@ -68,10 +68,10 @@ app.get('/', function(req, res){
 			updatePromise.then(msg => {
 				// console.log(userTextArr['response_url']);
 				console.log(msg);
-				if(typeof msg != 'strig')
-					msg = JSON.stringify(msg);
-
-				res.send({text: msg});
+				// if(typeof msg != 'strig')
+				// 	msg = JSON.stringify(msg);
+				//
+				// res.send({text: msg});
 			});
 			break;
 	}
