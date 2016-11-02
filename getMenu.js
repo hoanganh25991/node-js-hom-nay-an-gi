@@ -6,7 +6,7 @@ const nuiBayUtItId = '1osEF3thjxDgQiXk95N-xc9Ms9ZtgYI1CmZgKCLwIamY';
 
 let sheets = google.sheets('v4');
 let config = require(`${__dirname}/lib/nuiBayUtItConfig`);
-console.log(`${config['sheet_name']}!${config['menu_range']}`);
+// console.log(`${config['sheet_name']}!${config['menu_range']}`);
 
 // Open 'lunchMoneyId', get out users
 // Open 'nuiBayUtItId', get menu on each day of week
@@ -29,7 +29,7 @@ let getDatesMenuPromise = oauth2Promise
 				// range: 'Gia chanh Cam Tuyet!A558:AD581',
 				range: `${config['sheet_name']}!${config['menu_range']}`,
 				majorDimension: 'COLUMNS',
-			}, function (err, res){
+			}, function cb(err, res){
 				if (err) {
 					console.log('The API returned an error: ' + err);
 					reject('The API returned an error: ' + err);
@@ -42,7 +42,7 @@ let getDatesMenuPromise = oauth2Promise
 		return getMenuInWeek;
 	})
 	.then((res, reject) => {
-		console.log('Get menu success');
+		console.log('Got menu success');
 		let rows = res.values;
 		if (!rows || rows.length == 0) {
 			console.log('Fail to menu from getMenuInWeek_res');
@@ -58,9 +58,7 @@ let getDatesMenuPromise = oauth2Promise
 				currentChunkPos = i;
 			}
 		}
-
-		console.log('\033[32mChunk rows\033[0m: success');
-		console.log(chunkedRows[0]);
+		console.log('Chunk row success, chunkedRows.length', chunkedRows.length);
 
 		let dateMenus = chunkedRows.map((dateMenu, col) => {
 			// dateMenu[0] Menu: [menu, 'mon 1', 'mon 2', 'mon 3']
@@ -106,9 +104,10 @@ let getDatesMenuPromise = oauth2Promise
 						//store menu-date
 						var date = val[0]; // 'mon (31 Oct)'
 						//parse menu-date
-						date = date.substr(5, date.length - 5 - 1).replace(/\s/g, '-');
+						// date = date.substr(5, date.length - 5 - 1).replace(/\s/g, '-');
+						date = date.match(/\d+ [a-zA-Z]+/).replace(/\s/g, '-');
 						menu.date = `${date}-2016`;
-						console.log(menu.date);
+						// console.log(menu.date);
 
 						val.splice(0, 1);
 						val.forEach((users, index) => {
@@ -132,13 +131,19 @@ let getDatesMenuPromise = oauth2Promise
 		// let dateMenusPromise = new Promise((resolve, reject) => {
 		// 	resolve(dateMenus);
 		// });
+		console.log('Write cache menu');
 		let fs = require('fs');
-		fs.writeFile('menus.json', JSON.stringify(dateMenus));
+		fs.writeFile(`${__dirname}/menus.json`, JSON.stringify(dateMenus), (err)=>{
+			if(err){
+				console.log(err);
+			}else{
+				console.log('Write cache file success');
+			}
+		});
+
 		let dateMenusPromise = new Promise(resolve => resolve(dateMenus));
 
-		// console.log('\033[32mdateMenus\033[0m: success', dateMenus[0]['dishes']);
-		console.log('\033[32mdateMenus\033[0m: success', dateMenus.length);
-		console.log('\033[32mdateMenus[0]\033[0m: ', dateMenus[0]);
+		console.log('Parse dateMenus success, dateMenus.length: ', dateMenus.length);
 
 		return dateMenusPromise;
 	});
