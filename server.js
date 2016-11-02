@@ -314,23 +314,26 @@ function updateOrderToSheet(userTextArr){
 			// Build cellAddress, cellVal
 			// Run update in to sheet
 			// NEED PROMISE ALL
-			let dish = menu.dishes[removeDishIndex];
-			let cell = buildCell(menu.col, dish.row, dish, userTextArr);
+			let removeDish = menu.dishes[removeDishIndex];
+			console.log(dish.users);
+			let cell = buildCell(menu.col, removeDish.row, removeDish);
 			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
 
 			removeDishPromises.push(updatePromise);
 		});
 
 		// ONLY UPDATE NEW ONE after remove user from others
-		return Promise.all(removeDishPromises).then(()=>{
-			let cell = buildCell(menu.col, dish.row, dish, userTextArr);
+		return Promise.all(removeDishPromises).then(function (){
+			console.log('Remove user from others book success');
+
+			dish.users.push(userTextArr['sheet_name']);
+			let cell = buildCell(menu.col, dish.row, dish);
 			console.log(cell);
 			let cellAddress = cell['cellAddress'];
 			let cellVal = cell['cellVal'];
 
-
 			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cellAddress, cellVal);
-
+			updatePromise.then(msg => console.log(msg));
 			return updatePromise;
 		});
 	});
@@ -338,11 +341,11 @@ function updateOrderToSheet(userTextArr){
 	return updatePromise;
 }
 
-function buildCell(col, row, dish, userTextArr){
+function buildCell(col, row, dish){
 	// Build cell address, base on dish-row, menu-col
 	// Read out basic info from config
 	let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
-	console.log(col, row, nBUUConfig);
+	// console.log(col, row, nBUUConfig);
 	// ONLY read out the first one A558:AD581
 	// Build up row, col logic
 	let startRow = nBUUConfig['menu_range'].match(/\d+/);
@@ -353,7 +356,6 @@ function buildCell(col, row, dish, userTextArr){
 	let _ = require(`${__dirname}/lib/util`);
 	let cellAddress = `${_.convertA1Notation(col).toUpperCase()}${row}`;
 	// Build up cellVal, update dish.users
-	dish.users.push(userTextArr['sheet_name']);
 	let cellVal = dish.users.join(',');
 	console.log(cellAddress, cellVal);
 
