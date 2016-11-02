@@ -222,8 +222,10 @@ function slackMsgOrder(userTextArr){
 		}
 
 		let otherUsersBookDish = 'No one';
-		if(dish.users.length > 0)
-			otherUsersBookDish = dish.users.join(', ');
+		// Improve info by REMOVE him from his self
+		let otherUsersBookDishArr = dish.users.filter(userName => userName != userTextArr['sheet_name']);
+		if(otherUsersBookDishArr.length > 0)
+			otherUsersBookDish = otherUsersBookDishArr.join(', ');
 
 		let slackMsg = {
 			text: `Hi @${userTextArr['user_name']}`,
@@ -284,64 +286,69 @@ function updateOrderToSheet(userTextArr){
 			return new Promise(resolve => resolve('User choose dishIndex, which not exist'));
 		}
 
-
 		/**
 		 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
 		 */
-		let removeDishIndexs = [];
+		let preOrderInDishIndexs = [];
 		// Only check ONE TIME
 		// If he append in mutilple row?
-		menu.dishes.forEach((dish, index) => {
-			let removeUserIndexs = [];
-			dish.users.forEach((userName, userIndex) => {
+		menu.dishes.forEach((dishX, index) => {
+			let removingUserIndexs = [];
+			dishX.users.forEach((userName, userIndex) => {
 				if(userName == userTextArr['sheet_name']){
 					// store which dish need UPDATE
-					if(!removeDishIndexs.includes(index))
-						removeDishIndexs.push(index);
+					if(!preOrderInDishIndexs.includes(index) && index != selectedDishIndex)
+						preOrderInDishIndexs.push(index);
 					// store which user need REMOVED
-					removeUserIndexs.push(userIndex);
+					removingUserIndexs.push(userIndex);
 				}
 			});
 
-			dish.users = dish.users.filter((val, index) => {
-				return !removeUserIndexs.includes(index);
+			dishX.users = dishX.users.filter((val, index) => {
+				return !removingUserIndexs.includes(index);
 			});
 		});
-		console.log(removeDishIndexs);
+		console.log(preOrderInDishIndexs);
 
-		let removeDishPromises = [];
-		removeDishIndexs.forEach(removeDishIndex => {
+		let preOrderDishPromises = [];
+		preOrderInDishIndexs.forEach(preOrderDishIndex => {
 			// Build cellAddress, cellVal
 			// Run update in to sheet
 			// NEED PROMISE ALL
-			let removeDish = menu.dishes[removeDishIndex];
-			console.log(dish.users);
-			let cell = buildCell(menu.col, removeDish.row, removeDish);
-			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
+			let preOrderDish = menu.dishes[preOrderDishIndex];
+			let cell = buildCell(menu, preOrderDish);
 
-			removeDishPromises.push(updatePromise);
+			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
+			updatePromise.then(msg => console.log(msg));
+
+			preOrderDishPromises.push(updatePromise);
 		});
 
 		// ONLY UPDATE NEW ONE after remove user from others
-		return Promise.all(removeDishPromises).then(function (){
+		return Promise.all(preOrderDishPromises).then(function (){
 			console.log('Remove user from others book success');
 
-			dish.users.push(userTextArr['sheet_name']);
-			let cell = buildCell(menu.col, dish.row, dish);
-			console.log(cell);
-			let cellAddress = cell['cellAddress'];
-			let cellVal = cell['cellVal'];
+			if(dish.users.includes(userTextArr['sheet_name'])){
+				// He just re-submit, no thing NEW
+				return new Promise(resolve => resolve('Resubmit'));
+			}else{
+				dish.users.push(userTextArr['sheet_name']);
+				let cell = buildCell(menu, dish);
 
-			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cellAddress, cellVal);
-			updatePromise.then(msg => console.log(msg));
-			return updatePromise;
+				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
+				updatePromise.then(msg => console.log(msg));
+
+				return updatePromise;
+			}
 		});
 	});
 
 	return updatePromise;
 }
 
-function buildCell(col, row, dish){
+function buildCell(menu, dish){
+	let col = menu.col;
+	let row = dish.row;
 	// Build cell address, base on dish-row, menu-col
 	// Read out basic info from config
 	let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
@@ -357,7 +364,7 @@ function buildCell(col, row, dish){
 	let cellAddress = `${_.convertA1Notation(col).toUpperCase()}${row}`;
 	// Build up cellVal, update dish.users
 	let cellVal = dish.users.join(',');
-	console.log(cellAddress, cellVal);
+	console.log('build Cell', cellAddress, cellVal);
 
 	return {cellAddress, cellVal};
 }
