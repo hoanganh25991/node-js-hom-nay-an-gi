@@ -205,7 +205,7 @@ function slackMsgOrder(userTextArr){
 			attachments: [
 				{
 					title: 'Quan Chanh Cam Tuyet',
-					title_link: 'https://api.slack.com/',
+					title_link: 'https://tinker.press/good-food-good-life.jpg',
 					fields: [
 						{
 							value: `You have ordered: \`${dish['name']}\``,
