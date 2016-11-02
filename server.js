@@ -1,6 +1,5 @@
 let bodyParser = require('body-parser');
 let app = require('express')();
-// console.log(`${__dirname}/lib/util`);
 let _ = require(`${__dirname}/lib/util`);
 // Detect mode
 let config = {mode: 'dev'};
@@ -67,6 +66,7 @@ app.get('/', function(req, res){
 			// batchUpdate
 			let updatePromise = updateOrderToSheet(userTextArr);
 			updatePromise.then(msg => {
+				// TRY TO BUILD MUTIPLE RES for slack-cmd
 				// console.log(userTextArr['response_url']);
 				console.log(msg);
 				// if(typeof msg != 'strig')
@@ -177,7 +177,6 @@ function slackMsgMenu(userTextArr){
 			attachments: [
 				{
 					title: 'Quan Chanh Cam Tuyet',
-					// title_link: 'https://api.slack.com/',
 					title_link: 'https://tinker.press/good-food-good-life.jpg',
 					fields: dishesV2,
 					color: '#3AA3E3',
@@ -299,36 +298,36 @@ function updateOrderToSheet(userTextArr){
 		/**
 		 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
 		 */
-		let preOrderInDishIndexs = [];
+		let preOrderDishIndexs = [];
 		// Only check ONE TIME
 		// If he append in mutilple row?
-		menu.dishes.forEach((dishX, index) => {
+		menu.dishes.forEach((dish, index) => {
 			let removingUserIndexs = [];
-			dishX.users.forEach((userName, userIndex) => {
+			dish.users.forEach((userName, userIndex) => {
 				if(userName == userTextArr['sheet_name']){
 					// store which dish need UPDATE
-					if(!preOrderInDishIndexs.includes(index) && index != selectedDishIndex)
-						preOrderInDishIndexs.push(index);
+					if(!preOrderDishIndexs.includes(index) && selectedDishIndex != index)
+						preOrderDishIndexs.push(index);
 					// store which user need REMOVED
 					removingUserIndexs.push(userIndex);
 				}
 			});
 
-			dishX.users = dishX.users.filter((val, index) => {
+			dish.users = dish.users.filter((val, index) => {
 				return !removingUserIndexs.includes(index);
 			});
 		});
-		console.log(preOrderInDishIndexs);
+		console.log('preOrderDishIndexs', preOrderDishIndexs);
 
 		let preOrderDishPromises = [];
-		preOrderInDishIndexs.forEach(preOrderDishIndex => {
+		preOrderDishIndexs.forEach(preOrderDishIndex => {
 			// Build cellAddress, cellVal
 			// Run update in to sheet
 			// NEED PROMISE ALL
 			let preOrderDish = menu.dishes[preOrderDishIndex];
 			let cell = buildCell(menu, preOrderDish);
 
-			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
+			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
 			updatePromise
 				.then(msg => console.log(msg))
 				.catch(err => console.log(err));
@@ -348,7 +347,7 @@ function updateOrderToSheet(userTextArr){
 				let cell = buildCell(menu, dish);
 
 				console.log(`${__dirname}/updateOrderToSheet`);
-				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell.cellAddress, cell.cellVal);
+				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
 				updatePromise.then(msg => console.log(msg));
 
 				return updatePromise;

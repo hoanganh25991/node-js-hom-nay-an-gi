@@ -1,4 +1,3 @@
-// let relativePath = '.';
 let getOauth2Client = function() {
     var fs = require('fs');
     var readline = require('readline');
@@ -50,14 +49,8 @@ let getOauth2Client = function() {
         console.log('Token stored to ' + TOKEN_PATH);
     }
 
-    console.log('start create promise, read secretFile');
-    console.log(secretFile);
-
     let promise = new Promise((resolve, reject) => {
-        console.log('jalskdfjaslkdfj');
-        let fsx = require('fs');
-        fsx.access(secretFile, function(){console.log(secretFile + 'exist');});
-        fsx.readFile(secretFile, function processClientSecrets(err, content) {
+        fs.readFile(secretFile, function processClientSecrets(err, content) {
             if (err) {
                 console.log('Error loading client secret file: ' + err);
                 reject('Error loading client secret file: ' + err);
@@ -74,7 +67,7 @@ let getOauth2Client = function() {
             var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
             // Check if we have previously stored a token.
-            fsx.readFile(TOKEN_PATH, function(err, token) {
+            fs.readFile(TOKEN_PATH, function(err, token) {
                 if (err) {
                     console.log(err);
                     resolve(getNewToken(oauth2Client));

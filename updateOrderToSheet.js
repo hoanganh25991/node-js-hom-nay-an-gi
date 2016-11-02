@@ -1,8 +1,9 @@
 // let __dirname = '.';
 let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
 
-let updateOrderToSheet = function(cellAddress, cellVal){
-	console.log(cellAddress, cellVal);
+let updateOrderToSheet = function(cell){
+	let cellAddress = cell.cellAddress;
+	let cellVal= cell.cellVal;
 	// Open google sheet to update
 	let oauth2Promise = require(`${__dirname}/oauth2Client`)();
 	// console.log(oauth2Promise);
@@ -29,7 +30,7 @@ let updateOrderToSheet = function(cellAddress, cellVal){
 							majorDimension: 'ROWS'
 						}
 					}
-				}, function(err, res){
+				}, function cb(err, res){
 					if(err){
 						console.log('The API returned an error: ' + err);
 						reject('The API returned an error: ' + err);
