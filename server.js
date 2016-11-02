@@ -1,6 +1,5 @@
 let bodyParser = require('body-parser');
 let app = require('express')();
-let _ = require(`${__dirname}/lib/util`);
 // Detect mode
 let config = {mode: 'dev'};
 try{
@@ -171,6 +170,7 @@ function loadMenu(){
 	});
 
 	let checkOutdatedPromise = statMenusJsonPromise.then(mtime => {
+		let _ = require(`${__dirname}/lib/util`);
 		let thisWeek = _.getWeekNumber(new Date());
 		let menuJsonCreatedWeek = _.getWeekNumber(mtime);
 		console.log('Menus.json mtime (week): ', menuJsonCreatedWeek);
@@ -242,7 +242,28 @@ function slackMsgMenu(userTextArr){
 		return new Promise(resolve => resolve(slackMsg));
 	})
 	.catch(err => {
-		console.log(err);
+		// console.log(err);
+		if(err == 'nuiBayUtItConfig.json is outOfDate'){
+			let slackMsg = {
+				text: 'Menu not updated',
+				attachments: [
+					{
+						title: 'For admin',
+						fields: [
+							{
+								value: 'Type /lunch batchFix <menu range>, to update menu',
+								short: true,
+								color: 'danger',
+								footer_icon: 'https://tinker.press/favicon-64x64.png',
+								ts: Math.floor(new Date().getTime() / 1000)
+							}
+						]
+					}
+				]
+			};
+
+			return new Promise(resolve => resolve(slackMsg));
+		}
 	});
 
 	return slackMsgPromise;
