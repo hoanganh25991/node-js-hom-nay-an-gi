@@ -1,5 +1,6 @@
 let bodyParser = require('body-parser');
 let app = require('express')();
+const dayOfWeekConvert = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 // Detect mode
 let config = {mode: 'dev'};
 try{
@@ -287,7 +288,20 @@ function slackMsgOrder(userTextArr){
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		// let dayOfWeek = new Date().getDay() - 1;
+		let userInputDay = userTextArr[1].toLocaleLowerCase();
+		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
+
 		let day = new Date().getDate();
+		if(isUserInputDay){
+			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
+			// let dayOfWeek = 5;
+			let dd = new Date();
+			let dayx = dd.getDay();
+			let	diff = dd.getDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
+
+			day = new Date(dd.setDate(diff)).getDate();
+		}
+		
 		// let menu = menus[dayOfWeek];
 		// Better check menu by reading out
 		let menu = menus.filter(menu =>{
@@ -315,7 +329,12 @@ function slackMsgOrder(userTextArr){
 			});
 		}
 
+		// LOGIC ON CASE order mon 19
 		let dishIndex = parseInt(userTextArr[1], 10);
+		if(isUserInputDay){
+			dishIndex = parseInt(userTextArr[2], 10);
+		}
+
 		if(isNaN(dishIndex)){
 			dishIndex = 0;
 		}
@@ -352,11 +371,11 @@ function slackMsgOrder(userTextArr){
 			text: `Hi @${userTextArr['user_name']}`,
 			attachments: [
 				{
-					title: 'Quan Chanh Cam Tuyet',
+					title: `Order on ${menu.date}`,
 					title_link: 'https://tinker.press/good-food-good-life.jpg',
 					fields: [
 						{
-							value: `You have ordered: \`${dish['name']}\``,
+							value: `You've ordered: \`${dish['name']}\``,
 							short: true
 						},
 						{
