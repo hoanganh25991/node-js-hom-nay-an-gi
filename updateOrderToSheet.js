@@ -2,8 +2,10 @@
 let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
 
 let updateOrderToSheet = function(cellAddress, cellVal){
+	console.log(cellAddress, cellVal);
 	// Open google sheet to update
 	let oauth2Promise = require(`${__dirname}/oauth2Client`)();
+	// console.log(oauth2Promise);
 	let google = require('googleapis');
 	let sheets = google.sheets('v4');
 

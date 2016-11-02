@@ -50,27 +50,37 @@ let getOauth2Client = function() {
         console.log('Token stored to ' + TOKEN_PATH);
     }
 
+    console.log('start create promise, read secretFile');
+    console.log(secretFile);
+
     let promise = new Promise((resolve, reject) => {
-        fs.readFile(secretFile, function processClientSecrets(err, content) {
+        console.log('jalskdfjaslkdfj');
+        let fsx = require('fs');
+        fsx.access(secretFile, function(){console.log(secretFile + 'exist');});
+        fsx.readFile(secretFile, function processClientSecrets(err, content) {
             if (err) {
                 console.log('Error loading client secret file: ' + err);
                 reject('Error loading client secret file: ' + err);
             }
+            console.log('no err in readfile');
             // Authorize a client with the loaded credentials, then call the
             // Google Sheets API.
             var credentials = JSON.parse(content);
             var clientSecret = credentials.installed.client_secret;
             var clientId = credentials.installed.client_id;
             var redirectUrl = credentials.installed.redirect_uris[0];
+            console.log(credentials, clientSecret, redirectUrl);
             var auth = new googleAuth();
             var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
 
             // Check if we have previously stored a token.
-            fs.readFile(TOKEN_PATH, function(err, token) {
+            fsx.readFile(TOKEN_PATH, function(err, token) {
                 if (err) {
+                    console.log(err);
                     resolve(getNewToken(oauth2Client));
                 } else {
                     oauth2Client.credentials = JSON.parse(token);
+                    console.log('read from ./credentials');
                     resolve(oauth2Client);
                 }
             });

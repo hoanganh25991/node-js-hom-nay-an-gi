@@ -1,6 +1,6 @@
 let bodyParser = require('body-parser');
 let app = require('express')();
-console.log(`${__dirname}/lib/util`);
+// console.log(`${__dirname}/lib/util`);
 let _ = require(`${__dirname}/lib/util`);
 // Detect mode
 let config = {mode: 'dev'};
