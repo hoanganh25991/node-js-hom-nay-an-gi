@@ -31,9 +31,11 @@ app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-w
 app.get('/', function(req, res){
 	// userTextArr as destination
 	// Contain any useful info from user
-	let userName = req.param('user_name');
+	// let userName = req.param('user_name');
+	let userName = req.query['user_name'];
 	const acceptedUserCommand = ['menu', 'order'];
-	let userText = req.param('text').replace(/\s+/g, ' ');
+	// let userText = req.param('text').replace(/\s+/g, ' ');
+	let userText = req.query['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
 	// read user text
 	let userTextArr = userText.split(' ');
@@ -106,7 +108,7 @@ function loadMenu(){
 	let statMenusJsonPromise = new Promise((resolve, reject) => {
 		fs.stat(`${__dirname}/menus.json`, function(err, stats){
 			if(err){
-				console.log(err);
+				// console.log(err);
 				reject(err);
 			}else{
 				let mtime = new Date(stats.mtime);
@@ -118,31 +120,28 @@ function loadMenu(){
 	let checkOutdatedPromise = statMenusJsonPromise.then(mtime => {
 		let thisWeek = _.getWeekNumber(new Date());
 		let menuJsonCreatedWeek = _.getWeekNumber(mtime);
+		console.log('Menus.json mtime (week): ', menuJsonCreatedWeek);
+		console.log('Request for menus (week): ', thisWeek);
 
-		let outdated = (thisWeek > menuJsonCreatedWeek);
-		return new Promise(resolve => resolve(outdated));
+		let isOutOfDate = (thisWeek > menuJsonCreatedWeek);
+		return new Promise(resolve => resolve(isOutOfDate));
 	})
     .catch(err => {
-		console.log(err);
+		// console.log(err);
+		console.log('Menus.json not exist');
 		return new Promise(resolve => resolve(true));
 	});
 
-	let getDateMenusPromise = checkOutdatedPromise.then(outdated => {
-		console.log('move to outdated');
-		console.log(outdated);
-		let promise;
-		if(!outdated){
-			promise = new Promise(resolve => {
+	let getDateMenusPromise = checkOutdatedPromise.then(isOutOfDate => {
+		console.log('Menus.json isOutOfDate: ', isOutOfDate);
+
+		if(!isOutOfDate){
+			return new Promise(resolve => {
 				resolve(JSON.parse(fs.readFileSync(`${__dirname}/menus.json`).toString()));
 			});
 		}else{
-			// promise = require(`${__dirname}/getMenu`).then(dateMenus => {
-			// 	return new Promise(resolve => resolve(dateMenus));
-			// });
-			promise = require(`${__dirname}/getMenu`);
+			return require(`${__dirname}/getMenu`);
 		}
-
-		return promise;
 	});
 
 	return getDateMenusPromise;

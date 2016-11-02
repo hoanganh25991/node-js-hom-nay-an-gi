@@ -103,9 +103,11 @@ let getDatesMenuPromise = oauth2Promise
 					case 2:
 						//store menu-date
 						var date = val[0]; // 'mon (31 Oct)'
+						// console.log(date);
+						// console.log(date.match(/\d+ [a-zA-Z]+/));
 						//parse menu-date
 						// date = date.substr(5, date.length - 5 - 1).replace(/\s/g, '-');
-						date = date.match(/\d+ [a-zA-Z]+/).replace(/\s/g, '-');
+						date = date.match(/\d+ [a-zA-Z]+/)[0].replace(/\s/g, '-');
 						menu.date = `${date}-2016`;
 						// console.log(menu.date);
 
