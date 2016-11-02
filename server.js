@@ -61,6 +61,7 @@ app.get('/', function(req, res){
 			// we need to callback to NuiBayUtIt sheet
 			// get updated info
 			// batchUpdate
+			let updatePromise = updateOrderToSheet(userTextArr);
 			break;
 	}
 
@@ -194,8 +195,29 @@ function slackMsgOrder(userTextArr){
 		if(isNaN(dishIndex)){
 			dishIndex = 0;
 		}
+		// Update back into userTextArr
+		userTextArr[1] = dishIndex;
 
 		let dish = menu.dishes[dishIndex];
+		if(!dish){
+			return new Promise(resolve => {
+				let slackMsg = {
+					text: `Order error`,
+					attachments: [
+						{
+							text: `You have order dish [${dishIndex}], which not exist`,
+							color: 'danger',
+							footer: 'ReType `/lunch order [num]` to reorder\nChúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+							footer_icon: 'https://tinker.press/favicon-64x64.png',
+							ts: Math.floor(new Date().getTime() / 1000)
+						}
+					]
+				}
+
+				resolve(slackMsg);
+			});
+		}
+
 		let otherUsersBookDish = 'No one';
 		if(dish.users.length > 0)
 			otherUsersBookDish = dish.users.join(', ');
@@ -236,4 +258,22 @@ function slackMsgOrder(userTextArr){
 	});
 
 	return slackMsgPromise;
+}
+
+function updateOrderToSheet(userTextArr){
+	// Have to use userName in sheet, which different from slackName
+	let mapName = require(`${__dirname}/lib/mapName`);
+	let userNameInSheet = mapName[userTextArr['user_name']];
+	if(!userNameInSheet)
+		userNameInSheet = userTextArr['user_name'];
+	// ReAdd back to userTextArr
+	userTextArr['sheet_name'] = userNameInSheet;
+
+	let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	getDateMenusPromise.then(dateMenus => {
+		let selectedDishIndex = userTextArr[1];
+		// console.log(selectedDishIndex);
+		
+
+	});
 }
