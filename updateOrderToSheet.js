@@ -38,7 +38,8 @@ let updateOrderToSheet = function(cellAddress, cellVal){
 			});
 
 			return updatePromise;
-		});
+		})
+		.catch(err => console.log(err));
 	// return new Promise(r => r('hello'));
 	return promise;
 }
