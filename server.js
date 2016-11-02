@@ -33,7 +33,7 @@ app.get('/', function(req, res){
 	// Contain any useful info from user
 	// let userName = req.param('user_name');
 	let userName = req.query['user_name'];
-	const acceptedUserCommand = ['menu', 'order'];
+	const acceptedUserCommand = ['menu', 'order', 'batchFix'];
 	// let userText = req.param('text').replace(/\s+/g, ' ');
 	let userText = req.query['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
@@ -76,6 +76,59 @@ app.get('/', function(req, res){
 				//
 				// res.send({text: msg});
 			});
+			break;
+		case 'batchFix':
+			// let menu_range = req.query['menu_range'] || req.body['menu_range'];
+			let menu_range = userTextArr[1];
+			let nBUIConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
+			// Update on menu_range
+			// Check menu_range, detect ITS FORMAT A558:AD581
+			if(menu_range && menu_range.match(/[a-zA-Z]+\d+:[a-zA-Z]+\d+/)){
+				nBUIConfig['menu_range'] = menu_range;
+
+				resPromise = new Promise((resolve, reject) => {
+					let fs = require('fs');
+
+					fs.writeFile(`${__dirname}/lib/nuiBayUtItConfig.json`, 'w', function(err){
+						if(err){
+							console.log('Write nuiBayUtItConfig.json failed');
+							reject('Write nuiBayUtItConfig.json failed');
+						}else{
+							console.log('Write nuiBayUtItConfig.json success');
+
+							let slackMsg = {
+								text: 'Write nuiBayUtItConfig.json success'
+							};
+							resolve(slackMsg);
+						}
+					})
+				});
+			}else{
+				resPromise = new Promise(resolve => {
+					let slackMsg = {
+						text: `Please resubmit\ninclude header`,
+						attachments: [
+							{
+								title: 'Menu range format',
+								title_link: 'https://tinker.press',
+								fields: [
+									{
+										value: `A558:AD581`,
+										short: true
+									}
+								],
+								color: '#3AA3E3',
+								footer_icon: 'https://tinker.press/favicon-64x64.png',
+								ts: Math.floor(new Date().getTime() / 1000)
+							}
+						]
+					}
+
+					resolve(slackMsg);
+				});
+			}
+
+
 			break;
 	}
 
