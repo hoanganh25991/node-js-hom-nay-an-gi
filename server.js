@@ -34,6 +34,7 @@ app.get('/', function(req, res){
 	let userName = req.param('user_name');
 	const acceptedUserCommand = ['menu', 'order'];
 	let userText = req.param('text').replace(/\s+/g, ' ');
+	// let responseUrl = req.param('response_url');
 	// read user text
 	let userTextArr = userText.split(' ');
 	if(!acceptedUserCommand.includes(userTextArr[0])){
@@ -41,6 +42,8 @@ app.get('/', function(req, res){
 	}
 	// store user name
 	userTextArr['user_name'] = userName;
+	// userTextArr['response_url'] = responseUrl;
+	console.log(userTextArr);
 	// Build up default response
 	let response = {text: 'i hear you'};
 	let resPromise;
@@ -63,7 +66,12 @@ app.get('/', function(req, res){
 			// batchUpdate
 			let updatePromise = updateOrderToSheet(userTextArr);
 			updatePromise.then(msg => {
+				// console.log(userTextArr['response_url']);
 				console.log(msg);
+				if(typeof msg != 'strig')
+					msg = JSON.stringify(msg);
+
+				res.send({text: msg});
 			});
 			break;
 	}
@@ -330,7 +338,7 @@ function updateOrderToSheet(userTextArr){
 
 			if(dish.users.includes(userTextArr['sheet_name'])){
 				// He just re-submit, no thing NEW
-				return new Promise(resolve => resolve('Resubmit'));
+				return new Promise(resolve => resolve('Your order saved\nNo need to resubmit'));
 			}else{
 				dish.users.push(userTextArr['sheet_name']);
 				let cell = buildCell(menu, dish);
