@@ -279,8 +279,34 @@ function slackMsgOrder(userTextArr){
 	let getDateMenusPromise = loadMenu();
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		let dayOfWeek = new Date().getDay() - 1;
-		let menu = menus[dayOfWeek];
+		// let dayOfWeek = new Date().getDay() - 1;
+		let day = new Date().getDate();
+		// let menu = menus[dayOfWeek];
+		// Better check menu by reading out
+		let menu = menus.filter(menu =>{
+			let menuDate = new Date(menu.date);
+			return (day == menuDate.getDate());
+		})[0];
+		
+		if(!menu){
+			return new Promise(resolve => {
+				let slackMsg = {
+					text: `Hi @${userTextArr['user_name']}`,
+					attachments:[
+						{
+							title: `Order error`,
+							text: `Menu for today not exist`,
+							color: 'danger',
+							footer: 'Type /lunch menu <day>, to view menu\nChúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+							footer_icon: 'https://tinker.press/favicon-64x64.png',
+							ts: Math.floor(new Date().getTime() / 1000)
+						}
+					]
+				}
+
+				resolve(slackMsg);
+			});
+		}
 
 		let dishIndex = parseInt(userTextArr[1], 10);
 		if(isNaN(dishIndex)){
