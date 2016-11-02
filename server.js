@@ -5,7 +5,7 @@ let config = {mode: 'dev'};
 try{
 	config = require(`${__dirname}/config`);
 }catch(err){
-	console.log(`No config file supported${_.eol}Default mode: dev`);
+	console.log(`No config file supported\nDefault mode: dev`);
 }
 
 if(config.mode == 'production'){
@@ -32,7 +32,7 @@ app.get('/', function(req, res){
 	// Contain any useful info from user
 	// let userName = req.param('user_name');
 	let userName = req.query['user_name'];
-	const acceptedUserCommand = ['menu', 'order', 'batchFix', 'view'];
+	const acceptedUserCommand = ['menu', 'order', 'batchFix', 'view', 'delete'];
 	// let userText = req.param('text').replace(/\s+/g, ' ');
 	let userText = req.query['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
@@ -135,6 +135,13 @@ app.get('/', function(req, res){
 			break;
 		case 'view':
 			resPromise = slackMsgView(userTextArr);
+		case 'delete':
+			resPromise = slackMsgDelete(userTextArr);
+			// Now update delete order int sheet
+			let deleteOrderPromise = deleteOrder(userTextArr);
+			deleteOrderPromise
+				.then(msg => console.log(msg))
+				.catch(err => console.log(err));
 	}
 
 	resPromise.then(slackMsg => {
@@ -530,6 +537,96 @@ function slackMsgView(userTextArr){
 	return slackMsgPromise;
 }
 
-function deleteOrder(userTextArr){
+function slackMsgDelete(userTextArr){
+	let slackMsg = {
+		text: `Hi @${userTextArr['user_name']}`,
+		attachments: [
+			{
+				title: 'Delete order',
+				fields: [
+					{
+						value: `I'm deleting your order`,
+						short: true
+					}
+				],
+				color: '#3AA3E3',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	}
 
+	return new Promise(resolve => resolve(slackMsg));
+}
+
+function deleteOrder(userTextArr){
+	let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	let updatePromise = getDateMenusPromise.then(dateMenus => {
+		// console.log(userTextArr);
+
+		// let dayOfWeek = new Date().getDay() - 1;
+		// let menu = dateMenus[dayOfWeek];
+		// let dayOfWeek = new Date().getDay() - 1;
+		let day = new Date().getDate();
+		// let menu = menus[dayOfWeek];
+		// Better check menu by reading out
+		let menu = dateMenus.filter(menu =>{
+			let menuDate = new Date(menu.date);
+			return (day == menuDate.getDate());
+		})[0];
+		if(!menu){
+			return new Promise(resolve => resolve('No menu'));
+		}
+
+		/**
+		 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
+		 */
+		let preOrderDishIndexs = [];
+		// Only check ONE TIME
+		// If he append in mutilple row?
+		menu.dishes.forEach((dish, index) => {
+			let removingUserIndexs = [];
+			dish.users.forEach((userName, userIndex) => {
+				if(userName == userTextArr['sheet_name']){
+					// store which dish need UPDATE
+					// check include because, on that row
+					// userName may appear more than one
+					if(!preOrderDishIndexs.includes(index))
+						preOrderDishIndexs.push(index);
+					// store which user need REMOVED
+					removingUserIndexs.push(userIndex);
+				}
+			});
+
+			dish.users = dish.users.filter((val, index) => {
+				return !removingUserIndexs.includes(index);
+			});
+		});
+		console.log('preOrderDishIndexs', preOrderDishIndexs);
+
+		let preOrderDishPromises = [];
+		preOrderDishIndexs.forEach(preOrderDishIndex => {
+			// Build cellAddress, cellVal
+			// Run update in to sheet
+			// NEED PROMISE ALL
+			let preOrderDish = menu.dishes[preOrderDishIndex];
+			let cell = buildCell(menu, preOrderDish);
+
+			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
+			updatePromise
+				.then(msg => console.log(msg))
+				.catch(err => console.log(err));
+
+			preOrderDishPromises.push(updatePromise);
+		});
+
+		// ONLY UPDATE NEW ONE after remove user from others
+		return Promise.all(preOrderDishPromises).then(function (){
+			console.log('Remove user from others book success');
+
+			return new Promise(resolve => resolve('Remove success'));
+		});
+	});
+
+	return updatePromise;
 }
