@@ -118,7 +118,7 @@ app.get('/', function(req, res){
 			// get updated info
 			// batchUpdate
 			let updatePromise = updateOrder(userTextArr);
-			updatePromise.then(()=>{console.log('update order success')});
+			updatePromise.then(()=>{console.log('Update order success')});
 
 			// let writeMenuCachePromise = require(`${__dirname}/getMenu`);
 			// writeMenuCachePromise.then(()=>{console.log('update menus.json for view')});
@@ -594,6 +594,7 @@ function slackMsgOrder(userTextArr){
 }
 
 function updateOrder(userTextArr){
+	console.log('\033[32mStart updateOrder by getMenu\033[0m');
 	let getDateMenusPromise = require(`${__dirname}/getMenu`);
 
 	let userText = userTextArr['text'].replace(/\s+/g, ' ');
@@ -603,6 +604,7 @@ function updateOrder(userTextArr){
 	// store user name
 	// userTextArr['user_name'] = userName;
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
+		console.log('\033[32mgetMenu success!!!\033[0m');
 		// let selectedDishIndex = userTextArr[1];
 		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
 		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
