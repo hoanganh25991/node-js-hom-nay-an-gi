@@ -500,24 +500,37 @@ function slackMsgOrder(userTextArr){
 
 		// LOGIC ON CASE order mon 19
 		let dishIndex = parseInt(userTextArr[1], 10);
+		// store userDishOrder to inform what happen
+		let userDishOrder = userTextArr[1];
 		if(isUserInputDay){
 			dishIndex = parseInt(userTextArr[2], 10);
+			userDishOrder = userTextArr[2];
 		}
 
+		let dishIndexParseFail = false;
 		if(isNaN(dishIndex)){
 			dishIndex = 0;
+			dishIndexParseFail = true;
+			// userDishOrder = userTextArr[2];
 		}
 		// Update back into userTextArr
 		userTextArr[1] = dishIndex;
 
 		let dish = menu.dishes[dishIndex];
-		if(!dish){
+		if(!dish || dishIndexParseFail){
 			return new Promise(resolve => {
 				let slackMsg = {
-					text: `Order error`,
+					text: `Hi ${userTextArr['user_name']}`,
 					attachments: [
 						{
-							text: `You've orderd dish [${dishIndex}], which not exist`,
+							title: `Order error`,
+							title_link: `https://tinker.press`,
+							fields: [
+								{
+									value: `You've order dish [${userDishOrder}], which not exist`,
+									short: true
+								}
+							],
 							color: 'danger',
 							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 							footer_icon: 'https://tinker.press/favicon-64x64.png',
