@@ -941,7 +941,7 @@ function slackMsgHelp(userTextArr){
 					},
 					{
 						title: `Order dish`,
-						value: `Type /lunch order [dish num]\n[dish num] based on dish's order in menu`,
+						value: `Type /lunch order [dish num]\n[dish num]: dish's order in menu`,
 						short: true
 					},
 					{
@@ -956,7 +956,7 @@ function slackMsgHelp(userTextArr){
 					},
 					{
 						title: `Set name`,
-						value: `Type /lunch name [your name in google sheet]`,
+						value: `Type /lunch name [name in google sheet]`,
 						short: true
 					},
 				],
