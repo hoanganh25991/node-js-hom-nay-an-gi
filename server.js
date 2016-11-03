@@ -47,10 +47,10 @@ app.get('/', function(req, res){
 	userTextArr['user_name'] = userName;
 	let mapName = require(`${__dirname}/lib/mapName`);
 	let userNameInSheet = mapName[userTextArr['user_name']];
-	if(!userNameInSheet && userTextArr[0] != 'name'){
+	if(!userNameInSheet && (userTextArr[0] != 'name' || userTextArr[0] != 'menu')){
 		// userNameInSheet = userTextArr['user_name'];
 		let slackMsg = {
-			text: `Hi @${userTextArr['user_name']}\nYou've ask \`${userText}\``,
+			text: `Hi @${userTextArr['user_name']}\nYou've ask for: \`${userText}\``,
 			attachments: [
 				{
 					title: 'Sorry for this inconvenience.\n Please set name first',
@@ -61,7 +61,7 @@ app.get('/', function(req, res){
 							short: true
 						}
 					],
-					color: '#3AA3E3',
+					// color: '#3AA3E3',
 					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 					footer_icon: 'https://tinker.press/favicon-64x64.png',
 					ts: Math.floor(new Date().getTime() / 1000)
