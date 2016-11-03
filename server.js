@@ -83,9 +83,9 @@ app.get('/', function(req, res){
 	// Switch case on user command
 	switch(userTextArr[0]){
 		case 'menu':
-			if(!(userTextArr[1])){
-				userTextArr[1] = 'today';
-			}
+			// if(!(userTextArr[1])){
+			// 	userTextArr[1] = 'today';
+			// }
 			// load menu return menu-info promise
 			resPromise = slackMsgMenu(userTextArr);
 			break;
@@ -262,9 +262,64 @@ function loadMenu(){
 function slackMsgMenu(userTextArr){
 	let getDateMenusPromise = loadMenu();
 
+	let userText = userTextArr['text'].replace(/\s+/g, ' ');
+	// let responseUrl = req.param('response_url');
+	// read user text
+	let userTextArrTmp = userText.split(' ');
+
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		let dayOfWeek = new Date().getDay() - 1;
-		let menu = menus[dayOfWeek];
+		// let selectedDishIndex = userTextArr[1];
+		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
+		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
+
+		let day = new Date().getDate();
+		if(isUserInputDay){
+			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
+			// let dayOfWeek = 5;
+			let dd = new Date();
+			let dayx = dd.getDay();
+			let	diff = dd.getDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
+
+			day = new Date(dd.setDate(diff)).getDate();
+		}
+
+		// let menu = menus[dayOfWeek];
+		// Better check menu by reading out
+		let menu = menus.filter(menu =>{
+			let menuDate = new Date(menu.date);
+			return (day == menuDate.getDate());
+		})[0];
+		// console.log(userTextArr);
+
+		// let dayOfWeek = new Date().getDay() - 1;
+		// let menu = dateMenus[dayOfWeek];
+		// let dayOfWeek = new Date().getDay() - 1;
+		// let day = new Date().getDate();
+		// // let menu = menus[dayOfWeek];
+		// // Better check menu by reading out
+		// let menu = dateMenus.filter(menu =>{
+		// 	let menuDate = new Date(menu.date);
+		// 	return (day == menuDate.getDate());
+		// })[0];
+		if(!menu){
+			return new Promise(resolve => {
+				let slackMsg = {
+					text: `Hi @${userTextArr['user_name']}`,
+					attachments:[
+						{
+							title: `Order error`,
+							text: `Menu for day-${day} not exist`,
+							color: 'danger',
+							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+							footer_icon: 'https://tinker.press/favicon-64x64.png',
+							ts: Math.floor(new Date().getTime() / 1000)
+						}
+					]
+				}
+
+				resolve(slackMsg);
+			});
+		}
 		
 		let dishesV2 = [];
 		menu.dishes.forEach((dish, index) =>{
@@ -332,9 +387,14 @@ function slackMsgMenu(userTextArr){
 function slackMsgOrder(userTextArr){
 	let getDateMenusPromise = loadMenu();
 
+	let userText = userTextArr['text'].replace(/\s+/g, ' ');
+	// let responseUrl = req.param('response_url');
+	// read user text
+	let userTextArrTmp = userText.split(' ');
+	
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		// let dayOfWeek = new Date().getDay() - 1;
-		let userInputDay = userTextArr[1].toLocaleLowerCase();
+		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
 		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
 
 		let day = new Date().getDate();
@@ -347,14 +407,25 @@ function slackMsgOrder(userTextArr){
 
 			day = new Date(dd.setDate(diff)).getDate();
 		}
-		
+
 		// let menu = menus[dayOfWeek];
 		// Better check menu by reading out
 		let menu = menus.filter(menu =>{
 			let menuDate = new Date(menu.date);
 			return (day == menuDate.getDate());
 		})[0];
+		// console.log(userTextArr);
 
+		// let dayOfWeek = new Date().getDay() - 1;
+		// let menu = dateMenus[dayOfWeek];
+		// let dayOfWeek = new Date().getDay() - 1;
+		// let day = new Date().getDate();
+		// // let menu = menus[dayOfWeek];
+		// // Better check menu by reading out
+		// let menu = dateMenus.filter(menu =>{
+		// 	let menuDate = new Date(menu.date);
+		// 	return (day == menuDate.getDate());
+		// })[0];
 		if(!menu){
 			return new Promise(resolve => {
 				let slackMsg = {
@@ -362,7 +433,7 @@ function slackMsgOrder(userTextArr){
 					attachments:[
 						{
 							title: `Order error`,
-							text: `Menu for today not exist`,
+							text: `Menu for day-${day} not exist`,
 							color: 'danger',
 							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 							footer_icon: 'https://tinker.press/favicon-64x64.png',
