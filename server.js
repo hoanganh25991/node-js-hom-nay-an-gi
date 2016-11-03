@@ -1000,9 +1000,23 @@ function slackMsgName(userTextArr){
 }
 
 function storeName(userTextArr){
+	let userSheetNameInCache = userTextArr['sheet_name'];
+	// Parse out which name he want to ask
 	let userText = userTextArr['text'];
-	let userSheetName = userText.replace('name ', '');
+	userText = userText.replace(/\s+/g, ' ');
+	let userTextArrTmp = userText.split(' ');
+	userTextArrTmp.splice(0, 1);
+	// let userSheetName = userText.replace('name ', '');
+	let userSheetName = userTextArrTmp.join(' ');
 	userTextArr['sheet_name'] = userSheetName;
+
+	if(userSheetName == '' && userSheetNameInCache){
+		return Promise(resolve => resolve('User want to review name, no need to update'));
+	}
+
+	if(userSheetName == '' && !userSheetNameInCache){
+		return Promise(resolve => resolve('User want to set name, but not submit name @@, no need to update'));
+	}
 
 	let mapName = require(`${__dirname}/lib/mapName`);
 	mapName[userTextArr['user_name']] = userTextArr['sheet_name'];
