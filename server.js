@@ -128,8 +128,8 @@ app.get('/', function(req, res){
 				// res.send({text: msg});
 			});
 
-			let writeMenuCache = require(`${__dirname}/getMenu`);
-			writeMenuCache.then(msg => console.log(msg));
+			// let writeMenuCachePromise = require(`${__dirname}/getMenu`);
+			// writeMenuCachePromise.then(()=>{console.log('update menus.json for view')});
 
 			break;
 		case 'batchFix':
@@ -183,7 +183,7 @@ app.get('/', function(req, res){
 					resolve(slackMsg);
 				});
 			}
-			
+
 			break;
 		case 'view':
 			resPromise = slackMsgView(userTextArr);
@@ -198,8 +198,9 @@ app.get('/', function(req, res){
 				.then(msg => console.log(msg))
 				.catch(err => console.log(err));
 
-			let writeMenuCache = require(`${__dirname}/getMenu`);
-			writeMenuCache.then(msg => console.log(msg));
+			// let writeMenuCachePromiseX = require(`${__dirname}/getMenu`);
+			// writeMenuCachePromiseX.then(()=>{console.log('update menus.json for view')});
+
 
 			break;
 		case 'name':
@@ -697,9 +698,9 @@ function updateOrder(userTextArr){
 			let cell = buildCell(menu, preOrderDish);
 
 			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
-			updatePromise
-				.then(msg => console.log(msg))
-				.catch(err => console.log(err));
+			// updatePromise
+			// 	.then(msg => console.log(msg))
+			// 	.catch(err => console.log(err));
 
 			preOrderDishPromises.push(updatePromise);
 		});

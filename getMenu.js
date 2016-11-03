@@ -41,10 +41,6 @@ let getDatesMenuPromise = checknBUIPromise.then(isOutOfDate => {
 		// Open 'nuiBayUtItId', get menu on each day of week
 		// Append back into 'lunchMoneyId'
 
-		/**
-		 * Step 1: Open 'lunchMoneyId', get out users
-		 * @type {[type]}
-		 */
 		let globalAuth;
 
 		let promise = oauth2Promise
@@ -172,9 +168,9 @@ let getDatesMenuPromise = checknBUIPromise.then(isOutOfDate => {
 					}
 				});
 
-				let dateMenusPromise = new Promise(resolve => resolve(dateMenus));
-
 				console.log('Parse dateMenus success, dateMenus.length: ', dateMenus.length);
+
+				let dateMenusPromise = new Promise(resolve => resolve(dateMenus));
 
 				return dateMenusPromise;
 			});
