@@ -818,6 +818,7 @@ function slackMsgDelete(userTextArr){
 		attachments: [
 			{
 				title: 'Delete order',
+				title_link: 'https://tinker.press',
 				fields: [
 					{
 						value: `I'm deleting your order`,
