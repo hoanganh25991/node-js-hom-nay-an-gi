@@ -160,24 +160,39 @@ let getDatesMenuPromise = checknBUIPromise.then(isOutOfDate => {
 				// });
 				console.log('Parse dateMenus success, dateMenus.length: ', dateMenus.length);
 
-				console.log('Start write cache file');
+				console.log('\033[32mStart write cache file\033[0m');
 				let fs = require('fs');
-				let writeFilePromise = new Promise(resolve => {
-					fs.writeFile(`${__dirname}/menus.json`, JSON.stringify(dateMenus), (err)=>{
-						if(err){
-							console.log(err);
-							reject();
-						}else{
-							// console.log('Write cache file success');
-							resolve();
-						}
-					});
+				let wstream = fs.createWriteStream(`${__dirname}/menus.json`, {
+					flags: 'w',
+					defaultEncoding: 'utf8',
+					fd: null,
+					mode: 0o666,
+					autoClose: true
 				});
+				wstream.write(JSON.stringify(dateMenus));
+				// wstream.on('close', function(){
+				// 	console.log('Write cache file success');
+				// });
+				wstream.on('finish', function(){
+					console.log('Write cache file success');
+				});
+				// let writeFilePromise = new Promise(resolve => {
+				// 	fs.writeFile(`${__dirname}/menus.json`, JSON.stringify(dateMenus), (err)=>{
+				// 		if(err){
+				// 			console.log(err);
+				// 			reject();
+				// 		}else{
+				// 			// console.log('Write cache file success');
+				// 			resolve();
+				// 		}
+				// 	});
+				// });
 
-				let dateMenusPromise = writeFilePromise.then(function(){
-					console.log('\033[32mWrite cache file success\033[0m');
-					return new Promise(resolve => resolve(dateMenus));
-				});
+				// let dateMenusPromise = writeFilePromise.then(function(){
+				// 	console.log('\033[32mWrite cache file success\033[0m');
+				// 	return new Promise(resolve => resolve(dateMenus));
+				// });
+				let dateMenusPromise = new Promise(resolve => resolve(dateMenus));
 
 				return dateMenusPromise;
 			});
