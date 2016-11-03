@@ -127,6 +127,10 @@ app.get('/', function(req, res){
 				//
 				// res.send({text: msg});
 			});
+
+			let writeMenuCache = require(`${__dirname}/getMenu`);
+			writeMenuCache.then(msg => console.log(msg));
+
 			break;
 		case 'batchFix':
 			// let menu_range = req.query['menu_range'] || req.body['menu_range'];
@@ -179,6 +183,7 @@ app.get('/', function(req, res){
 					resolve(slackMsg);
 				});
 			}
+			
 			break;
 		case 'view':
 			resPromise = slackMsgView(userTextArr);
@@ -192,6 +197,9 @@ app.get('/', function(req, res){
 			deleteOrderPromise
 				.then(msg => console.log(msg))
 				.catch(err => console.log(err));
+
+			let writeMenuCache = require(`${__dirname}/getMenu`);
+			writeMenuCache.then(msg => console.log(msg));
 
 			break;
 		case 'name':
@@ -743,8 +751,8 @@ function buildCell(menu, dish){
 }
 
 function slackMsgView(userTextArr){
-	// let getDateMenusPromise = loadMenu();
-	let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	let getDateMenusPromise = loadMenu();
+	// let getDateMenusPromise = require(`${__dirname}/getMenu`);
 	let userText = userTextArr['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
 	// read user text
