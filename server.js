@@ -700,6 +700,9 @@ function updateOrder(userTextArr){
 		});
 
 		// ONLY UPDATE NEW ONE after remove user from others
+		// Update cache with what we have
+		writeCacheFile(dateMenus);
+
 		return Promise.all(preOrderDishPromises).then(function (){
 			console.log('Remove user from others book success');
 
@@ -714,8 +717,7 @@ function updateOrder(userTextArr){
 				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
 				// updatePromise.then(msg => console.log(msg));
 
-				// Update cache with what we have
-				writeCacheFile(dateMenus);
+				
 
 				return updatePromise;
 			}
