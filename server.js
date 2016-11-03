@@ -184,6 +184,7 @@ app.get('/', function(req, res){
 			resPromise = slackMsgView(userTextArr);
 
 			break;
+		case 'cancel':
 		case 'delete':
 			resPromise = slackMsgDelete(userTextArr);
 			// Now update delete order int sheet
@@ -900,9 +901,74 @@ function deleteOrder(userTextArr){
 }
 
 function slackMsgName(userTextArr){
+	let userSheetNameInCache = userTextArr['sheet_name'];
+	// Parse out which name he want to ask
 	let userText = userTextArr['text'];
-	let userSheetName = userText.replace('name ', '');
+	userText = userText.replace(/\s+/g, ' ');
+	let userTextArrTmp = userText.split(' ');
+	userTextArrTmp.splice(0, 1);
+	// let userSheetName = userText.replace('name ', '');
+	let userSheetName = userTextArrTmp.join(' ');
 	userTextArr['sheet_name'] = userSheetName;
+	// userSheetName.includes(',')
+	/**
+	 * CASE YOUR JUST WANT TO REVIEW
+	 */
+	if(userSheetName == '' && userSheetNameInCache){
+		let slackMsg = {
+			text: `Hi @${userTextArr['user_name']}`,
+			attachments: [
+				{
+					title: 'Review name in google sheet',
+					fields: [
+						{
+							value: `You've set to`,
+							short: true
+						},
+						{
+							value: `${userSheetNameInCache}`,
+							short: true
+						}
+					],
+					color: '3AA3E3',
+					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+					footer_icon: 'https://tinker.press/favicon-64x64.png',
+					ts: Math.floor(new Date().getTime() / 1000)
+				}
+			]
+		}
+
+		return new Promise(resolve => resolve(slackMsg));
+	}
+
+
+	if(userSheetName == '' && !userSheetNameInCache){
+		let slackMsg = {
+			text: `Hi @${userTextArr['user_name']}`,
+			attachments: [
+				{
+					title: 'Set name',
+					fields: [
+						{
+							title: `You've set name for google sheet`,
+							value: `Please type /lunch name <your name>`,
+							short: true
+						},
+						{
+							value: `${userTextArr['sheet_name']}`,
+							short: true
+						}
+					],
+					color: 'danger',
+					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+					footer_icon: 'https://tinker.press/favicon-64x64.png',
+					ts: Math.floor(new Date().getTime() / 1000)
+				}
+			]
+		}
+
+		return new Promise(resolve => resolve(slackMsg));
+	}
 
 	let slackMsg = {
 		text: `Hi @${userTextArr['user_name']}`,
@@ -988,8 +1054,18 @@ function slackMsgHelp(userTextArr){
 						short: true
 					},
 					{
+						title: `Delete order`,
+						value: `Type /lunch delete|cancel`,
+						short: true
+					},
+					{
 						title: `Set name`,
 						value: `Type /lunch name [name in google sheet]`,
+						short: true
+					},
+					{
+						title: `View name`,
+						value: `Type /lunch name`,
 						short: true
 					},
 				],
