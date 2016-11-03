@@ -399,6 +399,33 @@ function slackMsgOrder(userTextArr){
 	
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		// let dayOfWeek = new Date().getDay() - 1;
+		if(!userTextArrTmp[1]){
+			return new Promise(resolve => {
+				let slackMsg = {
+					text: `Hi @${userTextArr['user_name']}`,
+					attachments:[
+						{
+							title: `Order error`,
+							fields: [
+								{
+									title: `Order command need [dish-num]`,
+									value: `Please type /lunch order [dish-num]`,
+									short: true
+								}
+							],
+							color: 'danger',
+							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+							footer_icon: 'https://tinker.press/favicon-64x64.png',
+							ts: Math.floor(new Date().getTime() / 1000)
+						}
+					]
+				}
+
+				resolve(slackMsg);
+			});
+		}
+
+
 		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
 		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
 
@@ -686,8 +713,12 @@ function slackMsgView(userTextArr){
 	let userTextArrTmp = userText.split(' ');
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
-		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
+		let isUserInputDay = false;
+		let userInputDay = '';
+		if(userTextArrTmp[1]){
+			userInputDay = userTextArrTmp[1].toLocaleLowerCase();
+			isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
+		}
 
 		let day = new Date().getDate();
 		if(isUserInputDay){
@@ -719,7 +750,7 @@ function slackMsgView(userTextArr){
 			text: `Hi @${userTextArr['user_name']}`,
 			attachments: [
 				{
-					title: `Review Order ${menu.date}`,
+					title: `Review order on ${menu.date}`,
 					fields: [
 						{
 							value: `${orderedDish}`,
