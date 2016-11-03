@@ -887,7 +887,7 @@ function slackMsgName(userTextArr){
 						short: true
 					}
 				],
-				color: '#3AA3E3',
+				// color: '#3AA3E3',
 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
