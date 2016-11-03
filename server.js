@@ -269,8 +269,13 @@ function slackMsgMenu(userTextArr){
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		// let selectedDishIndex = userTextArr[1];
-		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
-		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
+		let isUserInputDay = false;
+		let userInputDay = '';
+		if(userTextArrTmp[1]){
+			userInputDay = userTextArrTmp[1].toLocaleLowerCase();
+			isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
+			// console.log('isUserInputDay', isUserInputDay);
+		}
 
 		let day = new Date().getDate();
 		if(isUserInputDay){
@@ -308,7 +313,7 @@ function slackMsgMenu(userTextArr){
 					attachments:[
 						{
 							title: `Order error`,
-							text: `Menu for day-${day} not exist`,
+							text: `Menu on ${day} not exist`,
 							color: 'danger',
 							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 							footer_icon: 'https://tinker.press/favicon-64x64.png',
@@ -339,10 +344,10 @@ function slackMsgMenu(userTextArr){
 		// let today = new Date();
 		let slackMsg = {
 			// text: `Hi, @${userTextArr['user_name']}, menu for ${userTextArr[1]}`,
-			text: `Hi, @${userTextArr['user_name']}, menu ${userTextArr[1]} ${new Date().toString().substr(0,10)}`,
+			text: `Hi, @${userTextArr['user_name']}`,
 			attachments: [
 				{
-					title: 'Quan Chanh Cam Tuyet',
+					title: `Menu on ${menu.date}`,
 					title_link: 'https://tinker.press/good-food-good-life.jpg',
 					fields: dishesV2,
 					color: '#3AA3E3',
@@ -433,7 +438,7 @@ function slackMsgOrder(userTextArr){
 					attachments:[
 						{
 							title: `Order error`,
-							text: `Menu for day-${day} not exist`,
+							text: `Menu on ${day} not exist`,
 							color: 'danger',
 							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 							footer_icon: 'https://tinker.press/favicon-64x64.png',
