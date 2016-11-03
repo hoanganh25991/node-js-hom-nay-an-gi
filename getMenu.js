@@ -158,19 +158,26 @@ let getDatesMenuPromise = checknBUIPromise.then(isOutOfDate => {
 				// let dateMenusPromise = new Promise((resolve, reject) => {
 				// 	resolve(dateMenus);
 				// });
-				console.log('Write cache menu');
-				let fs = require('fs');
-				fs.writeFile(`${__dirname}/menus.json`, JSON.stringify(dateMenus), (err)=>{
-					if(err){
-						console.log(err);
-					}else{
-						console.log('Write cache file success');
-					}
-				});
-
 				console.log('Parse dateMenus success, dateMenus.length: ', dateMenus.length);
 
-				let dateMenusPromise = new Promise(resolve => resolve(dateMenus));
+				console.log('Start write cache file');
+				let fs = require('fs');
+				let writeFilePromise = new Promise(resolve => {
+					fs.writeFile(`${__dirname}/menus.json`, JSON.stringify(dateMenus), (err)=>{
+						if(err){
+							console.log(err);
+							reject();
+						}else{
+							// console.log('Write cache file success');
+							resolve();
+						}
+					});
+				});
+
+				let dateMenusPromise = writeFilePromise.then(function(){
+					console.log('\033[32mWrite cache file success\033[0m');
+					return new Promise(resolve => resolve(dateMenus));
+				});
 
 				return dateMenusPromise;
 			});

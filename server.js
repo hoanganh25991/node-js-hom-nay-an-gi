@@ -118,15 +118,7 @@ app.get('/', function(req, res){
 			// get updated info
 			// batchUpdate
 			let updatePromise = updateOrder(userTextArr);
-			updatePromise.then(msg => {
-				// TRY TO BUILD MUTIPLE RES for slack-cmd
-				// console.log(userTextArr['response_url']);
-				console.log(msg);
-				// if(typeof msg != 'strig')
-				// 	msg = JSON.stringify(msg);
-				//
-				// res.send({text: msg});
-			});
+			updatePromise.then(()=>{console.log('update order success')});
 
 			// let writeMenuCachePromise = require(`${__dirname}/getMenu`);
 			// writeMenuCachePromise.then(()=>{console.log('update menus.json for view')});
