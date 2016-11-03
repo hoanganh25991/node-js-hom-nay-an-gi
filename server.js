@@ -39,6 +39,7 @@ app.get('/', function(req, res){
 	// let responseUrl = req.param('response_url');
 	// read user text
 	let userTextArr = userText.split(' ');
+	userTextArr['text'] = userText;
 	// if(!acceptedUserCommand.includes(userTextArr[0])){
 	// 	userTextArr = ['menu', 'today'];
 	// }
@@ -46,11 +47,33 @@ app.get('/', function(req, res){
 	userTextArr['user_name'] = userName;
 	let mapName = require(`${__dirname}/lib/mapName`);
 	let userNameInSheet = mapName[userTextArr['user_name']];
-	if(!userNameInSheet)
-		userNameInSheet = userTextArr['user_name'];
+	if(!userNameInSheet){
+		// userNameInSheet = userTextArr['user_name'];
+		let slackMsg = {
+			text: `Hi @${userTextArr['user_name']}\nYou've ask \`${userText}\``,
+			attachments: [
+				{
+					title: 'Sorry for this inconvenience.\n Please set name first',
+					title_link: 'https://tinker.press',
+					fields: [
+						{
+							value: `Type /lunch name <name in google sheet>`,
+							short: true
+						}
+					],
+					color: '#3AA3E3',
+					footer_icon: 'https://tinker.press/favicon-64x64.png',
+					ts: Math.floor(new Date().getTime() / 1000)
+				}
+			]
+		};
+
+		res.send(slackMsg);
+		return;
+	}
+
 	// ReAdd back to userTextArr
 	userTextArr['sheet_name'] = userNameInSheet;
-	userTextArr['text'] = userText;
 	// userTextArr['response_url'] = responseUrl;
 	console.log(userTextArr);
 	// Build up default response
