@@ -33,15 +33,15 @@ app.get('/', function(req, res){
 	// Contain any useful info from user
 	// let userName = req.param('user_name');
 	let userName = req.query['user_name'];
-	const acceptedUserCommand = ['menu', 'order', 'batchFix', 'view', 'delete'];
+	// const acceptedUserCommand = ['menu', 'order', 'batchFix', 'view', 'delete'];
 	// let userText = req.param('text').replace(/\s+/g, ' ');
 	let userText = req.query['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
 	// read user text
 	let userTextArr = userText.split(' ');
-	if(!acceptedUserCommand.includes(userTextArr[0])){
-		userTextArr = ['menu', 'today'];
-	}
+	// if(!acceptedUserCommand.includes(userTextArr[0])){
+	// 	userTextArr = ['menu', 'today'];
+	// }
 	// store user name
 	userTextArr['user_name'] = userName;
 	let mapName = require(`${__dirname}/lib/mapName`);
@@ -54,7 +54,7 @@ app.get('/', function(req, res){
 	// userTextArr['response_url'] = responseUrl;
 	console.log(userTextArr);
 	// Build up default response
-	let response = {text: 'i hear you'};
+	let response = {text: 'I hear you\nPlease type /lunch help, to review commands'};
 	let resPromise;
 	// Switch case on user command
 	switch(userTextArr[0]){
@@ -137,6 +137,8 @@ app.get('/', function(req, res){
 			break;
 		case 'view':
 			resPromise = slackMsgView(userTextArr);
+
+			break;
 		case 'delete':
 			resPromise = slackMsgDelete(userTextArr);
 			// Now update delete order int sheet
@@ -144,6 +146,12 @@ app.get('/', function(req, res){
 			deleteOrderPromise
 				.then(msg => console.log(msg))
 				.catch(err => console.log(err));
+
+			break;
+		default:
+			resPromise = new Promise(resolve => resolve(response));
+
+			break;
 	}
 
 	resPromise.then(slackMsg => {
@@ -558,10 +566,33 @@ function buildCell(menu, dish){
 
 function slackMsgView(userTextArr){
 	let getDateMenusPromise = loadMenu();
+	// let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	let userText = userTextArr['text'].replace(/\s+/g, ' ');
+	// let responseUrl = req.param('response_url');
+	// read user text
+	let userTextArrTmp = userText.split(' ');
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		let dayOfWeek = new Date().getDay() - 1;
-		let menu = menus[dayOfWeek];
+		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
+		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
+
+		let day = new Date().getDate();
+		if(isUserInputDay){
+			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
+			// let dayOfWeek = 5;
+			let dd = new Date();
+			let dayx = dd.getDay();
+			let	diff = dd.getDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
+
+			day = new Date(dd.setDate(diff)).getDate();
+		}
+
+		// let menu = menus[dayOfWeek];
+		// Better check menu by reading out
+		let menu = menus.filter(menu =>{
+			let menuDate = new Date(menu.date);
+			return (day == menuDate.getDate());
+		})[0];
 
 		let orderedDish = 'You haven\'t order dish'
 		menu.dishes.forEach(dish => {
@@ -575,7 +606,7 @@ function slackMsgView(userTextArr){
 			text: `Hi @${userTextArr['user_name']}`,
 			attachments: [
 				{
-					title: 'Review Order',
+					title: `Review Order ${menu.date}`,
 					fields: [
 						{
 							value: `${orderedDish}`,
