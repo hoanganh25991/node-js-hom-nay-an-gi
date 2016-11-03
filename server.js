@@ -47,7 +47,9 @@ app.get('/', function(req, res){
 	userTextArr['user_name'] = userName;
 	let mapName = require(`${__dirname}/lib/mapName`);
 	let userNameInSheet = mapName[userTextArr['user_name']];
-	if(!userNameInSheet && (userTextArr[0] != 'name' || userTextArr[0] != 'menu')){
+	// Unaccepted command to move on without userNameInSheet
+	let cmdNotAllowWithoutUserNameInSheet = ['order', 'view', 'delete'];
+	if(!userNameInSheet && !cmdNotAllowWithoutUserNameInSheet.includes(userTextArr[0])){
 		// userNameInSheet = userTextArr['user_name'];
 		let slackMsg = {
 			text: `Hi @${userTextArr['user_name']}\nYou've ask for: \`${userText}\``,
