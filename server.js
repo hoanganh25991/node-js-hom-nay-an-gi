@@ -49,7 +49,7 @@ app.get('/', function(req, res){
 	let userNameInSheet = mapName[userTextArr['user_name']];
 	// Unaccepted command to move on without userNameInSheet
 	let cmdNotAllowWithoutUserNameInSheet = ['order', 'view', 'delete'];
-	if(!userNameInSheet || !cmdNotAllowWithoutUserNameInSheet.includes(userTextArr[0])){
+	if(!userNameInSheet && cmdNotAllowWithoutUserNameInSheet.includes(userTextArr[0])){
 		// userNameInSheet = userTextArr['user_name'];
 		let slackMsg = {
 			text: `Hi @${userTextArr['user_name']}\nYou've ask for: \`${userText}\``,
