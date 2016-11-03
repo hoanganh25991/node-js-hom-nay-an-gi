@@ -47,7 +47,7 @@ app.get('/', function(req, res){
 	userTextArr['user_name'] = userName;
 	let mapName = require(`${__dirname}/lib/mapName`);
 	let userNameInSheet = mapName[userTextArr['user_name']];
-	if(!userNameInSheet){
+	if(!userNameInSheet && userTextArr[0] != 'name'){
 		// userNameInSheet = userTextArr['user_name'];
 		let slackMsg = {
 			text: `Hi @${userTextArr['user_name']}\nYou've ask \`${userText}\``,
@@ -169,6 +169,13 @@ app.get('/', function(req, res){
 			deleteOrderPromise
 				.then(msg => console.log(msg))
 				.catch(err => console.log(err));
+
+			break;
+		case 'name':
+			resPromise = slackMsgName(userTextArr);
+			let storeNamePromise = storeName(userTextArr);
+			storeNamePromise
+				.then(msg => console.log(msg));
 
 			break;
 		default:
@@ -742,4 +749,58 @@ function deleteOrder(userTextArr){
 	});
 
 	return updatePromise;
+}
+
+function slackMsgName(userTextArr){
+	let userText = userTextArr['text'];
+	let userSheetName = userText.replace('name ', '');
+	userTextArr['sheet_name'] = userSheetName;
+
+	let slackMsg = {
+		text: `Hi @${userTextArr['user_name']}`,
+		attachments: [
+			{
+				title: 'Set name',
+				text: 'Thank you',
+				fields: [
+					{
+						value: `Your name in google sheet`,
+						short: true
+					},
+					{
+						value: `${userTextArr['sheet_name']}`,
+						short: true
+					}
+				],
+				color: '#3AA3E3',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	}
+
+	return new Promise(resolve => resolve(slackMsg));
+}
+
+function storeName(userTextArr){
+	let userText = userTextArr['text'];
+	let userSheetName = userText.replace('name ', '');
+	userTextArr['sheet_name'] = userSheetName;
+
+	let mapName = require(`${__dirname}/lib/mapName`);
+	mapName[userTextArr['user_name']] = userTextArr['sheet_name'];
+
+	let fs = require('fs');
+
+	let promise = new Promise(resolve => {
+		fs.writeFile(`${__dirname}/lib/mapSlacknameUsername.json`, JSON.stringify(mapName), function(err){
+			if(err){
+				resolve(err);
+			}
+
+			resolve('Write mapSlacknameUsername.json success');
+		});
+	});
+
+	return promise;
 }
