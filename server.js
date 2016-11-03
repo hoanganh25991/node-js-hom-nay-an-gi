@@ -334,6 +334,7 @@ function slackMsgMenu(userTextArr){
 					attachments:[
 						{
 							title: `Order error`,
+							title_link: `https://tinker.press`,
 							text: `Menu on ${day} not exist`,
 							color: 'danger',
 							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
@@ -389,6 +390,7 @@ function slackMsgMenu(userTextArr){
 				attachments: [
 					{
 						title: 'For admin',
+						title_link: 'https://tinker.press',
 						fields: [
 							{
 								value: 'Type /lunch batchFix <menu range>, to update menu',
@@ -427,6 +429,7 @@ function slackMsgOrder(userTextArr){
 					attachments:[
 						{
 							title: `Order error`,
+							title_link: `https://tinker.press`,
 							fields: [
 								{
 									title: `Order command need [dish-num]`,
@@ -485,7 +488,8 @@ function slackMsgOrder(userTextArr){
 					text: `Hi @${userTextArr['user_name']}`,
 					attachments:[
 						{
-							title: `Order error`,
+							title: `Menu error`,
+							title_link: `https://tinker.press`,
 							text: `Menu on ${day} not exist`,
 							color: 'danger',
 							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
@@ -922,6 +926,7 @@ function slackMsgName(userTextArr){
 			attachments: [
 				{
 					title: 'Review name in google sheet',
+					title_link: 'https://tinker.press',
 					fields: [
 						{
 							value: `You've set to`,
@@ -950,6 +955,7 @@ function slackMsgName(userTextArr){
 			attachments: [
 				{
 					title: 'Set name',
+					title_link: 'https://tinker.press',
 					fields: [
 						{
 							title: `To set name for google sheet`,
@@ -977,10 +983,10 @@ function slackMsgName(userTextArr){
 		attachments: [
 			{
 				title: 'Set name',
-				text: 'Thank you',
+				title_link: 'https://tinker.press',
 				fields: [
 					{
-						value: `Your name in google sheet`,
+						value: `Thank you, your name in google sheet`,
 						short: true
 					},
 					{
