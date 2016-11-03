@@ -50,6 +50,7 @@ app.get('/', function(req, res){
 		userNameInSheet = userTextArr['user_name'];
 	// ReAdd back to userTextArr
 	userTextArr['sheet_name'] = userNameInSheet;
+	userTextArr['text'] = userText;
 	// userTextArr['response_url'] = responseUrl;
 	console.log(userTextArr);
 	// Build up default response
@@ -407,23 +408,62 @@ function slackMsgOrder(userTextArr){
 
 function updateOrder(userTextArr){
 	let getDateMenusPromise = require(`${__dirname}/getMenu`);
-	let updatePromise = getDateMenusPromise.then(dateMenus => {
-		let selectedDishIndex = userTextArr[1];
-		// console.log(userTextArr);
 
-		// let dayOfWeek = new Date().getDay() - 1;
-		// let menu = dateMenus[dayOfWeek];
-		// let dayOfWeek = new Date().getDay() - 1;
+	let userText = userTextArr['text'].replace(/\s+/g, ' ');
+	// let responseUrl = req.param('response_url');
+	// read user text
+	let userTextArrTmp = userText.split(' ');
+	// store user name
+	// userTextArr['user_name'] = userName;
+	let updatePromise = getDateMenusPromise.then(dateMenus => {
+		// let selectedDishIndex = userTextArr[1];
+		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
+		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
+
 		let day = new Date().getDate();
+		if(isUserInputDay){
+			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
+			// let dayOfWeek = 5;
+			let dd = new Date();
+			let dayx = dd.getDay();
+			let	diff = dd.getDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
+
+			day = new Date(dd.setDate(diff)).getDate();
+		}
+
 		// let menu = menus[dayOfWeek];
 		// Better check menu by reading out
 		let menu = dateMenus.filter(menu =>{
 			let menuDate = new Date(menu.date);
 			return (day == menuDate.getDate());
 		})[0];
+		// console.log(userTextArr);
+
+		// let dayOfWeek = new Date().getDay() - 1;
+		// let menu = dateMenus[dayOfWeek];
+		// let dayOfWeek = new Date().getDay() - 1;
+		// let day = new Date().getDate();
+		// // let menu = menus[dayOfWeek];
+		// // Better check menu by reading out
+		// let menu = dateMenus.filter(menu =>{
+		// 	let menuDate = new Date(menu.date);
+		// 	return (day == menuDate.getDate());
+		// })[0];
 		if(!menu){
 			return new Promise(resolve => resolve('No menu'));
 		}
+
+		// LOGIC ON CASE order mon 19
+		let dishIndex = parseInt(userTextArrTmp[1], 10);
+		if(isUserInputDay){
+			dishIndex = parseInt(userTextArrTmp[2], 10);
+		}
+
+		if(isNaN(dishIndex)){
+			dishIndex = 0;
+		}
+		// Update back into userTextArr
+		let selectedDishIndex = dishIndex;
 
 		let dish = menu.dishes[selectedDishIndex];
 		if(!dish){
