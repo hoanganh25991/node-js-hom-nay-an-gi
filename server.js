@@ -930,55 +930,37 @@ function slackMsgHelp(userTextArr){
 				title_link: 'https://tinker.press',
 				fields: [
 					{
-						value: `Menu today`,
-						short: true
-					},
-					{
+						title: `Menu today`,
 						value: `Type /lunch menu`,
 						short: true
 					},
 					{
-						value: `Menu on [day]`,
-						short: true
-					},
-					{
+						title: `Menu on [day]`,
 						value: `Type /lunch menu [mon|tue|..]`,
 						short: true
 					},
 					{
-						value: `Order dish`,
-						short: true
-					},
-					{
+						title: `Order dish`,
 						value: `Type /lunch order [dish num]\n[dish num] based on dish's order in menu`,
 						short: true
 					},
 					{
-						value: `Order dish on [day]`,
-						short: true
-					},
-					{
+						title: `Order dish on [day]`,
 						value: `Type /lunch order [mon|tue..] [dish num]`,
 						short: true
 					},
 					{
-						value: `Review order`,
-						short: true
-					},
-					{
+						title: `Review order`,
 						value: `Type /lunch view [mon|tue..]`,
 						short: true
 					},
 					{
-						value: `Set name`,
-						short: true
-					},
-					{
+						title: `Set name`,
 						value: `Type /lunch name [your name in google sheet]`,
 						short: true
-					}
+					},
 				],
-				color: '#3AA3E3',
+				// color: '#3AA3E3',
 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
