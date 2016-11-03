@@ -1,3 +1,35 @@
+// const buildReportCycle = 10*60000;
+const buildReportCycle = 10*60000;
+let buildReport = require(`${__dirname}/updateToLunchMoney.js`);
+function cb(){
+	buildReport();
+	let today = new Date();
+	let content = `${today.toString().substr(0,10)} - report built\n`;
+	let fs = require('fs');
+	fs.writeFile('buildReport.log', content, {flag: 'a'}, function(err){
+		if(err){
+			console.log(err);
+		}else{
+			console.log(`Build report success`);
+		}
+	});
+}
+
+cb();
+setInterval(function(){
+	buildReport();
+	let today = new Date();
+	let content = `${today.toString().substr(0,10)} - reported built\n`;
+	let fs = require('fs');
+	fs.writeFile('buildReport.log', content, {flag: 'a'}, function(err){
+		if(err){
+			console.log(err);
+		}else{
+			console.log(`build report success`);
+		}
+	});
+}, buildReportCycle);
+
 let bodyParser = require('body-parser');
 let app = require('express')();
 const dayOfWeekConvert = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];

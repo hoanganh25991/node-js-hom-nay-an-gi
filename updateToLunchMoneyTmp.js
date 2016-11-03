@@ -1,4 +1,3 @@
-let buildReport = function(){
 	let oauth2Promise = require(`${__dirname}/oauth2Client`)();
 	let google = require('googleapis');
 	// let natural = require('natural');
@@ -15,7 +14,8 @@ let buildReport = function(){
 	let mtime = lunchMoneyConfigStat.mtime;
 
 	let _ = require(`${__dirname}/lib/util`);
-	updateConfig = _.getWeekNumber(today) == _.getWeekNumber(new Date(mtime));
+	updateConfig = _.getWeekNumber(today) > _.getWeekNumber(new Date(mtime));
+	// updateConfig = (_.getWeekNumber(today) + 1) > _.getWeekNumber(new Date(mtime));
 
 	// check this config mtime
 	// if older than this week
@@ -139,13 +139,17 @@ let buildReport = function(){
 			let rowNum = parseInt(rowNumStr);
 			rowNum += lunchMoneyConfig['lastUpdatedRowsNum'];
 
-			let newStartCell = startCell;
+			// let newStartCell = startCell;
+			// if(updateConfig){
+			// 	newStartCell = colName + rowNum;
+			// }
 			if(updateConfig){
-				newStartCell = colName + rowNum;
+				startCell = colName + rowNum;
+				lunchMoneyConfig['startCell'] = startCell;
 			}
 
-			console.log('updateConfig', 'newStartCell', "lunchMoneyConfig['lastUpdatedRowsNum']");
-			console.log(updateConfig, newStartCell, lunchMoneyConfig['lastUpdatedRowsNum']);
+			console.log('updateConfig', 'startCell', "lunchMoneyConfig['lastUpdatedRowsNum']");
+			console.log(updateConfig, startCell, lunchMoneyConfig['lastUpdatedRowsNum']);
 
 			let updateLunchMoney = new Promise((resolve, reject) => {
 				sheets.spreadsheets.values.append({
@@ -153,7 +157,7 @@ let buildReport = function(){
 					spreadsheetId: lunchMoneyId,
 					valueInputOption: 'USER_ENTERED',
 					// range: '2016!A277:A277',
-					range: `${lunchMoneyConfig['sheet_name']}!${newStartCell}`,
+					range: `${lunchMoneyConfig['sheet_name']}!${lunchMoneyConfig['startCell']}`,
 					resource: {
 						values: records,
 						majorDimension: 'ROWS'
@@ -175,14 +179,18 @@ let buildReport = function(){
 			// After update success
 			// Next time move on
 			lunchMoneyConfig.lastUpdatedRowsNum = updatedRowsNum;
+			console.log('lunchMoneyConfig');
+			console.log(lunchMoneyConfig);
+			
 			let fs = require('fs');
-			let wstream = fs.fs.createWriteStream(`${__dirname}/lunchMoneyConfig.json`);
+			let wstream = fs.createWriteStream(`${__dirname}/lib/lunchMoneyConfig.json`);
 			wstream.on('open', function(){
 				wstream.write(JSON.stringify(lunchMoneyConfig));
 				wstream.end(function(){
 					console.log('\033[32mWriteStream on lunchMoneyConfig.json success');
 				});
 			});
+			// fs.writeFileSync(`${__dirname}/lib/lunchMoneyConfig.json`, JSON.stringify(lunchMoneyConfig));
 
 			let updateGlobalUsers = new Promise((resolve, reject) => {
 				sheets.spreadsheets.values.batchUpdate({
@@ -213,6 +221,3 @@ let buildReport = function(){
 		.catch(err => {
 			console.log(err)
 		});
-}
-
-module.exports = buildReport;
