@@ -140,7 +140,7 @@ app.get('/', function(req, res){
 				resPromise = new Promise((resolve, reject) => {
 					let fs = require('fs');
 
-					fs.writeFile(`${__dirname}/lib/nuiBayUtItConfig.json`, 'w', function(err){
+					fs.writeFile(`${__dirname}/lib/nuiBayUtItConfig.json`, JSON.stringify(nBUIConfig), function(err){
 						if(err){
 							console.log('Write nuiBayUtItConfig.json failed');
 							reject('Write nuiBayUtItConfig.json failed');
