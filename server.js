@@ -743,8 +743,8 @@ function buildCell(menu, dish){
 }
 
 function slackMsgView(userTextArr){
-	let getDateMenusPromise = loadMenu();
-	// let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	// let getDateMenusPromise = loadMenu();
+	let getDateMenusPromise = require(`${__dirname}/getMenu`);
 	let userText = userTextArr['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
 	// read user text
@@ -777,7 +777,7 @@ function slackMsgView(userTextArr){
 		})[0];
 		// console.log(menu.date);
 		// console.log(userTextArr['sheet_name']);
-
+		// console.log(userTextArr['sheet_name']);
 		let orderedDish = 'You haven\'t order dish'
 		menu.dishes.forEach(dish => {
 			dish.users.forEach(userName => {
