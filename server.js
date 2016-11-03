@@ -62,6 +62,7 @@ app.get('/', function(req, res){
 						}
 					],
 					color: '#3AA3E3',
+					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 					footer_icon: 'https://tinker.press/favicon-64x64.png',
 					ts: Math.floor(new Date().getTime() / 1000)
 				}
@@ -148,6 +149,7 @@ app.get('/', function(req, res){
 									}
 								],
 								color: '#3AA3E3',
+								footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 								footer_icon: 'https://tinker.press/favicon-64x64.png',
 								ts: Math.floor(new Date().getTime() / 1000)
 							}
@@ -176,6 +178,10 @@ app.get('/', function(req, res){
 			let storeNamePromise = storeName(userTextArr);
 			storeNamePromise
 				.then(msg => console.log(msg));
+
+			break;
+		case 'help':
+			resPromise = slackMsgHelp(userTextArr);
 
 			break;
 		default:
@@ -285,7 +291,7 @@ function slackMsgMenu(userTextArr){
 					title_link: 'https://tinker.press/good-food-good-life.jpg',
 					fields: dishesV2,
 					color: '#3AA3E3',
-					footer: 'Type `/lunch order [num]` to order',
+					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 					footer_icon: 'https://tinker.press/favicon-64x64.png',
 					ts: Math.floor(new Date().getTime() / 1000)
 				}
@@ -307,6 +313,7 @@ function slackMsgMenu(userTextArr){
 								value: 'Type /lunch batchFix <menu range>, to update menu',
 								short: true,
 								color: 'danger',
+								footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 								footer_icon: 'https://tinker.press/favicon-64x64.png',
 								ts: Math.floor(new Date().getTime() / 1000)
 							}
@@ -357,7 +364,7 @@ function slackMsgOrder(userTextArr){
 							title: `Order error`,
 							text: `Menu for today not exist`,
 							color: 'danger',
-							footer: 'Type /lunch menu <day>, to view menu\nChúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 							footer_icon: 'https://tinker.press/favicon-64x64.png',
 							ts: Math.floor(new Date().getTime() / 1000)
 						}
@@ -387,9 +394,9 @@ function slackMsgOrder(userTextArr){
 					text: `Order error`,
 					attachments: [
 						{
-							text: `You have order dish [${dishIndex}], which not exist`,
+							text: `You've orderd dish [${dishIndex}], which not exist`,
 							color: 'danger',
-							footer: 'ReType `/lunch order [num]` to reorder\nChúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 							footer_icon: 'https://tinker.press/favicon-64x64.png',
 							ts: Math.floor(new Date().getTime() / 1000)
 						}
@@ -431,7 +438,7 @@ function slackMsgOrder(userTextArr){
 						}
 					],
 					color: '#3AA3E3',
-					footer: 'ReType `/lunch order [num]` to reorder\nChúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 					footer_icon: 'https://tinker.press/favicon-64x64.png',
 					ts: Math.floor(new Date().getTime() / 1000)
 				}
@@ -642,7 +649,8 @@ function slackMsgView(userTextArr){
 							value: `${orderedDish}`,
 							short: true,
 							color: '#3AA3E3',
-							footer: 'Type /lunch order [dish num], to order',
+							// footer: 'Type /lunch order [dish num], to order',
+							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 							footer_icon: 'https://tinker.press/favicon-64x64.png',
 							ts: Math.floor(new Date().getTime() / 1000)
 						}
@@ -773,6 +781,7 @@ function slackMsgName(userTextArr){
 					}
 				],
 				color: '#3AA3E3',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
 			}
@@ -803,4 +812,72 @@ function storeName(userTextArr){
 	});
 
 	return promise;
+}
+
+function slackMsgHelp(userTextArr){
+	let slackMsg = {
+		text: `Hi @${userTextArr['user_name']}`,
+		attachments: [
+			{
+				title: 'Lunch help',
+				title_link: 'https://tinker.press',
+				fields: [
+					{
+						value: `Menu today`,
+						short: true
+					},
+					{
+						value: `Type /lunch menu`,
+						short: true
+					},
+					{
+						value: `Menu on [day]`,
+						short: true
+					},
+					{
+						value: `Type /lunch menu [mon|tue|..]`,
+						short: true
+					},
+					{
+						value: `Order dish`,
+						short: true
+					},
+					{
+						value: `Type /lunch order [dish num]\n[dish num] based on dish's order in menu`,
+						short: true
+					},
+					{
+						value: `Order dish on [day]`,
+						short: true
+					},
+					{
+						value: `Type /lunch order [mon|tue..] [dish num]`,
+						short: true
+					},
+					{
+						value: `Review order`,
+						short: true
+					},
+					{
+						value: `Type /lunch view [mon|tue..]`,
+						short: true
+					},
+					{
+						value: `Set name`,
+						short: true
+					},
+					{
+						value: `Type /lunch name [your name in google sheet]`,
+						short: true
+					}
+				],
+				color: '#3AA3E3',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	};
+
+	return new Promise(resolve => resolve(slackMsg));
 }
