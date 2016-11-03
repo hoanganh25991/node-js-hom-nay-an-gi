@@ -771,6 +771,8 @@ function slackMsgView(userTextArr){
 			let menuDate = new Date(menu.date);
 			return (day == menuDate.getDate());
 		})[0];
+		// console.log(menu.date);
+		// console.log(userTextArr['sheet_name']);
 
 		let orderedDish = 'You haven\'t order dish'
 		menu.dishes.forEach(dish => {
