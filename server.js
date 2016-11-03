@@ -595,7 +595,7 @@ function slackMsgOrder(userTextArr){
 
 function updateOrder(userTextArr){
 	console.log('\033[32mStart updateOrder by getMenu\033[0m');
-	let getDateMenusPromise = require(`${__dirname}/getMenu`)();
+	let getDateMenusPromise = require(`${__dirname}/getMenu`)(false);
 
 	let userText = userTextArr['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
@@ -713,6 +713,9 @@ function updateOrder(userTextArr){
 				// console.log(`${__dirname}/updateOrderToSheet`);
 				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
 				// updatePromise.then(msg => console.log(msg));
+
+				// Update cache with what we have
+				writeCacheFile(dateMenus);
 
 				return updatePromise;
 			}
@@ -840,7 +843,7 @@ function slackMsgDelete(userTextArr){
 }
 
 function deleteOrder(userTextArr){
-	let getDateMenusPromise = require(`${__dirname}/getMenu`)();
+	let getDateMenusPromise = require(`${__dirname}/getMenu`)(false);
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 		// console.log(userTextArr);
 
@@ -903,6 +906,9 @@ function deleteOrder(userTextArr){
 		// ONLY UPDATE NEW ONE after remove user from others
 		return Promise.all(preOrderDishPromises).then(function (){
 			console.log('Remove user from others book success');
+
+			// update cache file
+			writeCacheFile(dateMenus);
 
 			return new Promise(resolve => resolve('Remove success'));
 		});
@@ -1103,4 +1109,18 @@ function slackMsgHelp(userTextArr){
 	};
 
 	return new Promise(resolve => resolve(slackMsg));
+}
+
+function writeCacheFile(dateMenus){
+	let fs = require('fs');
+	let wstream = fs.createWriteStream(`${__dirname}/menus.json`);
+	// wstream.write(JSON.stringify(dateMenus));
+	// fs.writeFileSync(require(`${__dirname}/menus.json`), JSON.stringify(dateMenus));
+	// console.log('\033[32mWrite cache file SYNC success\033[0m');
+	wstream.once('open', function(fd) {
+		wstream.write(JSON.stringify(dateMenus));
+		wstream.end(function(){
+			console.log('\033[32mWriteStream for cache file success\033[0m');
+		});
+	});
 }
