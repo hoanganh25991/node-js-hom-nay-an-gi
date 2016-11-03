@@ -952,7 +952,7 @@ function slackMsgName(userTextArr){
 					title: 'Set name',
 					fields: [
 						{
-							title: `You've set name for google sheet`,
+							title: `To set name for google sheet`,
 							value: `Please type /lunch name <your name>`,
 							short: true
 						},
@@ -1011,19 +1011,19 @@ function storeName(userTextArr){
 	userTextArr['sheet_name'] = userSheetName;
 
 	if(userSheetName == '' && userSheetNameInCache){
-		return Promise(resolve => resolve('User want to review name, no need to update'));
+		return new Promise(resolve => resolve('User want to review name, no need to update'));
 	}
 
 	if(userSheetName == '' && !userSheetNameInCache){
-		return Promise(resolve => resolve('User want to set name, but not submit name @@, no need to update'));
+		return new Promise(resolve => resolve('User want to set name, but not submit name @@, no need to update'));
 	}
 
 	let mapName = require(`${__dirname}/lib/mapName`);
 	mapName[userTextArr['user_name']] = userTextArr['sheet_name'];
 
-	let fs = require('fs');
+	return new Promise(resolve => {
+		let fs = require('fs');
 
-	let promise = new Promise(resolve => {
 		fs.writeFile(`${__dirname}/lib/mapSlacknameUsername.json`, JSON.stringify(mapName), function(err){
 			if(err){
 				resolve(err);
@@ -1032,8 +1032,6 @@ function storeName(userTextArr){
 			resolve('Write mapSlacknameUsername.json success');
 		});
 	});
-
-	return promise;
 }
 
 function slackMsgHelp(userTextArr){
