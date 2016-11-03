@@ -120,7 +120,7 @@ app.get('/', function(req, res){
 			let updatePromise = updateOrder(userTextArr);
 			updatePromise.then(()=>{console.log('Update order success')});
 
-			// let writeMenuCachePromise = require(`${__dirname}/getMenu`);
+			// let writeMenuCachePromise = require(`${__dirname}/getMenu`)();
 			// writeMenuCachePromise.then(()=>{console.log('update menus.json for view')});
 
 			break;
@@ -190,7 +190,7 @@ app.get('/', function(req, res){
 				.then(msg => console.log(msg))
 				.catch(err => console.log(err));
 
-			// let writeMenuCachePromiseX = require(`${__dirname}/getMenu`);
+			// let writeMenuCachePromiseX = require(`${__dirname}/getMenu`)();
 			// writeMenuCachePromiseX.then(()=>{console.log('update menus.json for view')});
 
 
@@ -218,7 +218,7 @@ app.get('/', function(req, res){
 });
 
 app.get('/menu', function(req, res){
-	let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	let getDateMenusPromise = require(`${__dirname}/getMenu`)();
 	getDateMenusPromise.then(dateMenus =>{
 		let menu = dateMenus.filter(dateMenu =>{
 			let date = new Date().getDate();
@@ -274,7 +274,7 @@ function loadMenu(){
 				resolve(JSON.parse(fs.readFileSync(`${__dirname}/menus.json`).toString()));
 			});
 		}else{
-			return require(`${__dirname}/getMenu`);
+			return require(`${__dirname}/getMenu`)();
 		}
 	});
 
@@ -595,7 +595,7 @@ function slackMsgOrder(userTextArr){
 
 function updateOrder(userTextArr){
 	console.log('\033[32mStart updateOrder by getMenu\033[0m');
-	let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	let getDateMenusPromise = require(`${__dirname}/getMenu`)();
 
 	let userText = userTextArr['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
@@ -747,7 +747,7 @@ function buildCell(menu, dish){
 
 function slackMsgView(userTextArr){
 	let getDateMenusPromise = loadMenu();
-	// let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	// let getDateMenusPromise = require(`${__dirname}/getMenu`)();
 	let userText = userTextArr['text'].replace(/\s+/g, ' ');
 	// let responseUrl = req.param('response_url');
 	// read user text
@@ -840,7 +840,7 @@ function slackMsgDelete(userTextArr){
 }
 
 function deleteOrder(userTextArr){
-	let getDateMenusPromise = require(`${__dirname}/getMenu`);
+	let getDateMenusPromise = require(`${__dirname}/getMenu`)();
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 		// console.log(userTextArr);
 

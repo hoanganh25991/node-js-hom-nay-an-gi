@@ -209,6 +209,8 @@ let buildPromise = function (){
 			return promise;
 		}
 	});
+
+	return getDatesMenuPromise;
 }
 
 // module.exports = getDatesMenuPromise;
