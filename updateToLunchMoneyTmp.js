@@ -127,9 +127,9 @@
 			updatedRowsNum = records.length;
 			// just empty rows for blank
 			records.push([]);
-			records.push([]);
-			records.push([]);
-			records.push([]);
+			records.push(['balance']);
+			// records.push([]);
+			// records.push([]);
 
 			let range = '';	
 			let startCell = lunchMoneyConfig['startCell'];
@@ -175,7 +175,7 @@
 		})
 		.then(res => {
 			console.log('Update to LunchMoney success');
-			// console.log(res);
+			console.log(res);
 			// After update success
 			// Next time move on
 			lunchMoneyConfig.lastUpdatedRowsNum = updatedRowsNum;
