@@ -716,9 +716,9 @@ function updateOrder(userTextArr){
 				dish.users.push(userTextArr['sheet_name']);
 				let cell = buildCell(menu, dish);
 
-				console.log(`${__dirname}/updateOrderToSheet`);
+				// console.log(`${__dirname}/updateOrderToSheet`);
 				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
-				updatePromise.then(msg => console.log(msg));
+				// updatePromise.then(msg => console.log(msg));
 
 				return updatePromise;
 			}
