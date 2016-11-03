@@ -4,3 +4,5 @@
 /.vscode
 /config.js
 /menus.json
+/lib/mapSlacknameUsername.json
+/lib/nuiBayUtItConfig.json
