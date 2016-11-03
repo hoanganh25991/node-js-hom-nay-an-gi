@@ -791,17 +791,18 @@ function slackMsgView(userTextArr){
 			attachments: [
 				{
 					title: `Review order on ${menu.date}`,
+					title_link: `https://tinker.press`,
 					fields: [
 						{
 							value: `${orderedDish}`,
-							short: true,
-							color: '#3AA3E3',
-							// footer: 'Type /lunch order [dish num], to order',
-							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-							footer_icon: 'https://tinker.press/favicon-64x64.png',
-							ts: Math.floor(new Date().getTime() / 1000)
+							short: true
 						}
-					]
+					],
+					// color: '#3AA3E3',
+					// footer: 'Type /lunch order [dish num], to order',
+					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+					footer_icon: 'https://tinker.press/favicon-64x64.png',
+					ts: Math.floor(new Date().getTime() / 1000)
 				}
 			]
 		};
