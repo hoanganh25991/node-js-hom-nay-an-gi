@@ -162,20 +162,28 @@ let getDatesMenuPromise = checknBUIPromise.then(isOutOfDate => {
 
 				console.log('\033[32mStart write cache file\033[0m');
 				let fs = require('fs');
-				let wstream = fs.createWriteStream(`${__dirname}/menus.json`, {
-					flags: 'w',
-					defaultEncoding: 'utf8',
-					fd: null,
-					mode: 0o666,
-					autoClose: true
-				});
-				wstream.write(JSON.stringify(dateMenus));
+				// let wstream = fs.createWriteStream(`${__dirname}/menus.json`, {
+				// 	flags: 'w',
+				// 	defaultEncoding: 'utf8',
+				// 	fd: null,
+				// 	mode: 0o666,
+				// 	autoClose: true
+				// });
+				// wstream.write(JSON.stringify(dateMenus));
+				fs.writeFileSync(require(`${__dirname}/menus.json`), JSON.stringify(dateMenus));
+				console.log('\033[32mWrite cache file SYNC success\033[0m');
 				// wstream.on('close', function(){
 				// 	console.log('Write cache file success');
 				// });
-				wstream.on('finish', function(){
-					console.log('Write cache file success');
-				});
+				// wstream.on('finish', function(){
+				// 	console.log('\033[32mWrite cache file success\033[0m');
+				// });
+				// wstream.on('drain', function(){
+				// 	console.log('\033[32mWrite stream DRAIN\033[0m');
+				// });
+				// wstream.end(function(){
+				// 	console.log('\033[32mWrite stream END\033[0m');
+				// });
 				// let writeFilePromise = new Promise(resolve => {
 				// 	fs.writeFile(`${__dirname}/menus.json`, JSON.stringify(dateMenus), (err)=>{
 				// 		if(err){
