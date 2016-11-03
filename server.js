@@ -80,7 +80,25 @@ app.get('/', function(req, res){
 	// userTextArr['response_url'] = responseUrl;
 	console.log(userTextArr);
 	// Build up default response
-	let response = {text: 'I hear you\nPlease type /lunch help, to review commands'};
+	let response = {
+		text: `Hi @${userTextArr['user_name']}`,
+		attachments: [
+			{
+				title: `Command not supported`,
+				title_link: `https://tinker.press`,
+				fields: [
+					{
+						title: 'I hear you',
+						value: `Please type /lunch help, to review commands`,
+						short: true
+					}
+				],
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	};
 	let resPromise;
 	// Switch case on user command
 	switch(userTextArr[0]){
