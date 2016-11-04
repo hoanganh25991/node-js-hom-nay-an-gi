@@ -511,40 +511,10 @@ function buildCell(menu, dish){
 
 function slackMsgView(userTextArr){
 	let getDateMenusPromise = loadMenu();
-	// let getDateMenusPromise = require(`${__dirname}/getMenu`)();
-	let userText = userTextArr['text'].replace(/\s+/g, ' ');
-	// let responseUrl = req.param('response_url');
-	// read user text
-	let userTextArrTmp = userText.split(' ');
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		let isUserInputDay = false;
-		let userInputDay = '';
-		if(userTextArrTmp[1]){
-			userInputDay = userTextArrTmp[1].toLocaleLowerCase();
-			isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
-		}
+		let  menu = whichMenu(userTextArr, menus);
 
-		let day = new Date().getUTCDate();
-		if(isUserInputDay){
-			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
-			// let dayOfWeek = 5;
-			let dd = new Date();
-			let dayx = dd.getDay();
-			let	diff = dd.getUTCDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
-
-			day = new Date(dd.setDate(diff)).getUTCDate();
-		}
-
-		// let menu = menus[dayOfWeek];
-		// Better check menu by reading out
-		let menu = menus.filter(menu =>{
-			let menuDate = new Date(menu.date);
-			return (day == menuDate.getUTCDate());
-		})[0];
-		// console.log(menu.date);
-		// console.log(userTextArr['sheet_name']);
-		// console.log(userTextArr['sheet_name']);
 		let orderedDish = 'You haven\'t order dish'
 		menu.dishes.forEach(dish => {
 			dish.users.forEach(userName => {
@@ -606,20 +576,10 @@ function slackMsgDelete(userTextArr){
 function deleteOrder(userTextArr){
 	let getDateMenusPromise = require(`${__dirname}/getMenu`)(false);
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
-		// console.log(userTextArr);
+		let menu = whichMenu(userTextArr, dateMenus);
 
-		// let dayOfWeek = new Date().getDay() - 1;
-		// let menu = dateMenus[dayOfWeek];
-		// let dayOfWeek = new Date().getDay() - 1;
-		let day = new Date().getUTCDate();
-		// let menu = menus[dayOfWeek];
-		// Better check menu by reading out
-		let menu = dateMenus.filter(menu =>{
-			let menuDate = new Date(menu.date);
-			return (day == menuDate.getUTCDate());
-		})[0];
 		if(!menu){
-			return new Promise(resolve => resolve('No menu'));
+			return new Promise(r => r('No menu found'));
 		}
 
 		/**
@@ -1114,7 +1074,7 @@ function whichMenuForOrder(userTextArr, menus){
 	}
 
 	// Check menuOnWhichDay is truthly not dish-num
-	if(!isNaN(parseInt(menuOnWhichDay, 10))){
+	if(isNaN(parseInt(menuOnWhichDay, 10))){
 		menuOnWhichDay = menuOnWhichDay.toLowerCase();
 		let _ = require(`${__dirname}/lib/util`);
 		menuDate = _.dayOfCurrentWeek(menuOnWhichDay);
