@@ -98,13 +98,15 @@ let buildReport = function(){
 						globalUsers.forEach((userName, index) => {
 							// let matchPercent = natural.JaroWinklerDistance(user, userName);
 							let isMatch = (user.toLowerCase() == userName.toLowerCase());
+							let cellVal = '';
 							if (index == 0){
-								recordMenuX[index] = menu.date;
+								cellVal = menu.date;
 								// }else if(matchPercent > 0.6){
 							}else if(isMatch){
 								matched = true;
-								recordMenuX[index] = dish.price;
+								cellVal = dish.price;
 							}
+							recordMenuX[index] = cellVal;
 						});
 						// Check if user not MATCH
 						if (!matched) {
