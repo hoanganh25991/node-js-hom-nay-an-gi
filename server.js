@@ -1,21 +1,21 @@
 // const buildReportCycle = 10*60000;
 const buildReportCycle = 10*60000;
 let buildReport = require(`${__dirname}/updateToLunchMoney.js`);
-function cb(){
-	buildReport();
-	let today = new Date();
-	let content = `${today.toString().substr(0,10)} - report built\n`;
-	let fs = require('fs');
-	fs.writeFile('buildReport.log', content, {flag: 'a'}, function(err){
-		if(err){
-			console.log(err);
-		}else{
-			console.log(`Build report success`);
-		}
-	});
-}
+// function cb(){
+// 	buildReport();
+// 	let today = new Date();
+// 	let content = `${today.toString().substr(0,10)} - report built\n`;
+// 	let fs = require('fs');
+// 	fs.writeFile('buildReport.log', content, {flag: 'a'}, function(err){
+// 		if(err){
+// 			console.log(err);
+// 		}else{
+// 			console.log(`Build report success`);
+// 		}
+// 	});
+// }
 
-cb();
+// cb();
 setInterval(function(){
 	buildReport();
 	let today = new Date();
@@ -185,7 +185,7 @@ app.get('/', function(req, res){
 			}else{
 				resPromise = new Promise(resolve => {
 					let slackMsg = {
-						text: `Please resubmit\ninclude header`,
+						text: `Please resubmit\nMenu range includes heade`,
 						attachments: [
 							{
 								title: 'Menu range format',
@@ -237,6 +237,44 @@ app.get('/', function(req, res){
 		case 'help':
 			resPromise = slackMsgHelp(userTextArr);
 
+			break;
+		case 'report':
+			let fieldVal = 'Sorry, you don\'t have permission to build report';
+			const allowedRunReportUser = ['hoanganh25991'];
+
+			let isAllowedRunReport = allowedRunReportUser.includes(userTextArr['user_name']);
+
+			if(isAllowedRunReport){
+				fieldVal = 'I\'m building report';
+			}
+
+			resPromise = new Promise(resolve => {
+				let slackMsg = {
+					text: `Hi @${userTextArr['user_name']}`,
+						attachments: [
+							{
+								title: 'Build report',
+								title_link: 'https://tinker.press',
+								fields: [
+									{
+										value: `${fieldVal}`,
+										short: true
+									}
+								],
+								color: '#3AA3E3',
+								footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+								footer_icon: 'https://tinker.press/favicon-64x64.png',
+								ts: Math.floor(new Date().getTime() / 1000)
+							}
+						]
+				};
+
+				resolve(slackMsg);
+			});
+
+			if(isAllowedRunReport){
+				buildReport();
+			}
 			break;
 		default:
 			resPromise = new Promise(resolve => resolve(response));
@@ -1130,6 +1168,11 @@ function slackMsgHelp(userTextArr){
 					{
 						title: `View name`,
 						value: `Type /lunch name`,
+						short: true
+					},
+					{
+						title: `Build report`,
+						value: `Type /lunch report`,
 						short: true
 					},
 				],
