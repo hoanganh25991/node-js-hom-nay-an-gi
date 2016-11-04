@@ -246,12 +246,6 @@ let buildReport = function(){
 			});
 
 			return updateGlobalUsers;
-		})
-		.then(res => {
-			console.log('Update header users success');
-		})
-		.catch(err => {
-			console.log(err)
 		});
 }
 
