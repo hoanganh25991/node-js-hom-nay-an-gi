@@ -157,8 +157,7 @@ app.get('/', function(req, res){
 
 			break;
 		default:
-			let slackMsg = slackMsgCmdNotFound(userTextArr);
-			resPromise = new Promise(resolve => resolve(slackMsg));
+			resPromise = new Promise(resolve => resolve(slackMsgCmdNotFound(userTextArr)));
 
 			break;
 	}
@@ -202,14 +201,14 @@ function loadMenu(){
 	});
 
 	let checkOutdatedPromise = statMenusJsonPromise.then(mtime => {
-		let _ = require(`${__dirname}/lib/util`);
-		let thisWeek = _.getWeekNumber(new Date());
-		let menuJsonCreatedWeek = _.getWeekNumber(mtime);
-		console.log('Menus.json mtime (week): ', menuJsonCreatedWeek);
-		console.log('Request for menus (week): ', thisWeek);
-
-		let isOutOfDate = (thisWeek > menuJsonCreatedWeek);
-		return new Promise(resolve => resolve(isOutOfDate));
+		// let _ = require(`${__dirname}/lib/util`);
+		// let thisWeek = _.getWeekNumber(new Date());
+		// let menuJsonCreatedWeek = _.getWeekNumber(mtime);
+		// console.log('Menus.json mtime (week): ', menuJsonCreatedWeek);
+		// console.log('Request for menus (week): ', thisWeek);
+		//
+		// let isOutOfDate = (thisWeek > menuJsonCreatedWeek);
+		return new Promise(resolve => resolve(false));
 	})
     .catch(err => {
 		// console.log(err);
@@ -221,6 +220,7 @@ function loadMenu(){
 		console.log('Menus.json isOutOfDate: ', isOutOfDate);
 
 		if(!isOutOfDate){
+			console.log('read from file');
 			return new Promise(resolve => {
 				resolve(JSON.parse(fs.readFileSync(`${__dirname}/menus.json`).toString()));
 			});
@@ -235,105 +235,14 @@ function loadMenu(){
 function slackMsgMenu(userTextArr){
 	let getDateMenusPromise = loadMenu();
 
-	let userText = userTextArr['text'].replace(/\s+/g, ' ');
-	// let responseUrl = req.param('response_url');
-	// read user text
-	let userTextArrTmp = userText.split(' ');
-
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		// let selectedDishIndex = userTextArr[1];
-		let isUserInputDay = false;
-		let userInputDay = '';
-		if(userTextArrTmp[1]){
-			userInputDay = userTextArrTmp[1].toLocaleLowerCase();
-			isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
-			// console.log('isUserInputDay', isUserInputDay);
-		}
+		let menu = whichMenu(userTextArr, menus);
 
-		let day = new Date().getUTCDate();
-		if(isUserInputDay){
-			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
-			// let dayOfWeek = 5;
-			let dd = new Date();
-			let dayx = dd.getDay();
-			let	diff = dd.getUTCDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
-
-			day = new Date(dd.setDate(diff)).getUTCDate();
-		}
-
-		// let menu = menus[dayOfWeek];
-		// Better check menu by reading out
-		let menu = menus.filter(menu =>{
-			let menuDate = new Date(menu.date);
-			console.log(day, menuDate.getUTCDate());
-			return (day == menuDate.getUTCDate());
-		})[0];
-		// console.log(userTextArr);
-
-		// let dayOfWeek = new Date().getDay() - 1;
-		// let menu = dateMenus[dayOfWeek];
-		// let dayOfWeek = new Date().getDay() - 1;
-		// let day = new Date().getUTCDate();
-		// // let menu = menus[dayOfWeek];
-		// // Better check menu by reading out
-		// let menu = dateMenus.filter(menu =>{
-		// 	let menuDate = new Date(menu.date);
-		// 	return (day == menuDate.getUTCDate());
-		// })[0];
 		if(!menu){
-			return new Promise(resolve => {
-				let slackMsg = {
-					text: `Hi @${userTextArr['user_name']}`,
-					attachments:[
-						{
-							title: `Menu error`,
-							title_link: `https://tinker.press`,
-							text: `Menu on ${day} not exist`,
-							color: 'danger',
-							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-							footer_icon: 'https://tinker.press/favicon-64x64.png',
-							ts: Math.floor(new Date().getTime() / 1000)
-						}
-					]
-				}
-
-				resolve(slackMsg);
-			});
+			return new Promise(r => r(slackMsgMenuNotFound(userTextArr)));
 		}
-		
-		let dishesV2 = [];
-		menu.dishes.forEach((dish, index) =>{
-			let tmp = {
-				value: `[${index}] ${dish.name}`,
-				short: true
-			};
-			dishesV2.push(tmp);
 
-			tmp = {
-				value: `${dish.price},000`,
-				short: true
-			};
-			dishesV2.push(tmp);
-		});
-
-		// let today = new Date();
-		let slackMsg = {
-			// text: `Hi, @${userTextArr['user_name']}, menu for ${userTextArr[1]}`,
-			text: `Hi, @${userTextArr['user_name']}`,
-			attachments: [
-				{
-					title: `Menu on ${menu.date}`,
-					title_link: 'https://tinker.press/good-food-good-life.jpg',
-					fields: dishesV2,
-					color: '#3AA3E3',
-					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-					footer_icon: 'https://tinker.press/favicon-64x64.png',
-					ts: Math.floor(new Date().getTime() / 1000)
-				}
-			]
-		};
-
-		return new Promise(resolve => resolve(slackMsg));
+		return new Promise(resolve => resolve(slackMsgMenuFound(userTextArr, menu)));
 	})
 	.catch(err => {
 		// console.log(err);
@@ -368,14 +277,9 @@ function slackMsgMenu(userTextArr){
 function slackMsgOrder(userTextArr){
 	let getDateMenusPromise = loadMenu();
 
-	let userText = userTextArr['text'].replace(/\s+/g, ' ');
-	// let responseUrl = req.param('response_url');
-	// read user text
-	let userTextArrTmp = userText.split(' ');
-	
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		// let dayOfWeek = new Date().getDay() - 1;
-		if(!userTextArrTmp[1]){
+		if(!userTextArr[1]){
 			return new Promise(resolve => {
 				let slackMsg = {
 					text: `Hi @${userTextArr['user_name']}`,
@@ -401,40 +305,9 @@ function slackMsgOrder(userTextArr){
 				resolve(slackMsg);
 			});
 		}
-
-
-		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
-		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
-
-		let day = new Date().getUTCDate();
-		if(isUserInputDay){
-			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
-			// let dayOfWeek = 5;
-			let dd = new Date();
-			let dayx = dd.getDay();
-			let	diff = dd.getUTCDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
-
-			day = new Date(dd.setDate(diff)).getUTCDate();
-		}
-
-		// let menu = menus[dayOfWeek];
-		// Better check menu by reading out
-		let menu = menus.filter(menu =>{
-			let menuDate = new Date(menu.date);
-			return (day == menuDate.getUTCDate());
-		})[0];
-		// console.log(userTextArr);
-
-		// let dayOfWeek = new Date().getDay() - 1;
-		// let menu = dateMenus[dayOfWeek];
-		// let dayOfWeek = new Date().getDay() - 1;
-		// let day = new Date().getUTCDate();
-		// // let menu = menus[dayOfWeek];
-		// // Better check menu by reading out
-		// let menu = dateMenus.filter(menu =>{
-		// 	let menuDate = new Date(menu.date);
-		// 	return (day == menuDate.getUTCDate());
-		// })[0];
+		let menu = whichMenu(userTextArr, menus);
+		console.log('\033[32mSlackMsgOrder loadMenu, choose menu success\033[0m');
+		console.log(menu);
 		if(!menu){
 			return new Promise(resolve => {
 				let slackMsg = {
@@ -457,25 +330,12 @@ function slackMsgOrder(userTextArr){
 		}
 
 		// LOGIC ON CASE order mon 19
-		let dishIndex = parseInt(userTextArr[1], 10);
-		// store userDishOrder to inform what happen
-		let userDishOrder = userTextArr[1];
-		if(isUserInputDay){
-			dishIndex = parseInt(userTextArr[2], 10);
-			userDishOrder = userTextArr[2];
-		}
-
-		let dishIndexParseFail = false;
-		if(isNaN(dishIndex)){
-			dishIndex = 0;
-			dishIndexParseFail = true;
-			// userDishOrder = userTextArr[2];
-		}
-		// Update back into userTextArr
-		userTextArr[1] = dishIndex;
+		let dishIndex = whichDish(userTextArr);
 
 		let dish = menu.dishes[dishIndex];
-		if(!dish || dishIndexParseFail){
+		console.log(dish);
+		userTextArr['dish'] = dish;
+		if(!dish){
 			return new Promise(resolve => {
 				let slackMsg = {
 					text: `Hi ${userTextArr['user_name']}`,
@@ -485,7 +345,7 @@ function slackMsgOrder(userTextArr){
 							title_link: `https://tinker.press`,
 							fields: [
 								{
-									value: `You've order dish [${userDishOrder}], which not exist`,
+									value: `You've order dish [${userTextArr['dishIndex']}], which not exist`,
 									short: true
 								}
 							],
@@ -546,70 +406,18 @@ function slackMsgOrder(userTextArr){
 }
 
 function updateOrder(userTextArr){
-	console.log('\033[32mStart updateOrder by getMenu\033[0m');
 	let getDateMenusPromise = require(`${__dirname}/getMenu`)(false);
 
-	let userText = userTextArr['text'].replace(/\s+/g, ' ');
-	// let responseUrl = req.param('response_url');
-	// read user text
-	let userTextArrTmp = userText.split(' ');
-	// store user name
-	// userTextArr['user_name'] = userName;
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
-		console.log('\033[32mgetMenu success!!!\033[0m');
-		// let selectedDishIndex = userTextArr[1];
-		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
-		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
-
-		let day = new Date().getUTCDate();
-		if(isUserInputDay){
-			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
-			// let dayOfWeek = 5;
-			let dd = new Date();
-			let dayx = dd.getDay();
-			let	diff = dd.getUTCDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
-
-			day = new Date(dd.setDate(diff)).getUTCDate();
-		}
-
-		// let menu = menus[dayOfWeek];
-		// Better check menu by reading out
-		let menu = dateMenus.filter(menu =>{
-			let menuDate = new Date(menu.date);
-			return (day == menuDate.getUTCDate());
-		})[0];
-		// console.log(userTextArr);
-
-		// let dayOfWeek = new Date().getDay() - 1;
-		// let menu = dateMenus[dayOfWeek];
-		// let dayOfWeek = new Date().getDay() - 1;
-		// let day = new Date().getUTCDate();
-		// // let menu = menus[dayOfWeek];
-		// // Better check menu by reading out
-		// let menu = dateMenus.filter(menu =>{
-		// 	let menuDate = new Date(menu.date);
-		// 	return (day == menuDate.getUTCDate());
-		// })[0];
-		if(!menu){
-			return new Promise(resolve => resolve('No menu'));
-		}
-
-		// LOGIC ON CASE order mon 19
-		let dishIndex = parseInt(userTextArrTmp[1], 10);
-		if(isUserInputDay){
-			dishIndex = parseInt(userTextArrTmp[2], 10);
-		}
-
-		if(isNaN(dishIndex)){
-			dishIndex = 0;
-		}
-		// Update back into userTextArr
-		let selectedDishIndex = dishIndex;
-
-		let dish = menu.dishes[selectedDishIndex];
-		if(!dish){
+		if(!userTextArr['dish']){
 			return new Promise(resolve => resolve('User choose dishIndex, which not exist'));
 		}
+
+		// if(userTextArr['dish']){
+		let menu = whichMenu(userTextArr, dateMenus);
+		let selectedDishIndex = parseInt(userTextArr['dishIndex'], 10);
+		let dish = menu.dishes[selectedDishIndex];
+		// }
 
 		/**
 		 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
@@ -1181,4 +989,106 @@ function slackMsgReport(userTextArr){
 			}
 		]
 	};
+}
+
+function whichMenu(userTextArr, menus){
+	let today = new Date();
+	// let nextDay = new Date(today.setDate(today.getUTCDate() + 1));
+
+	let userText = userTextArr['text'];
+	let userTextArrTmp = userText.split(' ');
+	let menuOnWhichDay = userTextArrTmp[1]; // undefined mon|tue|wed|thu
+
+	// Builde up menuDate
+	let menuDate;
+	// As normal
+	menuDate = new Date(today.setUTCDate(today.getUTCDate() + 1));
+	// FAIL when today is friday
+	let isFridaynMore = today.getUTCDay() >= 5;
+	if(isFridaynMore){
+		// MenuDate should set to the Monday of nextweek
+		let _ = require(`${__dirname}/lib/util`);
+		menuDate = _.mondayOfNextWeek();
+	}
+
+	if(menuOnWhichDay){
+		menuOnWhichDay = menuOnWhichDay.toLowerCase();
+		let _ = require(`${__dirname}/lib/util`);
+		menuDate = _.dayOfCurrentWeek(menuOnWhichDay);
+	}
+
+	let menu = menus.filter(menu => {
+		return menuDate.getUTCDate() == new Date(menu.date).getUTCDate();
+	})[0];
+
+	userTextArr['menuDate'] = menuDate;
+
+	return menu;
+}
+
+function slackMsgMenuNotFound(userTextArr){
+	return {
+		text: `Hi @${userTextArr['user_name']}`,
+		attachments:[
+			{
+				title: `Menu error`,
+				title_link: `https://tinker.press`,
+				text: `Menu on ${userTextArr['menuDate'].toString().substr(0,10)} not exist`,
+				color: 'danger',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	}
+}
+
+function slackMsgMenuFound(userTextArr, menu){
+	let dishesV2 = [];
+	menu.dishes.forEach((dish, index) =>{
+		let tmp = {
+			value: `[${index}] ${dish.name}`,
+			short: true
+		};
+		dishesV2.push(tmp);
+
+		tmp = {
+			value: `${dish.price},000`,
+			short: true
+		};
+		dishesV2.push(tmp);
+	});
+
+	// let today = new Date();
+	return {
+		// text: `Hi, @${userTextArr['user_name']}, menu for ${userTextArr[1]}`,
+		text: `Hi, @${userTextArr['user_name']}`,
+		attachments: [
+			{
+				title: `Menu on ${menu.date}`,
+				title_link: 'https://tinker.press/good-food-good-life.jpg',
+				fields: dishesV2,
+				color: '#3AA3E3',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	};
+}
+
+function whichDish(userTextArr){
+	let dishIndex = parseInt(userTextArr[1], 10);
+	userTextArr['dishIndex'] = userTextArr[1];
+
+	if(isNaN(dishIndex)){
+		dishIndex = parseInt(userTextArr[2], 10);
+		userTextArr['dishIndex'] = userTextArr[2];
+	}
+
+	if(isNaN(dishIndex)){
+		return undefined;
+	}
+
+	return dishIndex;
 }
