@@ -37,7 +37,8 @@ let buildEmailLink = function(userTextArr){
 		sendForDay = new Date(dd.setDate(diff));
 	}
 
-	let dayOfWeek = sendForDay.getDay() - 1;
+	// let dayOfWeek = sendForDay.getDay() - 1;
+	let dayOfWeek = sendForDay.getDay() - 1 + 1;
 	// console.log(dayOfWeek);
 	// let col = dayOfWeek * 6;
 	let _ = require(`${__dirname}/lib/util`);
