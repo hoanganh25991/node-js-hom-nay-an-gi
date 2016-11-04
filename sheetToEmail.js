@@ -42,8 +42,9 @@ let buildEmailLink = function(userTextArr){
 	// let col = dayOfWeek * 6;
 	let _ = require(`${__dirname}/lib/util`);
 	console.log(_.convertA1Notation(dayOfWeek));
-	let sRange = `${_.convertA1Notation(dayOfWeek)}${startRow}`;
-	let eRange = `${_.convertA1Notation(dayOfWeek + 5)}${endRow + 2}`;
+	let startCol = dayOfWeek * 6;
+	let sRange = `${_.convertA1Notation(startCol)}${startRow}`;
+	let eRange = `${_.convertA1Notation(startCol + 5)}${endRow + 5}`;
 	let range = `${sRange}:${eRange}`;
 	let link = linkEmail + `?sheet_name=${sheetName}&range=${range}`;
 	console.log(link);
