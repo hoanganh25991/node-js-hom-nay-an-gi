@@ -278,16 +278,16 @@ app.get('/', function(req, res){
 			break;
 		case 'email':
 			let buildEmailLink = require(`${__dirname}/sheetToEmail`);
-			let link = buildEmailLink(userTextArr);
+			let emailInfo = buildEmailLink(userTextArr);
 			let slackMsg = {
 				text: `Hi @${userTextArr['user_name']}`,
 				attachments:[
 					{
-						title: `Confirm send mail`,
+						title: `Email for menu on ${emailInfo.sendForDay.toString().substr(0,10)}`,
 						// title_link: `https://tinker.press`,
 						fields: [
 							{
-								value: `Please <${link}|click here> to confirm`,
+								value: `Please <${emailInfo.link}|click here> to confirm`,
 								short: true
 							}
 						],

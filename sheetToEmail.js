@@ -26,6 +26,8 @@ let buildEmailLink = function(userTextArr){
 	let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
 
 	let sendForDay = new Date();
+	let oneDayFutureStr = `${sendForDay.getMonth() + 1}/${sendForDay.getUTCDate() + 1}/${sendForDay.getFullYear()}`;
+	sendForDay =  new Date(oneDayFutureStr);
 	
 	if(isUserInputDay){
 		let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
@@ -37,8 +39,8 @@ let buildEmailLink = function(userTextArr){
 		sendForDay = new Date(dd.setDate(diff));
 	}
 
-	// let dayOfWeek = sendForDay.getDay() - 1;
-	let dayOfWeek = sendForDay.getDay() - 1 + 1;
+	let dayOfWeek = sendForDay.getDay() - 1;
+	// let dayOfWeek = sendForDay.getDay() - 1 + 1;
 	// console.log(dayOfWeek);
 	// let col = dayOfWeek * 6;
 	let _ = require(`${__dirname}/lib/util`);
@@ -51,7 +53,8 @@ let buildEmailLink = function(userTextArr){
 	let link = linkEmail + `?sheet_name=${sheetName}&range=${range}`;
 	console.log(link);
 
-	return link;
+	// return link;
+	return {link, sendForDay};
 }
 
 module.exports =buildEmailLink;
