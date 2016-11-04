@@ -3,7 +3,7 @@ let buildReport = function(){
 	let google = require('googleapis');
 	// let natural = require('natural');
 
-	const nuiBayUtItId = '1osEF3thjxDgQiXk95N-xc9Ms9ZtgYI1CmZgKCLwIamY';
+	// const nuiBayUtItId = '1osEF3thjxDgQiXk95N-xc9Ms9ZtgYI1CmZgKCLwIamY';
 	const lunchMoneyId = '1CM6BNJn4K24JZbn5zJLwkcES9BZ4o9wzr8t9W6kNb-8';
 
 	let lunchMoneyConfig = require(`${__dirname}/lib/lunchMoneyConfig.js`);
@@ -15,7 +15,8 @@ let buildReport = function(){
 	let mtime = lunchMoneyConfigStat.mtime;
 
 	let _ = require(`${__dirname}/lib/util`);
-	updateConfig = _.getWeekNumber(today) == _.getWeekNumber(new Date(mtime));
+	updateConfig = _.getWeekNumber(today) > _.getWeekNumber(new Date(mtime));
+	// updateConfig = (_.getWeekNumber(today) + 1) > _.getWeekNumber(new Date(mtime));
 
 	// check this config mtime
 	// if older than this week
@@ -46,7 +47,7 @@ let buildReport = function(){
 					auth: globalAuth,
 					spreadsheetId: lunchMoneyId,
 					range: '2016!1:1'
-				}, (err, res) => {
+				}, function cb(err, res){
 					if (err) {
 						reject('The API returned an error: ' + err);
 					}
@@ -64,14 +65,16 @@ let buildReport = function(){
 
 			let rows = res.values;
 			if (!rows || rows.length == 0) {
-				reject('Fail to users from getUsersPromise_res');
+				console.log('Fail to users from getUsersPromise_res');
 			}
 			//["", "Hoan", "Loc", "Duy", "Hoang", "Vinh", "Toan web", "Nam", "D. Vu"]
 			globalUsers = rows[0];
 			// console.log(globalUsers);
 			let dateMenusPromise = require(`${__dirname}/getMenu`)(false);
+
 			return dateMenusPromise;
-		}).then(dateMenus => {
+		})
+		.then(dateMenus => {
 			// console.log('\033[32mdateMenus pass through promise\033[0m: success');
 			// console.log('dateMenus.length', dateMenus.length);
 			console.log(`Got dateMenus`);
@@ -79,16 +82,17 @@ let buildReport = function(){
 			let records = [];
 			// Empty row to separate,just UI
 			records.push([]);
+			console.log(dateMenus);
 
 			dateMenus.forEach(menu => {
 				let recordMenuX = [];
 				for(let i = 0; i < globalUsers.length; i++){
 					recordMenuX.push(null);
 				}
-				
+
 				menu.dishes.forEach(dish => {
 					let unmatchedUsers = [];
-					
+
 					dish.users.forEach((user, userIndex) => {
 						let matched = false;
 						globalUsers.forEach((userName, index) => {
@@ -96,7 +100,7 @@ let buildReport = function(){
 							let isMatch = (user.toLowerCase() == userName.toLowerCase());
 							if (index == 0){
 								recordMenuX[index] = menu.date;
-							// }else if(matchPercent > 0.6){
+								// }else if(matchPercent > 0.6){
 							}else if(isMatch){
 								matched = true;
 								recordMenuX[index] = dish.price;
@@ -120,18 +124,19 @@ let buildReport = function(){
 				records.push(recordMenuX);
 			});
 
-			console.log('record.length', records.length);
+			console.log('records.length', records.length);
 			// console.log('\033[32mrecords[0]\033[0m', records[0]);
 			console.log('records[0].length', records[0].length);
 			console.log('globalUsers', globalUsers.length);
 			updatedRowsNum = records.length;
 			// just empty rows for blank
 			records.push([]);
+			// records.push(['balance']);
 			records.push([]);
-			records.push([]);
-			records.push([]);
+			// records.push([]);
+			// records.push([]);
 
-			let range = '';	
+			// let range = '';
 			let startCell = lunchMoneyConfig['startCell'];
 			let rowNumStr = startCell.match(/\d+/)[0];
 			let colName = startCell.replace(rowNumStr, '');
@@ -139,13 +144,42 @@ let buildReport = function(){
 			let rowNum = parseInt(rowNumStr);
 			rowNum += lunchMoneyConfig['lastUpdatedRowsNum'];
 
-			let newStartCell = startCell;
+			// let newStartCell = startCell;
+			// if(updateConfig){
+			// 	newStartCell = colName + rowNum;
+			// }
 			if(updateConfig){
-				newStartCell = colName + rowNum;
+				startCell = colName + rowNum;
+				lunchMoneyConfig['startCell'] = startCell;
 			}
 
-			console.log('updateConfig', 'newStartCell', "lunchMoneyConfig['lastUpdatedRowsNum']");
-			console.log(updateConfig, newStartCell, lunchMoneyConfig['lastUpdatedRowsNum']);
+			let balanceRow = records[records.length - 1];
+			let startIndex = parseInt(startCell.match(/\d+/)[0], 10)
+
+			let _ = require(`${__dirname}/lib/util`);
+			globalUsers.forEach((name, index) => {
+				let cellVal = '';
+				if(index == 0){
+					cellVal = 'balance';
+				}
+
+				if(index > 0){
+					let colName = _.convertA1Notation(index);
+					let preBalanceIndex = startIndex - 1;
+					let startSumIndex = startIndex + 1;
+					let endSumIndex = startIndex + (records.length  - 1) -1 -1;
+
+					let sumStr = `sum(${colName}${startSumIndex}:${colName}${endSumIndex})`;
+					let formula = `=${colName}${preBalanceIndex} - ${sumStr}`;
+					cellVal = formula;
+				}
+
+				balanceRow.push(cellVal);
+			});
+
+
+			console.log('updateConfig', 'startCell', "lunchMoneyConfig['lastUpdatedRowsNum']");
+			console.log(updateConfig, startCell, lunchMoneyConfig['lastUpdatedRowsNum']);
 
 			let updateLunchMoney = new Promise((resolve, reject) => {
 				sheets.spreadsheets.values.append({
@@ -153,12 +187,12 @@ let buildReport = function(){
 					spreadsheetId: lunchMoneyId,
 					valueInputOption: 'USER_ENTERED',
 					// range: '2016!A277:A277',
-					range: `${lunchMoneyConfig['sheet_name']}!${newStartCell}`,
+					range: `${lunchMoneyConfig['sheet_name']}!${lunchMoneyConfig['startCell']}`,
 					resource: {
 						values: records,
 						majorDimension: 'ROWS'
 					}
-				}, function(err, res) {
+				}, function cb(err, res) {
 					if (err) {
 						reject('The API returned an error: ' + err);
 					}
@@ -171,18 +205,22 @@ let buildReport = function(){
 		})
 		.then(res => {
 			console.log('Update to LunchMoney success');
-			// console.log(res);
+			console.log(res);
 			// After update success
 			// Next time move on
 			lunchMoneyConfig.lastUpdatedRowsNum = updatedRowsNum;
+			console.log('lunchMoneyConfig');
+			console.log(lunchMoneyConfig);
+
 			let fs = require('fs');
-			let wstream = fs.fs.createWriteStream(`${__dirname}/lunchMoneyConfig.json`);
+			let wstream = fs.createWriteStream(`${__dirname}/lib/lunchMoneyConfig.json`);
 			wstream.on('open', function(){
 				wstream.write(JSON.stringify(lunchMoneyConfig));
 				wstream.end(function(){
 					console.log('\033[32mWriteStream on lunchMoneyConfig.json success');
 				});
 			});
+			// fs.writeFileSync(`${__dirname}/lib/lunchMoneyConfig.json`, JSON.stringify(lunchMoneyConfig));
 
 			let updateGlobalUsers = new Promise((resolve, reject) => {
 				sheets.spreadsheets.values.batchUpdate({
@@ -196,7 +234,7 @@ let buildReport = function(){
 							majorDimension: 'ROWS',
 						}
 					}
-				}, function(err, res) {
+				}, function cb(err, res) {
 					if (err) {
 						// console.log(err);
 						reject('The API returned an error: ' + err);
