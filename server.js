@@ -277,7 +277,28 @@ app.get('/', function(req, res){
 			}
 			break;
 		case 'email':
-
+			let buildEmailLink = require(`${__dirname}/sheetToEmail`);
+			let link = buildEmailLink(userTextArr);
+			let slackMsg = {
+				text: `Hi @${userTextArr['user_name']}`,
+				attachments:[
+					{
+						title: `Confirm send mail`,
+						title_link: `https://tinker.press`,
+						fields: [
+							{
+								value: `Please <${link}|click> to confirm`,
+								short: true
+							}
+						],
+						color: 'warning',
+						footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+						footer_icon: 'https://tinker.press/favicon-64x64.png',
+						ts: Math.floor(new Date().getTime() / 1000)
+					}
+				]
+			}
+			resPromise = new Promise(resolve => resolve(slackMsg));
 
 			break;
 		default:
