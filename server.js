@@ -515,6 +515,10 @@ function slackMsgView(userTextArr){
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		let  menu = whichMenu(userTextArr, menus);
 
+		if(!menu){
+			return new Promise(r => r({text: 'No menu found'}));
+		}
+
 		let orderedDish = 'You haven\'t order dish'
 		menu.dishes.forEach(dish => {
 			dish.users.forEach(userName => {
