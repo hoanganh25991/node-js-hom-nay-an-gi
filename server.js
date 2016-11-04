@@ -305,7 +305,7 @@ function slackMsgOrder(userTextArr){
 				resolve(slackMsg);
 			});
 		}
-		let menu = whichMenu(userTextArr, menus);
+		let menu = whichMenuForOrder(userTextArr, menus);
 		console.log('\033[32mSlackMsgOrder loadMenu, choose menu success\033[0m');
 		console.log(menu);
 		if(!menu){
@@ -1017,8 +1017,8 @@ function whichMenu(userTextArr, menus){
 		menuDate = _.dayOfCurrentWeek(menuOnWhichDay);
 	}
 
-	let menu = menus.filter(menu => {
-		return menuDate.getUTCDate() == new Date(menu.date).getUTCDate();
+	let menu = menus.filter(menuX => {
+		return menuDate.getUTCDate() == new Date(menuX.date).getUTCDate();
 	})[0];
 
 	userTextArr['menuDate'] = menuDate;
@@ -1091,4 +1091,40 @@ function whichDish(userTextArr){
 	}
 
 	return dishIndex;
+}
+
+function whichMenuForOrder(userTextArr, menus){
+	let today = new Date();
+	// let nextDay = new Date(today.setDate(today.getUTCDate() + 1));
+
+	let userText = userTextArr['text'];
+	let userTextArrTmp = userText.split(' ');
+	let menuOnWhichDay = userTextArrTmp[1]; // 1|2|3 mon|tue|wed|thu
+
+	// Builde up menuDate
+	let menuDate;
+	// As normal
+	menuDate = new Date(today.setUTCDate(today.getUTCDate() + 1));
+	// FAIL when today is friday
+	let isFridaynMore = today.getUTCDay() >= 5;
+	if(isFridaynMore){
+		// MenuDate should set to the Monday of nextweek
+		let _ = require(`${__dirname}/lib/util`);
+		menuDate = _.mondayOfNextWeek();
+	}
+
+	// Check menuOnWhichDay is truthly not dish-num
+	if(!isNaN(parseInt(menuOnWhichDay, 10))){
+		menuOnWhichDay = menuOnWhichDay.toLowerCase();
+		let _ = require(`${__dirname}/lib/util`);
+		menuDate = _.dayOfCurrentWeek(menuOnWhichDay);
+	}
+
+	let menu = menus.filter(menuX => {
+		return menuDate.getUTCDate() == new Date(menuX.date).getUTCDate();
+	})[0];
+
+	userTextArr['menuDate'] = menuDate;
+
+	return menu;
 }
