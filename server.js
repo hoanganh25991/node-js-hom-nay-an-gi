@@ -276,6 +276,10 @@ app.get('/', function(req, res){
 				buildReport();
 			}
 			break;
+		case 'email':
+
+
+			break;
 		default:
 			resPromise = new Promise(resolve => resolve(response));
 
@@ -806,7 +810,7 @@ function buildCell(menu, dish){
 	// console.log(col, row, nBUUConfig);
 	// ONLY read out the first one A558:AD581
 	// Build up row, col logic
-	let startRow = nBUUConfig['menu_range'].match(/\d+/);
+	let startRow = nBUUConfig['menu_range'].match(/\d+/)[0];
 	startRow = parseInt(startRow, 10);
 	row += startRow;
 	col += 2; //col for menu, +2 for userList
