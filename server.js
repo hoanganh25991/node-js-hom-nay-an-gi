@@ -384,6 +384,7 @@ function slackMsgMenu(userTextArr){
 		// Better check menu by reading out
 		let menu = menus.filter(menu =>{
 			let menuDate = new Date(menu.date);
+			console.log(day, menuDate.getUTCDate());
 			return (day == menuDate.getUTCDate());
 		})[0];
 		// console.log(userTextArr);
@@ -404,7 +405,7 @@ function slackMsgMenu(userTextArr){
 					text: `Hi @${userTextArr['user_name']}`,
 					attachments:[
 						{
-							title: `Order error`,
+							title: `Menu error`,
 							title_link: `https://tinker.press`,
 							text: `Menu on ${day} not exist`,
 							color: 'danger',
