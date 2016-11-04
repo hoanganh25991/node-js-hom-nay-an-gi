@@ -291,9 +291,9 @@ app.get('/menu', function(req, res){
 	let getDateMenusPromise = require(`${__dirname}/getMenu`)();
 	getDateMenusPromise.then(dateMenus =>{
 		let menu = dateMenus.filter(dateMenu =>{
-			let date = new Date().getDate();
+			let date = new Date().getUTCDate();
 			console.log(date);
-			let menuDate = new Date(dateMenu.date).getDate();
+			let menuDate = new Date(dateMenu.date).getUTCDate();
 			console.log(menuDate);
 
 			return date == menuDate;
@@ -369,34 +369,34 @@ function slackMsgMenu(userTextArr){
 			// console.log('isUserInputDay', isUserInputDay);
 		}
 
-		let day = new Date().getDate();
+		let day = new Date().getUTCDate();
 		if(isUserInputDay){
 			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
 			// let dayOfWeek = 5;
 			let dd = new Date();
 			let dayx = dd.getDay();
-			let	diff = dd.getDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
+			let	diff = dd.getUTCDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
 
-			day = new Date(dd.setDate(diff)).getDate();
+			day = new Date(dd.setDate(diff)).getUTCDate();
 		}
 
 		// let menu = menus[dayOfWeek];
 		// Better check menu by reading out
 		let menu = menus.filter(menu =>{
 			let menuDate = new Date(menu.date);
-			return (day == menuDate.getDate());
+			return (day == menuDate.getUTCDate());
 		})[0];
 		// console.log(userTextArr);
 
 		// let dayOfWeek = new Date().getDay() - 1;
 		// let menu = dateMenus[dayOfWeek];
 		// let dayOfWeek = new Date().getDay() - 1;
-		// let day = new Date().getDate();
+		// let day = new Date().getUTCDate();
 		// // let menu = menus[dayOfWeek];
 		// // Better check menu by reading out
 		// let menu = dateMenus.filter(menu =>{
 		// 	let menuDate = new Date(menu.date);
-		// 	return (day == menuDate.getDate());
+		// 	return (day == menuDate.getUTCDate());
 		// })[0];
 		if(!menu){
 			return new Promise(resolve => {
@@ -524,34 +524,34 @@ function slackMsgOrder(userTextArr){
 		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
 		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
 
-		let day = new Date().getDate();
+		let day = new Date().getUTCDate();
 		if(isUserInputDay){
 			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
 			// let dayOfWeek = 5;
 			let dd = new Date();
 			let dayx = dd.getDay();
-			let	diff = dd.getDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
+			let	diff = dd.getUTCDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
 
-			day = new Date(dd.setDate(diff)).getDate();
+			day = new Date(dd.setDate(diff)).getUTCDate();
 		}
 
 		// let menu = menus[dayOfWeek];
 		// Better check menu by reading out
 		let menu = menus.filter(menu =>{
 			let menuDate = new Date(menu.date);
-			return (day == menuDate.getDate());
+			return (day == menuDate.getUTCDate());
 		})[0];
 		// console.log(userTextArr);
 
 		// let dayOfWeek = new Date().getDay() - 1;
 		// let menu = dateMenus[dayOfWeek];
 		// let dayOfWeek = new Date().getDay() - 1;
-		// let day = new Date().getDate();
+		// let day = new Date().getUTCDate();
 		// // let menu = menus[dayOfWeek];
 		// // Better check menu by reading out
 		// let menu = dateMenus.filter(menu =>{
 		// 	let menuDate = new Date(menu.date);
-		// 	return (day == menuDate.getDate());
+		// 	return (day == menuDate.getUTCDate());
 		// })[0];
 		if(!menu){
 			return new Promise(resolve => {
@@ -679,34 +679,34 @@ function updateOrder(userTextArr){
 		let userInputDay = userTextArrTmp[1].toLocaleLowerCase();
 		let isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
 
-		let day = new Date().getDate();
+		let day = new Date().getUTCDate();
 		if(isUserInputDay){
 			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
 			// let dayOfWeek = 5;
 			let dd = new Date();
 			let dayx = dd.getDay();
-			let	diff = dd.getDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
+			let	diff = dd.getUTCDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
 
-			day = new Date(dd.setDate(diff)).getDate();
+			day = new Date(dd.setDate(diff)).getUTCDate();
 		}
 
 		// let menu = menus[dayOfWeek];
 		// Better check menu by reading out
 		let menu = dateMenus.filter(menu =>{
 			let menuDate = new Date(menu.date);
-			return (day == menuDate.getDate());
+			return (day == menuDate.getUTCDate());
 		})[0];
 		// console.log(userTextArr);
 
 		// let dayOfWeek = new Date().getDay() - 1;
 		// let menu = dateMenus[dayOfWeek];
 		// let dayOfWeek = new Date().getDay() - 1;
-		// let day = new Date().getDate();
+		// let day = new Date().getUTCDate();
 		// // let menu = menus[dayOfWeek];
 		// // Better check menu by reading out
 		// let menu = dateMenus.filter(menu =>{
 		// 	let menuDate = new Date(menu.date);
-		// 	return (day == menuDate.getDate());
+		// 	return (day == menuDate.getUTCDate());
 		// })[0];
 		if(!menu){
 			return new Promise(resolve => resolve('No menu'));
@@ -835,22 +835,22 @@ function slackMsgView(userTextArr){
 			isUserInputDay = dayOfWeekConvert.indexOf(userInputDay) != -1;
 		}
 
-		let day = new Date().getDate();
+		let day = new Date().getUTCDate();
 		if(isUserInputDay){
 			let dayOfWeek = dayOfWeekConvert.indexOf(userInputDay);
 			// let dayOfWeek = 5;
 			let dd = new Date();
 			let dayx = dd.getDay();
-			let	diff = dd.getDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
+			let	diff = dd.getUTCDate() - dayx + (dayx == 0 ? -6 : 1) + dayOfWeek;
 
-			day = new Date(dd.setDate(diff)).getDate();
+			day = new Date(dd.setDate(diff)).getUTCDate();
 		}
 
 		// let menu = menus[dayOfWeek];
 		// Better check menu by reading out
 		let menu = menus.filter(menu =>{
 			let menuDate = new Date(menu.date);
-			return (day == menuDate.getDate());
+			return (day == menuDate.getUTCDate());
 		})[0];
 		// console.log(menu.date);
 		// console.log(userTextArr['sheet_name']);
@@ -921,12 +921,12 @@ function deleteOrder(userTextArr){
 		// let dayOfWeek = new Date().getDay() - 1;
 		// let menu = dateMenus[dayOfWeek];
 		// let dayOfWeek = new Date().getDay() - 1;
-		let day = new Date().getDate();
+		let day = new Date().getUTCDate();
 		// let menu = menus[dayOfWeek];
 		// Better check menu by reading out
 		let menu = dateMenus.filter(menu =>{
 			let menuDate = new Date(menu.date);
-			return (day == menuDate.getDate());
+			return (day == menuDate.getUTCDate());
 		})[0];
 		if(!menu){
 			return new Promise(resolve => resolve('No menu'));
