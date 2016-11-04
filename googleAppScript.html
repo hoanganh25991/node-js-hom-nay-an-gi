@@ -1,0 +1,27 @@
+<script>
+	function callSendMail(){
+		let getQueryParams = function(qs) {
+		    qs = qs.split('+').join(' ');
+
+		    var params = {},
+		        tokens,
+		        re = /[?&]?([^=]+)=([^&]*)/g;
+
+		    while (tokens = re.exec(qs)) {
+		        params[decodeURIComponent(tokens[1])] = decodeURIComponent(tokens[2]);
+		    }
+
+		    return params;
+		};
+
+		let e = getQueryParams(window.location.search);
+		console.log(e);
+
+		var myRunner = google.script.run.send(e);
+		myRunner.withSuccessHandler(function(){
+			window.close();
+		});
+	}
+</script>
+<h1>Email sent. Do you want to resend?</h1>
+<button onClick='callSendMail()'>Send</button>
