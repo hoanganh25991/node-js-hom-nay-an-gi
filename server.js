@@ -287,7 +287,7 @@ app.get('/', function(req, res){
 						// title_link: `https://tinker.press`,
 						fields: [
 							{
-								value: `Please <${link}|click> to confirm`,
+								value: `Please <${link}|click here> to confirm`,
 								short: true
 							}
 						],
