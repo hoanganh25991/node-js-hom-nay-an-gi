@@ -6,11 +6,13 @@ const buildReportCycle = 10 * 60000;
 let buildReport = require(`${__dirname}/updateToLunchMoney.js`);
 setInterval(function(){
 	let buildReportPromise = buildReport();
-	buildReportPromise.then(() => {console.log('Build report success')})
 	
-	let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
-	let fs = require('fs');
-	fs.writeFile(`${__dirname}/log/buildReport.log`, content, {flag: 'a'});
+	buildReportPromise.then(() => {
+		console.log('Build report success');
+		let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
+		let fs = require('fs');
+		fs.writeFile(`${__dirname}/log/buildReport.log`, content, {flag: 'a'});
+	});
 }, buildReportCycle);
 
 /**

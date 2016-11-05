@@ -3,6 +3,6 @@
 /vendor
 /.vscode
 /config.js
-/menus.json
+/cache/menus.json
 /lib/mapSlacknameUsername.json
 /lib/nuiBayUtItConfig.json
