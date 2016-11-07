@@ -3,7 +3,7 @@
  * @type {number}
  */
 const buildReportCycle = 10 * 60000;
-let buildReport = require(`${__dirname}/updateToLunchMoney.js`);
+let buildReport = require(`${__dirname}/lib/buildReport.js`);
 setInterval(function(){
 	let buildReportPromise = buildReport();
 	buildReportPromise.then(() => {console.log('Build report success')})

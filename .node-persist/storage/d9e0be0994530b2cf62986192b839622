@@ -1,1 +1,1 @@
-{"key":"acceptedInputDates","value":["mon","tue","wed","thu","fri","sat","sun"]}
+{"key":"acceptedInputDates","value":{"mon":"Monday","tue":"Tueday","wed":"Wednesday","thu":"Thursday","fri":"Friday","sat":"Saturday","sun":"Sunday"}}
