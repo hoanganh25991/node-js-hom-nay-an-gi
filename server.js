@@ -111,13 +111,11 @@ app.get('/', function(req, res){
 			resPromise = getHelpMsgPromise(userTextArr);
 			break;
 		case 'report':
-			const isAllowedRunReportUser = ['hoanganh25991'];
-			let isAllowedRunReport = isAllowedRunReportUser.includes(userTextArr['user_name']);
-			userTextArr['isAllowedRunReport'] = isAllowedRunReport;
-			
-			userTextArr['report_msg'] = isAllowedRunReport ? 'I\'m building report' : 'Sorry, you don\'t have permission to build report';
+			userTextArr['report_msg'] =
+				userTextArr['isAllowedRunReport'] ? 'I\'m building report' : 'Sorry, you don\'t have permission to build report';
 
 			resPromise = new Promise(r => r(slackMsgReport(userTextArr)));
+
 			if(userTextArr['isAllowedRunReport']){
 				let buildReportPromise = buildReport();
 				buildReportPromise.then(() => {console.log('Build report success')})
