@@ -310,20 +310,14 @@ function updateOrder(userTextArr){
 		return Promise.all(preOrderDishPromises).then(function (){
 			console.log('Remove user from others book success');
 
-			let dishX = menu.dishes[3];
-			console.log(dishX);
+			let dish = menu.dishes[userTextArr['dishIndex']];
 
-			if(dishX.users.includes(userTextArr['sheet_name'])){
+			if(dish.users.includes(userTextArr['sheet_name'])){
 				// He just re-submit, no thing NEW
 				return new Promise(resolve => resolve('Your order saved\nNo need to resubmit'));
 			}else{
-				console.log(userTextArr['sheet_name']);
-				dishX.users.push(userTextArr['sheet_name']);
-				console.log(dishX.users);
-				let cell = buildCell(menu, dishX);
-				console.log(cell);
-
-				// console.log(`${__dirname}/updateOrderToSheet`);
+				dish.users.push(userTextArr['sheet_name']);
+				let cell = buildCell(menu, dish);
 				let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 
 				return updatePromise;
