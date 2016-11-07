@@ -361,10 +361,12 @@ function getViewMsgPromise(userTextArr){
 		}
 
 		let orderedDish = 'You haven\'t order dish'
+		console.log(userTextArr['sheet_name']);
 		menu.dishes.forEach(dish => {
 			dish.users.forEach(userName => {
+				console.log(userName);
 				if(userName == userTextArr['sheet_name'])
-					orderedDish = dish['name'];
+					orderedDish = `${dish['name']} - ${dish['price']}`;
 			});
 		});
 
@@ -485,20 +487,10 @@ function deleteOrder(userTextArr){
 }
 
 function getNameMsgPromise(userTextArr){
-	let userSheetNameInCache = userTextArr['sheet_name'];
-	// Parse out which name he want to ask
-	let userText = userTextArr['text'];
-	userText = userText.replace(/\s+/g, ' ');
-	let userTextArrTmp = userText.split(' ');
-	userTextArrTmp.splice(0, 1);
-	// let userSheetName = userText.replace('name ', '');
-	let userSheetName = userTextArrTmp.join(' ');
-	userTextArr['sheet_name'] = userSheetName;
-	// userSheetName.includes(',')
 	/**
 	 * CASE YOUR JUST WANT TO REVIEW
 	 */
-	if(userSheetName == '' && userSheetNameInCache){
+	if(userTextArr['new_name'] == '' && userTextArr['sheet_name']){
 		let slackMsg = {
 			text: `Hi @${userTextArr['user_name']}`,
 			attachments: [
@@ -511,7 +503,7 @@ function getNameMsgPromise(userTextArr){
 							short: true
 						},
 						{
-							value: `${userSheetNameInCache}`,
+							value: `${userTextArr['sheet_name']}`,
 							short: true
 						}
 					],
@@ -527,7 +519,7 @@ function getNameMsgPromise(userTextArr){
 	}
 
 
-	if(userSheetName == '' && !userSheetNameInCache){
+	if(userTextArr['new_name'] == '' && !userTextArr['sheet_name']){
 		let slackMsg = {
 			text: `Hi @${userTextArr['user_name']}`,
 			attachments: [
@@ -538,10 +530,6 @@ function getNameMsgPromise(userTextArr){
 						{
 							title: `To set name for google sheet`,
 							value: `Please type /lunch name <your name>`,
-							short: true
-						},
-						{
-							value: `${userTextArr['sheet_name']}`,
 							short: true
 						}
 					],
@@ -568,7 +556,7 @@ function getNameMsgPromise(userTextArr){
 						short: true
 					},
 					{
-						value: `${userTextArr['sheet_name']}`,
+						value: `${userTextArr['new_name']}`,
 						short: true
 					}
 				],
@@ -584,12 +572,17 @@ function getNameMsgPromise(userTextArr){
 }
 
 function storeName(userTextArr){
-	let mapName = storage.getItemSync('mapName');
-	mapName[userTextArr['user_name']] = userTextArr['sheet_name'];
+	if(userTextArr['new_name'] != ''){
+		let mapName = storage.getItemSync('mapName');
+		console.log('mapname', userTextArr);
+		mapName[userTextArr['user_name']] = userTextArr['new_name'];
 
-	storage.setItemSync('mapName', mapName);
+		storage.setItemSync('mapName', mapName);
 
-	return new Promise(res => res('Store name success'));
+		return new Promise(res => res('Store name success'));
+	}
+
+	return new Promise(res => res('No new_name to storeName'));
 }
 
 function getHelpMsgPromise(userTextArr){
