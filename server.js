@@ -258,7 +258,7 @@ function updateOrder(userTextArr){
 	/**
 	 * Should load new menu
 	 */
-	let getDateMenusPromise = require(`${__dirname}/getMenu`)(true);
+	let getDateMenusPromise = require(`${__dirname}/lib/getMenu`)(true);
 
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 
@@ -335,7 +335,7 @@ function buildCell(menu, dish){
 	// Build cell address, base on dish-row, menu-col
 	// Read out basic info from config
 	let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
-	// console.log(col, row, nBUUConfig);
+	// console.log(col, row, sheetNuiBayUtIt);
 	// ONLY read out the first one A558:AD581
 	// Build up row, col logic
 	let startRow = nBUUConfig['menu_range'].match(/\d+/)[0];
