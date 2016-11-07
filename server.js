@@ -54,6 +54,7 @@ let _ = require(`${__dirname}/lib/util`);
 let parseUserText = require(`${__dirname}/lib/parseUserText`);
 let storage = _.getStorage();
 app.get('/', function(req, res){
+	console.log(req.query);
 	let userTextArr = parseUserText(req);
 	/**
 	 * Some command NEED USERNAME
@@ -240,9 +241,7 @@ function getOrderMsgPromise(userTextArr){
 		}
 
 		// LOGIC ON CASE order mon 19
-		let dishIndex = userTextArr['dishIndex'];
-
-		let dish = menu.dishes[dishIndex];
+		let dish = menu.dishes[userTextArr['dishIndex']];
 
 		if(!dish){
 			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextArr)));
@@ -311,15 +310,21 @@ function updateOrder(userTextArr){
 		return Promise.all(preOrderDishPromises).then(function (){
 			console.log('Remove user from others book success');
 
-			if(dish.users.includes(userTextArr['sheet_name'])){
+			let dishX = menu.dishes[3];
+			console.log(dishX);
+
+			if(dishX.users.includes(userTextArr['sheet_name'])){
 				// He just re-submit, no thing NEW
 				return new Promise(resolve => resolve('Your order saved\nNo need to resubmit'));
 			}else{
-				dish.users.push(userTextArr['sheet_name']);
-				let cell = buildCell(menu, dish);
+				console.log(userTextArr['sheet_name']);
+				dishX.users.push(userTextArr['sheet_name']);
+				console.log(dishX.users);
+				let cell = buildCell(menu, dishX);
+				console.log(cell);
 
 				// console.log(`${__dirname}/updateOrderToSheet`);
-				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
+				let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 
 				return updatePromise;
 			}
@@ -334,16 +339,15 @@ function buildCell(menu, dish){
 	let row = dish.row;
 	// Build cell address, base on dish-row, menu-col
 	// Read out basic info from config
-	let nBUUConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
+	let sheetNuiBayUtIt = storage.getItemSync('sheetNuiBayUtIt');
 	// console.log(col, row, sheetNuiBayUtIt);
 	// ONLY read out the first one A558:AD581
 	// Build up row, col logic
-	let startRow = nBUUConfig['menu_range'].match(/\d+/)[0];
+	let startRow = sheetNuiBayUtIt['menuRange'].match(/\d+/)[0];
 	startRow = parseInt(startRow, 10);
 	row += startRow;
 	col += 2; //col for menu, +2 for userList
 	// Parse to A1 notation
-	let _ = require(`${__dirname}/lib/util`);
 	let cellAddress = `${_.convertA1Notation(col).toUpperCase()}${row}`;
 	// Build up cellVal, update dish.users
 	let cellVal = dish.users.join(',');
@@ -885,6 +889,7 @@ function slackMsgNoMenu(userTextArr){
 function slackMsgOrder(userTextArr, menu){
 	let otherUsersBookDish = 'No one';
 	// Improve info by REMOVE him from his self
+	let dish = menu.dishes[userTextArr['dishIndex']];
 	let otherUsersBookDishArr = dish.users.filter(userName => userName != userTextArr['sheet_name']);
 	if(otherUsersBookDishArr.length > 0)
 		otherUsersBookDish = otherUsersBookDishArr.join(', ');
