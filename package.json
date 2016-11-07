@@ -4,7 +4,7 @@
   "description": "node-js-google-drive-api-get-started",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Anh Le Hoang",
   "license": "MIT",
@@ -14,7 +14,12 @@
     "google-auth-library": "^0.9.9",
     "googleapis": "^14.1.0",
     "https": "^1.0.0",
+    "moment": "^2.15.2",
     "multer": "^1.2.0",
     "natural": "^0.4.0"
+  },
+  "devDependencies": {
+    "assert": "^1.4.1",
+    "mocha": "^3.1.2"
   }
 }
