@@ -171,9 +171,9 @@ app.get('/menu', function(req, res){
 	let getDateMenusPromise = require(`${__dirname}/getMenu`)();
 	getDateMenusPromise.then(dateMenus =>{
 		let menu = dateMenus.filter(dateMenu =>{
-			let date = new Date().getUTCDate();
+			let date = new Date().getDate();
 			console.log(date);
-			let menuDate = new Date(dateMenu.date).getUTCDate();
+			let menuDate = new Date(dateMenu.date).getDate();
 			console.log(menuDate);
 
 			return date == menuDate;
@@ -414,7 +414,7 @@ function updateOrder(userTextArr){
 		}
 
 		// if(userTextArr['dish']){
-		let menu = whichMenu(userTextArr, dateMenus);
+		let menu = whichMenuForOrder(userTextArr, dateMenus);
 		let selectedDishIndex = parseInt(userTextArr['dishIndex'], 10);
 		let dish = menu.dishes[selectedDishIndex];
 		// }
@@ -853,7 +853,7 @@ function writeCacheFile(dateMenus){
 
 function slackMsgCmdNeedUserName(userTextArr){
 	let slackMsg = {
-		text: `Hi @${userTextArr['user_name']}\nYou've ask for: \`${userText}\``,
+		text: `Hi @${userTextArr['user_name']}\nYou've ask for: \`${userTextArr['text']}\``,
 		attachments: [
 			{
 				title: 'Sorry for this inconvenience.\n Please set name first',
@@ -953,7 +953,7 @@ function slackMsgReport(userTextArr){
 
 function whichMenu(userTextArr, menus){
 	let today = new Date();
-	// let nextDay = new Date(today.setDate(today.getUTCDate() + 1));
+	// let nextDay = new Date(today.setDate(today.getDate() + 1));
 
 	let userText = userTextArr['text'];
 	let userTextArrTmp = userText.split(' ');
@@ -962,7 +962,7 @@ function whichMenu(userTextArr, menus){
 	// Builde up menuDate
 	let menuDate;
 	// As normal
-	menuDate = new Date(today.setUTCDate(today.getUTCDate() + 1));
+	menuDate = new Date(today.setDate(today.getDate() + 1));
 	// FAIL when today is friday
 	let isFridaynMore = today.getUTCDay() >= 5;
 	if(isFridaynMore){
@@ -978,7 +978,7 @@ function whichMenu(userTextArr, menus){
 	}
 
 	let menu = menus.filter(menuX => {
-		return menuDate.getUTCDate() == new Date(menuX.date).getUTCDate();
+		return menuDate.getDate() == new Date(menuX.date).getDate();
 	})[0];
 
 	userTextArr['menuDate'] = menuDate;
@@ -1055,7 +1055,7 @@ function whichDish(userTextArr){
 
 function whichMenuForOrder(userTextArr, menus){
 	let today = new Date();
-	// let nextDay = new Date(today.setDate(today.getUTCDate() + 1));
+	// let nextDay = new Date(today.setDate(today.getDate() + 1));
 
 	let userText = userTextArr['text'];
 	let userTextArrTmp = userText.split(' ');
@@ -1064,7 +1064,7 @@ function whichMenuForOrder(userTextArr, menus){
 	// Builde up menuDate
 	let menuDate;
 	// As normal
-	menuDate = new Date(today.setUTCDate(today.getUTCDate() + 1));
+	menuDate = new Date(today.setDate(today.getDate() + 1));
 	// FAIL when today is friday
 	let isFridaynMore = today.getUTCDay() >= 5;
 	if(isFridaynMore){
@@ -1081,7 +1081,7 @@ function whichMenuForOrder(userTextArr, menus){
 	}
 
 	let menu = menus.filter(menuX => {
-		return menuDate.getUTCDate() == new Date(menuX.date).getUTCDate();
+		return menuDate.getDate() == new Date(menuX.date).getDate();
 	})[0];
 
 	userTextArr['menuDate'] = menuDate;

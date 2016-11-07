@@ -35,7 +35,7 @@ let buildReport = function(){
 	let globalAuth;
 	let globalUsers;
 
-	oauth2Promise
+	let buildReportPromise = oauth2Promise
 		.then(auth => {
 			// console.log(auth);
 			console.log('\033[32mAuth\033[0m: success');
@@ -247,6 +247,8 @@ let buildReport = function(){
 
 			return updateGlobalUsers;
 		});
+
+	return buildReportPromise;
 }
 
 module.exports = buildReport;
