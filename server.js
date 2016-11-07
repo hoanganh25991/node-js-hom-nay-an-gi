@@ -3,14 +3,14 @@
  * @type {number}
  */
 const buildReportCycle = 10 * 60000;
-let buildReport = require(`${__dirname}/lib/buildReport.js`);
+let buildReport = require(`${__dirname}/lib/buildReport`);
 setInterval(function(){
 	let buildReportPromise = buildReport();
-	buildReportPromise.then(() => {console.log('Build report success')})
-	
-	let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
-	let fs = require('fs');
-	fs.writeFile(`${__dirname}/log/buildReport.log`, content, {flag: 'a'});
+	buildReportPromise.then(() => {
+		let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
+		let fs = require('fs');
+		fs.writeFileSync(`${__dirname}/log/buildReport.log`, content, {flag: 'a'});
+	})
 }, buildReportCycle);
 
 /**
@@ -50,26 +50,18 @@ app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-w
 /**
  * Listen to command
  */
+let _ = require(`${__dirname}/lib/util`);
+let parseUserText = require(`${__dirname}/lib/parseUserText`);
+let storage = _.getStorage();
 app.get('/', function(req, res){
-	let userName = req.query['user_name'];
-	let userText = req.query['text'].replace(/\s+/g, ' ');
-	// Build basic info from user slack command
-	let userTextArr = userText.split(' ');
-	let mapName = require(`${__dirname}/lib/mapName`);
-	let userNameInSheet = mapName[userName];
-	userTextArr['text'] = userText;
-	userTextArr['cmd'] = userTextArr[0];
-	userTextArr['user_name'] = userName;
-	userTextArr['sheet_name'] = userNameInSheet;
-	console.log(userTextArr);
-
+	let userTextArr = parseUserText(req);
 	/**
 	 * Some command NEED USERNAME
 	 * check it here
 	 * @type {string[]}
 	 */
 	let cmdsDependOnUsername = ['order', 'view', 'delete'];
-	if(!userNameInSheet && cmdsDependOnUsername.includes(userTextArr[0])){
+	if(!userTextArr['sheet_name'] && cmdsDependOnUsername.includes(userTextArr[0])){
 		slackMsgCmdNeedUserName(userTextArr).then(slackMsg => {
 			res.send(slackMsg);
 		});
@@ -83,10 +75,10 @@ app.get('/', function(req, res){
 	let resPromise;
 	switch(userTextArr[0]){
 		case 'menu':
-			resPromise = slackMsgMenu(userTextArr);
+			resPromise = getMenuMsgPromise(userTextArr);
 			break;
 		case 'order':
-			resPromise = slackMsgOrder(userTextArr);
+			resPromise = getOrderMsgPromise(userTextArr);
 			let updatePromise = updateOrder(userTextArr);
 			updatePromise.then(()=>{console.log('Update order success')});
 			break;
@@ -100,22 +92,22 @@ app.get('/', function(req, res){
 			}
 			break;
 		case 'view':
-			resPromise = slackMsgView(userTextArr);
+			resPromise = getViewMsgPromise(userTextArr);
 			break;
 		case 'cancel':
 		case 'delete':
-			resPromise = slackMsgDelete(userTextArr);
+			resPromise = getDeleteMsgPromise(userTextArr);
 			// Now update delete order int sheet
 			let deleteOrderPromise = deleteOrder(userTextArr);
 			deleteOrderPromise.then(()=>{console.log('Delete order success')});
 			break;
 		case 'name':
-			resPromise = slackMsgName(userTextArr);
+			resPromise = getNameMsgPromise(userTextArr);
 			let storeNamePromise = storeName(userTextArr);
 			storeNamePromise.then(msg => console.log(msg));
 			break;
 		case 'help':
-			resPromise = slackMsgHelp(userTextArr);
+			resPromise = getHelpMsgPromise(userTextArr);
 			break;
 		case 'report':
 			const isAllowedRunReportUser = ['hoanganh25991'];
@@ -187,51 +179,10 @@ app.get('/menu', function(req, res){
 function loadMenu(){
 	let fs = require('fs');
 
-	let statMenusJsonPromise = new Promise((resolve, reject) => {
-		fs.stat(`${__dirname}/menus.json`, function(err, stats){
-			if(err){
-				// console.log(err);
-				reject(err);
-			}else{
-				let mtime = new Date(stats.mtime);
-				resolve(mtime);
-			}
-		});
-	});
-
-	let checkOutdatedPromise = statMenusJsonPromise.then(mtime => {
-		// let _ = require(`${__dirname}/lib/util`);
-		// let thisWeek = _.getWeekNumber(new Date());
-		// let menuJsonCreatedWeek = _.getWeekNumber(mtime);
-		// console.log('Menus.json mtime (week): ', menuJsonCreatedWeek);
-		// console.log('Request for menus (week): ', thisWeek);
-		//
-		// let isOutOfDate = (thisWeek > menuJsonCreatedWeek);
-		return new Promise(resolve => resolve(false));
-	})
-    .catch(err => {
-		// console.log(err);
-		console.log('Menus.json not exist');
-		return new Promise(resolve => resolve(true));
-	});
-
-	let getDateMenusPromise = checkOutdatedPromise.then(isOutOfDate => {
-		console.log('Menus.json isOutOfDate: ', isOutOfDate);
-
-		if(!isOutOfDate){
-			console.log('read from file');
-			return new Promise(resolve => {
-				resolve(JSON.parse(fs.readFileSync(`${__dirname}/menus.json`).toString()));
-			});
-		}else{
-			return require(`${__dirname}/getMenu`)();
-		}
-	});
-
-	return getDateMenusPromise;
+	return new Promise(resolve => resolve(JSON.parse(fs.readFileSync(`${__dirname}/menus.json`).toString())));
 }
 
-function slackMsgMenu(userTextArr){
+function getMenuMsgPromise(userTextArr){
 	let getDateMenusPromise = loadMenu();
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
@@ -273,151 +224,48 @@ function slackMsgMenu(userTextArr){
 	return slackMsgPromise;
 }
 
-function slackMsgOrder(userTextArr){
+function getOrderMsgPromise(userTextArr){
 	let getDateMenusPromise = loadMenu();
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		// let dayOfWeek = new Date().getDay() - 1;
-		if(!userTextArr[1]){
-			return new Promise(resolve => {
-				let slackMsg = {
-					text: `Hi @${userTextArr['user_name']}`,
-					attachments:[
-						{
-							title: `Order error`,
-							title_link: `https://tinker.press`,
-							fields: [
-								{
-									title: `Order command need [dish-num]`,
-									value: `Please type /lunch order [dish-num]`,
-									short: true
-								}
-							],
-							color: 'danger',
-							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-							footer_icon: 'https://tinker.press/favicon-64x64.png',
-							ts: Math.floor(new Date().getTime() / 1000)
-						}
-					]
-				}
-
-				resolve(slackMsg);
-			});
+		if(!userTextArr['dishIndex']){
+			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextArr)));
 		}
-		let menu = whichMenuForOrder(userTextArr, menus);
-		console.log('\033[32mSlackMsgOrder loadMenu, choose menu success\033[0m');
-		console.log(menu);
-		if(!menu){
-			return new Promise(resolve => {
-				let slackMsg = {
-					text: `Hi @${userTextArr['user_name']}`,
-					attachments:[
-						{
-							title: `Menu error`,
-							title_link: `https://tinker.press`,
-							text: `Menu on ${day} not exist`,
-							color: 'danger',
-							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-							footer_icon: 'https://tinker.press/favicon-64x64.png',
-							ts: Math.floor(new Date().getTime() / 1000)
-						}
-					]
-				}
 
-				resolve(slackMsg);
-			});
+		let menu = whichMenu(userTextArr, menus);
+
+		if(!menu){
+			return new Promise(resolve =>resolve(slackMsgNoMenu(userTextArr)));
 		}
 
 		// LOGIC ON CASE order mon 19
-		let dishIndex = whichDish(userTextArr);
+		let dishIndex = userTextArr['dishIndex'];
 
 		let dish = menu.dishes[dishIndex];
-		console.log(dish);
-		userTextArr['dish'] = dish;
-		if(!dish){
-			return new Promise(resolve => {
-				let slackMsg = {
-					text: `Hi ${userTextArr['user_name']}`,
-					attachments: [
-						{
-							title: `Order error`,
-							title_link: `https://tinker.press`,
-							fields: [
-								{
-									value: `You've order dish [${userTextArr['dishIndex']}], which not exist`,
-									short: true
-								}
-							],
-							color: 'danger',
-							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-							footer_icon: 'https://tinker.press/favicon-64x64.png',
-							ts: Math.floor(new Date().getTime() / 1000)
-						}
-					]
-				}
 
-				resolve(slackMsg);
-			});
+		if(!dish){
+			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextArr)));
 		}
 
-		let otherUsersBookDish = 'No one';
-		// Improve info by REMOVE him from his self
-		let otherUsersBookDishArr = dish.users.filter(userName => userName != userTextArr['sheet_name']);
-		if(otherUsersBookDishArr.length > 0)
-			otherUsersBookDish = otherUsersBookDishArr.join(', ');
-
-		let slackMsg = {
-			text: `Hi @${userTextArr['user_name']}`,
-			attachments: [
-				{
-					title: `Order on ${menu.date}`,
-					title_link: 'https://tinker.press/good-food-good-life.jpg',
-					fields: [
-						{
-							value: `You've ordered: \`${dish['name']}\``,
-							short: true
-						},
-						{
-							value: `${dish['price']}k`,
-							short: true
-						},
-						{
-							value: `Other users:`,
-							short: true
-						},
-						{
-							value: `${otherUsersBookDish}`,
-							short: true
-						}
-					],
-					color: '#3AA3E3',
-					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-					footer_icon: 'https://tinker.press/favicon-64x64.png',
-					ts: Math.floor(new Date().getTime() / 1000)
-				}
-			]
-		};
-
-		return new Promise(resolve => resolve(slackMsg));
+		return new Promise(resolve => resolve(slackMsgOrder(userTextArr, menu)));
 	});
 
 	return slackMsgPromise;
 }
 
 function updateOrder(userTextArr){
-	let getDateMenusPromise = require(`${__dirname}/getMenu`)(false);
+	/**
+	 * Should load new menu
+	 */
+	let getDateMenusPromise = require(`${__dirname}/getMenu`)(true);
 
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
-		if(!userTextArr['dish']){
-			return new Promise(resolve => resolve('User choose dishIndex, which not exist'));
+
+		let menu = whichMenu(userTextArr, dateMenus);
+		if(!menu || !menu.dishes[userTextArr['dishIndex']]){
+			return new Promise(res => res('Not right case to update order'));
 		}
-
-		// if(userTextArr['dish']){
-		let menu = whichMenuForOrder(userTextArr, dateMenus);
-		let selectedDishIndex = parseInt(userTextArr['dishIndex'], 10);
-		let dish = menu.dishes[selectedDishIndex];
-		// }
-
 		/**
 		 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
 		 */
@@ -429,7 +277,7 @@ function updateOrder(userTextArr){
 			dish.users.forEach((userName, userIndex) => {
 				if(userName == userTextArr['sheet_name']){
 					// store which dish need UPDATE
-					if(!preOrderDishIndexs.includes(index) && selectedDishIndex != index)
+					if(!preOrderDishIndexs.includes(index) && userTextArr['dishIndex'] != index)
 						preOrderDishIndexs.push(index);
 					// store which user need REMOVED
 					removingUserIndexs.push(userIndex);
@@ -472,10 +320,6 @@ function updateOrder(userTextArr){
 
 				// console.log(`${__dirname}/updateOrderToSheet`);
 				let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
-				// updatePromise.then(msg => console.log(msg));
-
-				// Update cache with what we have
-				writeCacheFile(dateMenus);
 
 				return updatePromise;
 			}
@@ -508,7 +352,7 @@ function buildCell(menu, dish){
 	return {cellAddress, cellVal};
 }
 
-function slackMsgView(userTextArr){
+function getViewMsgPromise(userTextArr){
 	let getDateMenusPromise = loadMenu();
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
@@ -553,7 +397,7 @@ function slackMsgView(userTextArr){
 	return slackMsgPromise;
 }
 
-function slackMsgDelete(userTextArr){
+function getDeleteMsgPromise(userTextArr){
 	let slackMsg = {
 		text: `Hi @${userTextArr['user_name']}`,
 		attachments: [
@@ -578,6 +422,7 @@ function slackMsgDelete(userTextArr){
 
 function deleteOrder(userTextArr){
 	let getDateMenusPromise = require(`${__dirname}/getMenu`)(false);
+
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 		let menu = whichMenu(userTextArr, dateMenus);
 
@@ -641,7 +486,7 @@ function deleteOrder(userTextArr){
 	return updatePromise;
 }
 
-function slackMsgName(userTextArr){
+function getNameMsgPromise(userTextArr){
 	let userSheetNameInCache = userTextArr['sheet_name'];
 	// Parse out which name he want to ask
 	let userText = userTextArr['text'];
@@ -741,41 +586,15 @@ function slackMsgName(userTextArr){
 }
 
 function storeName(userTextArr){
-	let userSheetNameInCache = userTextArr['sheet_name'];
-	// Parse out which name he want to ask
-	let userText = userTextArr['text'];
-	userText = userText.replace(/\s+/g, ' ');
-	let userTextArrTmp = userText.split(' ');
-	userTextArrTmp.splice(0, 1);
-	// let userSheetName = userText.replace('name ', '');
-	let userSheetName = userTextArrTmp.join(' ');
-	userTextArr['sheet_name'] = userSheetName;
-
-	if(userSheetName == '' && userSheetNameInCache){
-		return new Promise(resolve => resolve('User want to review name, no need to update'));
-	}
-
-	if(userSheetName == '' && !userSheetNameInCache){
-		return new Promise(resolve => resolve('User want to set name, but not submit name @@, no need to update'));
-	}
-
-	let mapName = require(`${__dirname}/lib/mapName`);
+	let mapName = storage.getItemSync('mapName');
 	mapName[userTextArr['user_name']] = userTextArr['sheet_name'];
 
-	return new Promise(resolve => {
-		let fs = require('fs');
+	storage.setItemSync('mapName', mapName);
 
-		fs.writeFile(`${__dirname}/lib/mapSlacknameUsername.json`, JSON.stringify(mapName), function(err){
-			if(err){
-				resolve(err);
-			}
-
-			resolve('Write mapSlacknameUsername.json success');
-		});
-	});
+	return new Promise(res => res('Store name success'));
 }
 
-function slackMsgHelp(userTextArr){
+function getHelpMsgPromise(userTextArr){
 	let slackMsg = {
 		text: `Hi @${userTextArr['user_name']}`,
 		attachments: [
@@ -955,33 +774,12 @@ function slackMsgReport(userTextArr){
 }
 
 function whichMenu(userTextArr, menus){
-	let today = new Date();
-	// let nextDay = new Date(today.setDate(today.getDate() + 1));
-
-	let userText = userTextArr['text'];
-	let userTextArrTmp = userText.split(' ');
-	let menuOnWhichDay = userTextArrTmp[1]; // undefined mon|tue|wed|thu
-
-	// Builde up menuDate
-	let menuDate;
-	// As normal
-	menuDate = new Date(today.setDate(today.getDate() + 1));
-	// FAIL when today is friday
-	let isFridaynMore = today.getUTCDay() >= 5;
-	if(isFridaynMore){
-		// MenuDate should set to the Monday of nextweek
-		let _ = require(`${__dirname}/lib/util`);
-		menuDate = _.mondayOfNextWeek();
-	}
-
-	if(menuOnWhichDay){
-		menuOnWhichDay = menuOnWhichDay.toLowerCase();
-		let _ = require(`${__dirname}/lib/util`);
-		menuDate = _.dayOfCurrentWeek(menuOnWhichDay);
-	}
-
+	let moment = require('moment');
+	let menuDate = userTextArr['whichDate'];
+	// console.log(menuDate.date());
 	let menu = menus.filter(menuX => {
-		return menuDate.getDate() == new Date(menuX.date).getDate();
+		// console.log(moment(menuX.date, 'D-MMM-YYYY').utcOffset(7*60).date());
+		return moment(menuX.date, 'D-MMM-YYYY').utcOffset(7*60).date() == menuDate.date();
 	})[0];
 
 	userTextArr['menuDate'] = menuDate;
@@ -1040,54 +838,88 @@ function slackMsgMenuFound(userTextArr, menu){
 	};
 }
 
-function whichDish(userTextArr){
-	let dishIndex = parseInt(userTextArr[1], 10);
-	userTextArr['dishIndex'] = userTextArr[1];
-
-	if(isNaN(dishIndex)){
-		dishIndex = parseInt(userTextArr[2], 10);
-		userTextArr['dishIndex'] = userTextArr[2];
+function slackMsgNoDishIndex(userTextArr){
+	let slackMsg = {
+		text: `Hi @${userTextArr['user_name']}`,
+		attachments:[
+			{
+				title: `Order error`,
+				title_link: `https://tinker.press`,
+				fields: [
+					{
+						title: `Please type /lunch order [mon|tue] [dish-num]`,
+						value: `[dish-num]: required`,
+						short: true
+					}
+				],
+				color: 'danger',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
 	}
 
-	if(isNaN(dishIndex)){
-		return undefined;
-	}
-
-	return dishIndex;
+	return slackMsg;
 }
 
-function whichMenuForOrder(userTextArr, menus){
-	let today = new Date();
-	// let nextDay = new Date(today.setDate(today.getDate() + 1));
-
-	let userText = userTextArr['text'];
-	let userTextArrTmp = userText.split(' ');
-	let menuOnWhichDay = userTextArrTmp[1]; // 1|2|3 mon|tue|wed|thu
-
-	// Builde up menuDate
-	let menuDate;
-	// As normal
-	menuDate = new Date(today.setDate(today.getDate() + 1));
-	// FAIL when today is friday
-	let isFridaynMore = today.getUTCDay() >= 5;
-	if(isFridaynMore){
-		// MenuDate should set to the Monday of nextweek
-		let _ = require(`${__dirname}/lib/util`);
-		menuDate = _.mondayOfNextWeek();
+function slackMsgNoMenu(userTextArr){
+	let slackMsg = {
+		text: `Hi @${userTextArr['user_name']}`,
+		attachments:[
+			{
+				title: `Menu error`,
+				title_link: `https://tinker.press`,
+				text: `Menu on ${day} not exist`,
+				color: 'danger',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
 	}
 
-	// Check menuOnWhichDay is truthly not dish-num
-	if(isNaN(parseInt(menuOnWhichDay, 10))){
-		menuOnWhichDay = menuOnWhichDay.toLowerCase();
-		let _ = require(`${__dirname}/lib/util`);
-		menuDate = _.dayOfCurrentWeek(menuOnWhichDay);
-	}
+	return slackMsg;
+}
 
-	let menu = menus.filter(menuX => {
-		return menuDate.getDate() == new Date(menuX.date).getDate();
-	})[0];
+function slackMsgOrder(userTextArr, menu){
+	let otherUsersBookDish = 'No one';
+	// Improve info by REMOVE him from his self
+	let otherUsersBookDishArr = dish.users.filter(userName => userName != userTextArr['sheet_name']);
+	if(otherUsersBookDishArr.length > 0)
+		otherUsersBookDish = otherUsersBookDishArr.join(', ');
 
-	userTextArr['menuDate'] = menuDate;
+	let slackMsg = {
+		text: `Hi @${userTextArr['user_name']}`,
+		attachments: [
+			{
+				title: `Order on ${menu.date}`,
+				title_link: 'https://tinker.press/good-food-good-life.jpg',
+				fields: [
+					{
+						value: `You've ordered: \`${dish['name']}\``,
+						short: true
+					},
+					{
+						value: `${dish['price']}k`,
+						short: true
+					},
+					{
+						value: `Other users:`,
+						short: true
+					},
+					{
+						value: `${otherUsersBookDish}`,
+						short: true
+					}
+				],
+				color: '#3AA3E3',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	};
 
-	return menu;
+	return slackMsg;
 }
