@@ -361,9 +361,9 @@ function getViewMsgPromise(userTextArr){
 		console.log(userTextArr['sheet_name']);
 		menu.dishes.forEach(dish => {
 			dish.users.forEach(userName => {
-				console.log(userName);
+				// console.log(userName);
 				if(userName == userTextArr['sheet_name'])
-					orderedDish = `${dish['name']} - ${dish['price']}`;
+					orderedDish = `${dish['name']} - ${dish['price']}k`;
 			});
 		});
 
