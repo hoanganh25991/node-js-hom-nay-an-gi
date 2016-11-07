@@ -254,10 +254,7 @@ function getOrderMsgPromise(userTextArr){
 }
 
 function updateOrder(userTextArr){
-	/**
-	 * Should load new menu
-	 */
-	let getDateMenusPromise = require(`${__dirname}/lib/getMenu`)(true);
+	let getDateMenusPromise = require(`${__dirname}/lib/getMenu`)(false);
 
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 
@@ -319,6 +316,8 @@ function updateOrder(userTextArr){
 				dish.users.push(userTextArr['sheet_name']);
 				let cell = buildCell(menu, dish);
 				let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
+
+				writeCacheFile(dateMenus);
 
 				return updatePromise;
 			}
@@ -421,7 +420,7 @@ function getDeleteMsgPromise(userTextArr){
 }
 
 function deleteOrder(userTextArr){
-	let getDateMenusPromise = require(`${__dirname}/getMenu`)(false);
+	let getDateMenusPromise = require(`${__dirname}/lib/getMenu`)(false);
 
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 		let menu = whichMenu(userTextArr, dateMenus);
@@ -464,7 +463,7 @@ function deleteOrder(userTextArr){
 			let preOrderDish = menu.dishes[preOrderDishIndex];
 			let cell = buildCell(menu, preOrderDish);
 
-			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
+			let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 			updatePromise
 				.then(msg => console.log(msg))
 				.catch(err => console.log(err));
