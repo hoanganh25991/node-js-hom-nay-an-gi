@@ -3,7 +3,7 @@
  * @type {number}
  */
 const buildReportCycle = 10 * 60000;
-let buildReport = require(`${__dirname}/updateToLunchMoney.js`);
+let buildReport = require(`${__dirname}/buildReportToLunchMoney.js`);
 setInterval(function(){
 	let buildReportPromise = buildReport();
 	
@@ -21,7 +21,9 @@ setInterval(function(){
  */
 let bodyParser = require('body-parser');
 let app = require('express')();
-// Detect mode
+/**
+ * Detect mode
+ */
 let config = {mode: 'dev'};
 try{
 	config = require(`${__dirname}/config`);
