@@ -8,3 +8,4 @@
 /lib/nuiBayUtItConfig.json
 /menus.json
 /lib/loadDefaultConfig.js
+/.node-persist
