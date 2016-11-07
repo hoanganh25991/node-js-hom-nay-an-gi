@@ -298,7 +298,7 @@ function updateOrder(userTextArr){
 			let preOrderDish = menu.dishes[preOrderDishIndex];
 			let cell = buildCell(menu, preOrderDish);
 
-			let updatePromise = require(`${__dirname}/updateOrderToSheet`)(cell);
+			let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 			// updatePromise
 			// 	.then(msg => console.log(msg))
 			// 	.catch(err => console.log(err));
