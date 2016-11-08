@@ -4,14 +4,14 @@
  */
 const buildReportCycle = 10 * 60000;
 let buildReport = require(`${__dirname}/lib/buildReport`);
-setInterval(function(){
-	let buildReportPromise = buildReport();
-	buildReportPromise.then(() => {
-		let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
-		let fs = require('fs');
-		fs.writeFileSync(`${__dirname}/buildReport.log`, content, {flag: 'a'});
-	})
-}, buildReportCycle);
+// setInterval(function(){
+// 	let buildReportPromise = buildReport();
+// 	buildReportPromise.then(() => {
+// 		let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
+// 		let fs = require('fs');
+// 		fs.writeFileSync(`${__dirname}/buildReport.log`, content, {flag: 'a'});
+// 	})
+// }, buildReportCycle);
 
 /**
  * Create server
