@@ -9,7 +9,7 @@ setInterval(function(){
 	buildReportPromise.then(() => {
 		let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
 		let fs = require('fs');
-		fs.writeFileSync(`${__dirname}/log/buildReport.log`, content, {flag: 'a'});
+		fs.writeFileSync(`${__dirname}/buildReport.log`, content, {flag: 'a'});
 	})
 }, buildReportCycle);
 
