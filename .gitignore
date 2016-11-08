@@ -9,3 +9,4 @@
 /menus.json
 /lib/loadDefaultConfig.js
 /.node-persist
+/manipulate-config.js
