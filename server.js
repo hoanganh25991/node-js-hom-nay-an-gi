@@ -19,6 +19,7 @@ let checkMenuUpdate = require(`${__dirname}/lib/checkMenuUpdate`);
 setInterval(function(){
 	checkMenuUpdate();
 }, 10 * 60000);
+// }, 5000);
 
 /**
  * Create server
