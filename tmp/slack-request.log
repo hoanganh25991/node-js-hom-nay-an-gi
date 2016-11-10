@@ -1,0 +1,10 @@
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D276QQFKN',
+  channel_name: 'directmessage',
+  user_id: 'U276TC8K0',
+  user_name: 'hoanganh25991',
+  command: '/lunch',
+  text: 'order 0',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/102323651443/h1W1b1CtYHFizG117ZJ7b4MF' }

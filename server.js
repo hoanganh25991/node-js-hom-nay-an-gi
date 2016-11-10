@@ -2,16 +2,21 @@
  * Build report 10 minutes interval
  * @type {number}
  */
-const buildReportCycle = 10 * 60000;
 let buildReport = require(`${__dirname}/lib/buildReport`);
-// setInterval(function(){
-// 	let buildReportPromise = buildReport();
-// 	buildReportPromise.then(() => {
-// 		let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
-// 		let fs = require('fs');
-// 		fs.writeFileSync(`${__dirname}/buildReport.log`, content, {flag: 'a'});
-// 	})
-// }, buildReportCycle);
+setInterval(function(){
+	//noinspection JSValidateTypes
+	let buildReportPromise = buildReport(false);
+	buildReportPromise.then(() => {
+		let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
+		let fs = require('fs');
+		fs.writeFileSync(`${__dirname}/buildReport.log`, content, {flag: 'a'});
+	})
+}, 60 * 60000);
+
+let checkMenuUpdate = require(`${__dirname}/lib/checkMenuUpdate`);
+setInterval(function(){
+	checkMenuUpdate();
+}, 10 * 60000);
 
 /**
  * Create server
@@ -154,24 +159,6 @@ app.get('/', function(req, res){
 
 	resPromise.then(slackMsg => {
 		res.send(slackMsg);
-	});
-});
-
-app.get('/menu', function(req, res){
-	let getDateMenusPromise = require(`${__dirname}/getMenu`)();
-	getDateMenusPromise.then(dateMenus =>{
-		let menu = dateMenus.filter(dateMenu =>{
-			let date = new Date().getDate();
-			console.log(date);
-			let menuDate = new Date(dateMenu.date).getDate();
-			console.log(menuDate);
-
-			return date == menuDate;
-		});
-		if(menu.length == 0)
-			menu[0] = dateMenus[0];
-
-		res.send(JSON.stringify(menu[0]));
 	});
 });
 
