@@ -4,6 +4,7 @@
  */
 let buildReport = require(`${__dirname}/lib/buildReport`);
 setInterval(function(){
+	// console.log('Run buildReport interval');
 	//noinspection JSValidateTypes
 	let buildReportPromise = buildReport(false);
 	buildReportPromise.then(() => {
@@ -12,6 +13,7 @@ setInterval(function(){
 		fs.writeFileSync(`${__dirname}/buildReport.log`, content, {flag: 'a'});
 	})
 }, 60 * 60000);
+// }, 10000);
 
 let checkMenuUpdate = require(`${__dirname}/lib/checkMenuUpdate`);
 setInterval(function(){
