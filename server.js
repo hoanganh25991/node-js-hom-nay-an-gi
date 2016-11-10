@@ -218,7 +218,8 @@ function getOrderMsgPromise(userTextArr){
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		// let dayOfWeek = new Date().getDay() - 1;
-		if(!userTextArr['dishIndex']){
+		console.log('dishIndex', userTextArr['dishIndex']);
+		if(userTextArr['dishIndex'] == undefined){
 			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextArr)));
 		}
 
