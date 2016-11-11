@@ -343,12 +343,12 @@ function buildCell(menu, dish, userTextArr){
 	 */
 	console.log(today.format());
 	console.log(menuDate.format());
-	if(!menuDate.isSame(today, 'w')){
+	if(!menuDate.isSame(today, 'week')){
 		console.log('Different week');
 		startRow = sheetNuiBayUtIt['newMenuRange'].match(/\d+/)[0];
 		startRow = parseInt(startRow, 10);
 
-		if(!menuDate.isSame(today, 'w')){
+		if(!menuDate.isSame(today, 'week')){
 			console.log(`Menu date not match ANYTHING`);
 		}
 	}
