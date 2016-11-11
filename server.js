@@ -281,7 +281,7 @@ function updateOrder(userTextArr){
 			// Run update in to sheet
 			// NEED PROMISE ALL
 			let preOrderDish = menu.dishes[preOrderDishIndex];
-			let cell = buildCell(menu, preOrderDish);
+			let cell = buildCell(menu, preOrderDish, userTextArr);
 
 			let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 			// updatePromise
@@ -303,7 +303,7 @@ function updateOrder(userTextArr){
 				return new Promise(resolve => resolve('Your order saved\nNo need to resubmit'));
 			}else{
 				dish.users.push(userTextArr['sheet_name']);
-				let cell = buildCell(menu, dish);
+				let cell = buildCell(menu, dish, userTextArr);
 				let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 
 				writeCacheFile(dateMenus);
@@ -316,7 +316,7 @@ function updateOrder(userTextArr){
 	return updatePromise;
 }
 
-function buildCell(menu, dish){
+function buildCell(menu, dish, userTextArr){
 	let col = menu.col;
 	let row = dish.row;
 	// Build cell address, base on dish-row, menu-col
@@ -325,8 +325,33 @@ function buildCell(menu, dish){
 	// console.log(col, row, sheetNuiBayUtIt);
 	// ONLY read out the first one A558:AD581
 	// Build up row, col logic
+	/** 
+	 * FALL CASE
+	 * when new_range available, what the heck???
+	 * menu.col still right, BUT, startRow need to change
+	 * @type {[type]}
+	 */
+	let moment = require('moment');
+	let today = moment().utcOffset(storage.getItemSync('timezone') * 60);
+	let menuDate = moment(menu.date, 'D-MMM-YYYY').utcOffset(storage.getItemSync('timezone') * 60);
+
 	let startRow = sheetNuiBayUtIt['menuRange'].match(/\d+/)[0];
 	startRow = parseInt(startRow, 10);
+
+	/**
+	 * When new range come, this fail
+	 */
+	console.log(today.format());
+	console.log(menuDate.format());
+	if(!menuDate.isSame(today, 'w')){
+		console.log('Different week');
+		startRow = sheetNuiBayUtIt['newMenuRange'].match(/\d+/)[0];
+		startRow = parseInt(startRow, 10);
+
+		if(!menuDate.isSame(today, 'w')){
+			console.log(`Menu date not match ANYTHING`);
+		}
+	}
 	row += startRow;
 	col += 2; //col for menu, +2 for userList
 	// Parse to A1 notation
@@ -450,7 +475,7 @@ function deleteOrder(userTextArr){
 			// Run update in to sheet
 			// NEED PROMISE ALL
 			let preOrderDish = menu.dishes[preOrderDishIndex];
-			let cell = buildCell(menu, preOrderDish);
+			let cell = buildCell(menu, preOrderDish, userTextArr);
 
 			let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 			updatePromise
