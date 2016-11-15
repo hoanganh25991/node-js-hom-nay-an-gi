@@ -10,3 +10,4 @@
 /lib/loadDefaultConfig.js
 /.node-persist
 /manipulate-config.js
+/buildReport.log
