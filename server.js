@@ -1,4 +1,8 @@
 /**
+ * THIS IS FOR MONITOR ON HTTP LAG on keymetric
+ */
+require('pmx').init();
+/**
  * Build report 10 minutes interval
  * @type {number}
  */
