@@ -1,18 +1,19 @@
 /**
  * THIS IS FOR MONITOR ON HTTP LAG on keymetric
  */
-require("appdynamics").profile({
-	controllerHostName: 'paid108.saas.appdynamics.com',
-	controllerPort: 443, 
+// require("appdynamics").profile({
+// 	controllerHostName: 'paid108.saas.appdynamics.com',
+// 	controllerPort: 443, 
+// 	// controllerPort: 1234, 
 
-	// If SSL, be sure to enable the next line
-	controllerSslEnabled: true,
-	accountName: 'originallyussg',
-	accountAccessKey: 'j3i8ckm981gf',
-	applicationName: 'Hom nay an gi',
-	tierName: 'AppDynamic',
-	nodeName: 'process' // The controller will automatically append the node name with a unique number
-});
+// 	// If SSL, be sure to enable the next line
+// 	controllerSslEnabled: true,
+// 	accountName: 'originallyussg',
+// 	accountAccessKey: 'j3i8ckm981gf',
+// 	applicationName: 'Hom nay an gi',
+// 	tierName: 'AppDynamic',
+// 	nodeName: 'process' // The controller will automatically append the node name with a unique number
+// });
 // require('pmx').init();
 /**
  * Build report 10 minutes interval
