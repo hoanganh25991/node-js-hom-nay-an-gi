@@ -298,7 +298,7 @@ function updateOrder(userTextArr){
 			// Run update in to sheet
 			// NEED PROMISE ALL
 			let preOrderDish = menu.dishes[preOrderDishIndex];
-			let cell = buildCell(menu, preOrderDish, userTextArr);
+			let cell = buildCell(menu, preOrderDish);
 
 			let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 			// updatePromise
@@ -320,7 +320,7 @@ function updateOrder(userTextArr){
 				return new Promise(resolve => resolve('Your order saved\nNo need to resubmit'));
 			}else{
 				dish.users.push(userTextArr['sheet_name']);
-				let cell = buildCell(menu, dish, userTextArr);
+				let cell = buildCell(menu, dish);
 				let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 
 				writeCacheFile(dateMenus);
@@ -333,7 +333,7 @@ function updateOrder(userTextArr){
 	return updatePromise;
 }
 
-function buildCell(menu, dish, userTextArr){
+function buildCell(menu, dish){
 	let col = menu.col;
 	let row = dish.row;
 	// Build cell address, base on dish-row, menu-col
@@ -492,7 +492,7 @@ function deleteOrder(userTextArr){
 			// Run update in to sheet
 			// NEED PROMISE ALL
 			let preOrderDish = menu.dishes[preOrderDishIndex];
-			let cell = buildCell(menu, preOrderDish, userTextArr);
+			let cell = buildCell(menu, preOrderDish);
 
 			let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 			updatePromise
