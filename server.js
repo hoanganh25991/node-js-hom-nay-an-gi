@@ -1,4 +1,9 @@
 /**
+ * This is TRACE
+ */
+require('@risingstack/trace');
+// your application's code
+/**
  * THIS IS FOR MONITOR ON HTTP LAG on keymetric
  */
 // require("appdynamics").profile({
