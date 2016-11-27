@@ -81,6 +81,11 @@ app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-w
  * debug with rollbar
  */
 app.use(rollbar.errorHandler('4a831c1b57ff4b6ba24c49fd9bf36a66'));
+app.get('/error/rollbar', function(req, res){
+	rollbar.reportMessage('Test rollbar debug-track', 'error', req, function(){
+		console.log('Test rollbar debug-track');
+	});
+})
 
 /**
  * Listen to command
