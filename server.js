@@ -1,7 +1,7 @@
 /**
  * This is TRACE
  */
-require('@risingstack/trace');
+// require('@risingstack/trace');
 // your application's code
 /**
  * THIS IS FOR MONITOR ON HTTP LAG on keymetric
@@ -75,7 +75,12 @@ if(config.mode == 'production'){
 }
 
 app.use(bodyParser.json()); // for parsing application/json
+let rollbar = require('rollbar');
 app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
+/**
+ * debug with rollbar
+ */
+app.use(rollbar.errorHandler('4a831c1b57ff4b6ba24c49fd9bf36a66'));
 
 /**
  * Listen to command

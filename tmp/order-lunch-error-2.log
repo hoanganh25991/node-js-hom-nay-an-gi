@@ -1,0 +1,505 @@
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 2): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 3): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 4): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 5): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 6): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 7): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 8): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 9): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 10): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 11): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 12): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 13): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 14): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 15): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 16): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 17): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 18): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 19): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 20): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 21): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 22): The API returned an error: Error: Request had invalid authentication credentials.
+(node:5197) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 23): The API returned an error: Error: Request had invalid authentication credentials.
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+Error: Cannot find module '@risingstack/trace'
+    at Function.Module._resolveFilename (module.js:455:15)
+    at Function.Module._load (module.js:403:25)
+    at Function._load (/root/.npm-global/lib/node_modules/pm2/node_modules/pmx/lib/transaction.js:62:21)
+    at Module.require (module.js:483:17)
+    at require (internal/module.js:20:19)
+    at Object.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/server.js:4:1)
+    at Module._compile (module.js:556:32)
+    at Object.Module._extensions..js (module.js:565:10)
+    at Module.load (module.js:473:32)
+    at tryModuleLoad (module.js:432:12)
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 2): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 3): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 4): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 5): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 6): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 7): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 8): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 9): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 10): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 11): The API returned an error: Error: Request had invalid authentication credentials.
+error: [trace] There was an error connecting to the Trace servers when sending data. Make sure your servers can reach trace-collector-api.risingstack.com
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 12): The API returned an error: Error: Request had invalid authentication credentials.
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 13): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 14): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 15): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 16): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 17): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 18): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 19): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 20): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 21): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 22): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 23): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 24): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 25): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 26): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 27): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 28): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 29): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 30): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 31): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 32): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 33): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 34): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 35): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 36): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 37): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 38): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 39): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 40): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 41): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 42): The API returned an error: Error: deleted_client
+error: [trace] There was an error connecting to the Trace servers when sending data. Make sure your servers can reach trace-collector-api.risingstack.com
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 43): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 44): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 45): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 46): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 47): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 48): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 49): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 50): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 51): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 52): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 53): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 54): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 55): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 56): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 57): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 58): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 59): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 60): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 61): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 62): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 63): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 64): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 65): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 66): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 67): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 68): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 69): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 70): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 71): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 72): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 73): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 74): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 75): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 76): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 77): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 78): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 79): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 80): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 81): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 82): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 83): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 84): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 85): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 86): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 87): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 88): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 89): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 90): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 91): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 92): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 93): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 94): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 95): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 96): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 97): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 98): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 99): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 100): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 101): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 102): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 103): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 104): The API returned an error: Error: deleted_client
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 106): ReferenceError: day is not defined
+(node:23940) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 107): TypeError: Cannot read property 'filter' of undefined

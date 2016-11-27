@@ -1,0 +1,2506 @@
+HTTPS server listening on port 3000!
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+HTTPS server listening on port 3000!
+HTTPS server listening on port 3000!
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D276QQFKN',
+  channel_name: 'directmessage',
+  user_id: 'U276TC8K0',
+  user_name: 'hoanganh25991',
+  command: '/lunch',
+  text: 'menu',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/104615331971/FJkrFodLAsPcucnX1kHZ0Rrl' }
+HTTPS server listening on port 3000!
+HTTPS server listening on port 3000!
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D2ZQ23TF0',
+  channel_name: 'directmessage',
+  user_id: 'U2Z6S7PC5',
+  user_name: 'hoangnhat',
+  command: '/lunch',
+  text: 'menu fri',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/105079479123/6uONvSgjkUQVOiJKET0eIKrT' }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'C0267LQRM',
+  channel_name: 'chitchat',
+  user_id: 'U276VFS9F',
+  user_name: 'torinnguyen',
+  command: '/lunch',
+  text: 'view today',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/105036639088/c2a4gEipnE0ABcjlUK6WM7Mb' }
+Torin OUS
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'C0267LQS7',
+  channel_name: 'hoipos',
+  user_id: 'U276VFS9F',
+  user_name: 'torinnguyen',
+  command: '/lunch',
+  text: 'view today',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/105095225840/6ahCgLU6zncaDV3Y0q4nEjSN' }
+Torin OUS
+HTTPS server listening on port 3000!
+HTTPS server listening on port 3000!
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+{ user_name: 'hoanganh25991', text: 'help' }
+{ user_name: 'hoanganh25991', text: 'help' }
+{ user_name: 'hoanganh25991', text: 'help' }
+{ user_name: 'hoanganh25991', text: 'help' }
+{ user_name: 'hoanganh25991', text: 'help' }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+isNewMenuAvailable false, is friday, hours > 9
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D276VFVMF',
+  channel_name: 'directmessage',
+  user_id: 'U276VFS9F',
+  user_name: 'torinnguyen',
+  command: '/lunch',
+  text: 'view today',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/106381686564/ERSWf6dQd2ttpVEOF1PkAUoA' }
+Torin OUS
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D275EJ3T5',
+  channel_name: 'directmessage',
+  user_id: 'U277C2AG2',
+  user_name: 'nguyetquoi',
+  command: '/lunch',
+  text: 'view today',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/106988524886/RaShVkDwfGcLKMtNzeRmzOCQ' }
+Quoi OUS
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 46
+292
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+isNewMenuAvailable false, is friday, hours > 9
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+isNewMenuAvailable false, is friday, hours > 9
+undefined
+undefined
+undefined
+undefined
+Find out NEW menu
+Got newMenuRange (only range for Monday to save load data)
+{ id: '1ZRaQ0B3PNaJmix9BQXe3XHpOpJKa_6l6puMpO57AYJY',
+  activeSheetName: 'Gia chanh Cam Tuyet',
+  menuRange: 'A612:637',
+  newMenuRange: 'A640:e665' }
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+A640:e665
+New menu available, @@, start load it
+getNewMenuInWeek success
+Chunk row success, chunkedRows.length 1
+Added newMenu into this week dateMenus, dateMenus.length 6
+[32mStart write cache file[0m
+[32mWriteStream for cache file success[0m
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D276QQFKN',
+  channel_name: 'directmessage',
+  user_id: 'U276TC8K0',
+  user_name: 'hoanganh25991',
+  command: '/lunch',
+  text: 'menu',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/106341780994/iOjrt7GzdTJfaBmrLGvSf9C1' }
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D2ZQD8VN3',
+  channel_name: 'directmessage',
+  user_id: 'U276VFS9F',
+  user_name: 'torinnguyen',
+  command: '/lunch',
+  text: 'menu mon',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/106417520148/GUoHBfKk7Z9TnhiFkOIfZ9aH' }
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D276VSP5X',
+  channel_name: 'directmessage',
+  user_id: 'U276GG9JQ',
+  user_name: 'thanhtu',
+  command: '/lunch',
+  text: 'help',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/107016372086/59zU69PIKoIPUve05aHOlptz' }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+A640:e665
+New menu available, @@, start load it
+getNewMenuInWeek success
+Chunk row success, chunkedRows.length 1
+Added newMenu into this week dateMenus, dateMenus.length 6
+46 46
+292
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: Request had invalid authentication credentials.
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:85:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7)
+  code: 401,
+  errors: 
+   [ { message: 'Request had invalid authentication credentials.',
+       domain: 'global',
+       reason: 'unauthorized' } ] }
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'C2QH41CSC',
+  channel_name: 'goodthingsmustshare',
+  user_id: 'U276VFS9F',
+  user_name: 'torinnguyen',
+  command: '/lunch',
+  text: 'order 13',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/106442674596/cAA3x1fZ6pAGdKalXOusCTky' }
+dishIndex 13
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+A640:e665
+New menu available, @@, start load it
+getNewMenuInWeek success
+Chunk row success, chunkedRows.length 1
+Added newMenu into this week dateMenus, dateMenus.length 6
+preOrderDishIndexs []
+Remove user from others book success
+2016-11-18T16:21:25+07:00
+2016-11-21T12:00:00+07:00
+Different week
+Menu date not match ANYTHING
+build Cell C656 Torin OUS
+[32mWriteStream for cache file success[0m
+Update order success
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+is Monday, isUpdateNewMenuRange false
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D2YDS9HFB',
+  channel_name: 'directmessage',
+  user_id: 'U2Z6S7PC5',
+  user_name: 'hoangnhat',
+  command: '/lunch',
+  text: 'view',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/107787642871/9VGG06dGWaLsU3m5UmxpdiAD' }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D276VFVMF',
+  channel_name: 'directmessage',
+  user_id: 'U276VFS9F',
+  user_name: 'torinnguyen',
+  command: '/lunch',
+  text: 'view today',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/107184049236/9vwOu7o4OqTbQwZCuvhcL8Fi' }
+Torin OUS
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+{ Error: deleted_client
+    at Request._callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/google-auth-library/lib/transporters.js:81:15)
+    at Request.self.callback (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:187:22)
+    at emitTwo (events.js:106:13)
+    at Request.emit (events.js:191:7)
+    at Request.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:1044:10)
+    at emitOne (events.js:96:13)
+    at Request.emit (events.js:188:7)
+    at IncomingMessage.<anonymous> (/var/www/html/node-js-hom-nay-an-gi/node_modules/request/request.js:965:12)
+    at emitNone (events.js:91:20)
+    at IncomingMessage.emit (events.js:185:7) code: 401 }
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D276QQFKN',
+  channel_name: 'directmessage',
+  user_id: 'U276TC8K0',
+  user_name: 'hoanganh25991',
+  command: '/lunch',
+  text: 'men',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/107732023284/hMiIynYqi0uBlArcAywCC8nG' }
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D276QQFKN',
+  channel_name: 'directmessage',
+  user_id: 'U276TC8K0',
+  user_name: 'hoanganh25991',
+  command: '/lunch',
+  text: 'menu',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/108331146198/XjUwq0ql8TEwZJz2QbHP21nt' }
+Build report run, buildNow val false
+buildRepot auto
+buildRepot rule OK
+Chunk row success, chunkedRows.length 5
+Parse dateMenus success, dateMenus.length:  5
+46 47
+startRow for new week: 300
+Start call getRowsFromStartRow
+Success call getRowsFromStartRow
+row has lenght:  56
+row has lenght:  0
+row has lenght:  54
+row has lenght:  0
+row has lenght:  56
+Add up 3 to startRow
+303
+{ token: 'tbpeHW31gFy8nKrFNg7EnX3B',
+  team_id: 'T0267LQRD',
+  team_domain: 'originally',
+  channel_id: 'D276QQFKN',
+  channel_name: 'directmessage',
+  user_id: 'U276TC8K0',
+  user_name: 'hoanganh25991',
+  command: '/lunch',
+  text: 'menu',
+  response_url: 'https://hooks.slack.com/commands/T0267LQRD/107743648437/Zc58QSFxZ1csowtKoamrF0kG' }
