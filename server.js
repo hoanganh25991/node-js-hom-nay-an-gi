@@ -85,6 +85,7 @@ app.get('/error/rollbar', function(req, res){
 	rollbar.reportMessage('Test rollbar debug-track', 'error', req, function(){
 		console.log('Test rollbar debug-track');
 	});
+	res.send('Rollbar has reported debug msg');
 })
 
 /**
