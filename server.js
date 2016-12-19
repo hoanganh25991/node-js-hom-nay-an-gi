@@ -103,7 +103,7 @@ app.get('/', function(req, res){
 	 * @type {string[]}
 	 */
 	let cmdsDependOnUsername = ['order', 'view', 'delete'];
-	if(!userTextArr['sheet_name'] && cmdsDependOnUsername.includes(userTextArr[0])){
+	if(!userTextArr['sheet_name'] && cmdsDependOnUsername.includes(userTextArr['cmd'])){
 		slackMsgCmdNeedUserName(userTextArr).then(slackMsg => {
 			res.send(slackMsg);
 		});
