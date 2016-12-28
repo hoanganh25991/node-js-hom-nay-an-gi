@@ -4,7 +4,8 @@
   "description": "node-js-google-drive-api-get-started",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node server"
   },
   "author": "Anh Le Hoang",
   "license": "MIT",
@@ -21,6 +22,7 @@
     "natural": "^0.4.0",
     "node-persist": "^2.0.7",
     "pmx": "^0.6.8",
+    "request": "^2.79.0",
     "rollbar": "^0.6.3"
   },
   "devDependencies": {

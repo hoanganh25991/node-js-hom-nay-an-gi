@@ -94,6 +94,7 @@ app.get('/error/rollbar', function(req, res){
 let _ = require(`${__dirname}/lib/util`);
 let parseUserText = require(`${__dirname}/lib/parseUserText`);
 let storage = _.getStorage();
+let request = require('request');
 app.get('/', function(req, res){
 	console.log(req.query);
 	let userTextArr = parseUserText(req);
@@ -135,6 +136,23 @@ app.get('/', function(req, res){
 			break;
 		case 'view':
 			resPromise = getViewMsgPromise(userTextArr);
+			console.log(userTextArr['response_url']);
+			if(userTextArr['response_url']){
+				let latestViewMsgPromise = getLastestViewMsgPromise(userTextArr);
+				latestViewMsgPromise.then(slackMsg => {
+					var options = {
+						method: 'POST',
+						url: userTextArr['response_url'],
+						body: slackMsg
+					};
+
+					request(options, function (error, response, body) {
+						if (error) throw new Error(error);
+
+						console.log(body);
+					});
+				});
+			}
 			break;
 		case 'cancel':
 		case 'delete':
@@ -397,7 +415,34 @@ function buildCell(menu, dish){
 }
 
 function getViewMsgPromise(userTextArr){
-	let getDateMenusPromise = loadMenu();
+	let slackMsg = {
+		text: `Hi @${userTextArr['user_name']}`,
+		attachments: [
+			{
+				title: `...looking to Google Sheet`,
+				title_link: `https://tinker.press`,
+				fields: [
+					{
+						value: '',
+						short: true
+					}
+				],
+				// color: '#3AA3E3',
+				// footer: 'Type /lunch order [dish num], to order',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	};
+
+	let slackMsgPromise = Promise.resolve(slackMsg);
+
+	return slackMsgPromise;
+}
+
+function getLastestViewMsgPromise(userTextArr){
+	let getDateMenusPromise = require(`${__dirname}/lib/getMenu`)(true);
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		let  menu = whichMenu(userTextArr, menus);
