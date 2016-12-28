@@ -143,7 +143,7 @@ app.get('/', function(req, res){
 					var options = {
 						method: 'POST',
 						url: userTextArr['response_url'],
-						body: slackMsg
+						body: JSON.stringify(slackMsg)
 					};
 
 					request(options, function (error, response, body) {
