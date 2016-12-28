@@ -677,6 +677,7 @@ function storeName(userTextArr){
 }
 
 function getHelpMsgPromise(userTextArr){
+	let cmd = userTextArr['command'];
 	let slackMsg = {
 		text: `Hi @${userTextArr['user_name']}`,
 		attachments: [
@@ -686,47 +687,47 @@ function getHelpMsgPromise(userTextArr){
 				fields: [
 					{
 						title: `Menu today`,
-						value: `Type /lunch menu`,
+						value: `Type ${cmd} menu`,
 						short: true
 					},
 					{
 						title: `Menu on [day]`,
-						value: `Type /lunch menu [mon|tue|..]`,
+						value: `Type ${cmd} menu [mon|tue|..]`,
 						short: true
 					},
 					{
 						title: `Order dish`,
-						value: `Type /lunch order [dish num]\n[dish num]: dish's order in menu`,
+						value: `Type ${cmd} order [dish num]\n[dish num]: dish's order in menu`,
 						short: true
 					},
 					{
 						title: `Order dish on [day]`,
-						value: `Type /lunch order [mon|tue..] [dish num]`,
+						value: `Type ${cmd} order [mon|tue..] [dish num]`,
 						short: true
 					},
 					{
 						title: `Review order`,
-						value: `Type /lunch view [mon|tue..]`,
+						value: `Type ${cmd} view [mon|tue..]`,
 						short: true
 					},
 					{
 						title: `Delete order`,
-						value: `Type /lunch delete|cancel`,
+						value: `Type ${cmd} delete|cancel`,
 						short: true
 					},
 					{
 						title: `Set name`,
-						value: `Type /lunch name [name in google sheet]`,
+						value: `Type ${cmd} name [name in google sheet]`,
 						short: true
 					},
 					{
 						title: `View name`,
-						value: `Type /lunch name`,
+						value: `Type ${cmd} name`,
 						short: true
 					},
 					{
 						title: `Build report`,
-						value: `Type /lunch report`,
+						value: `Type ${cmd} report`,
 						short: true
 					},
 				],
