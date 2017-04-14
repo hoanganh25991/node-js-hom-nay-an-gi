@@ -1,116 +1,25 @@
-/**
- * This is TRACE
- */
-// require('@risingstack/trace');
-// your application's code
-/**
- * THIS IS FOR MONITOR ON HTTP LAG on keymetric
- */
-// require("appdynamics").profile({
-// 	controllerHostName: 'paid108.saas.appdynamics.com',
-// 	controllerPort: 443, 
-// 	// controllerPort: 1234, 
-
-// 	// If SSL, be sure to enable the next line
-// 	controllerSslEnabled: true,
-// 	accountName: 'originallyussg',
-// 	accountAccessKey: 'j3i8ckm981gf',
-// 	applicationName: 'Hom nay an gi',
-// 	tierName: 'AppDynamic',
-// 	nodeName: 'process' // The controller will automatically append the node name with a unique number
-// });
-// require('pmx').init();
-/**
- * Build report 10 minutes interval
- * @type {number}
- */
-let buildReport = require(`${__dirname}/lib/buildReport`);
-setInterval(function(){
-	// console.log('Run buildReport interval');
-	//noinspection JSValidateTypes
-	let buildReportPromise = buildReport(false);
-	buildReportPromise.then(() => {
-		let content = `[${new Date().toString().substr(0,10)}] Report built\n`;
-		let fs = require('fs');
-		fs.writeFileSync(`${__dirname}/buildReport.log`, content, {flag: 'a'});
-	})
-}, 60 * 60000);
-// }, 10000);
-
 let checkMenuUpdate = require(`${__dirname}/lib/checkMenuUpdate`);
 setInterval(function(){
 	checkMenuUpdate();
 }, 10 * 60000);
-// }, 5000);
 
 /**
  * Create server
- * @type {Parsers}
  */
-let bodyParser = require('body-parser');
 let app = require('express')();
-// Detect mode
-let config = {mode: 'dev'};
-try{
-	config = require(`${__dirname}/config`);
-}catch(err){
-	console.log(`No config file supported\nDefault mode: dev`);
-}
-
-if(config.mode == 'production'){
-	let fs = require('fs');
-	let privateKey = fs.readFileSync('/etc/letsencrypt/live/tinker.press/privkey.pem');
-	let certificate = fs.readFileSync('/etc/letsencrypt/live/tinker.press/cert.pem');
-	let credentials = {key: privateKey, cert: certificate};
-	let https = require('https');
-	let httpsPort = 3000;
-	
-	https.createServer(credentials, app).listen(httpsPort, function(){
-		console.log('HTTPS server listening on port 3000!');
-	});
-}else{
-	app.listen(3000, function(){
-		console.log('Server listening on port 3000!');
-	});
-}
-
-app.use(bodyParser.json()); // for parsing application/json
-let rollbar = require('rollbar');
-app.use(bodyParser.urlencoded({extended: true})); // for parsing application/x-www-form-urlencoded
-/**
- * debug with rollbar
- */
-app.use(rollbar.errorHandler('4a831c1b57ff4b6ba24c49fd9bf36a66'));
-app.get('/error/rollbar', function(req, res){
-	rollbar.reportMessage('Test rollbar debug-track', 'error', req, function(){
-		console.log('Test rollbar debug-track');
-	});
-	res.send('Rollbar has reported debug msg');
-})
+app.use(require('body-parser').json()); // for parsing application/json
+app.listen(3000, function(){console.log('Server listening on port 3000!');});
 
 /**
  * Listen to command
  */
-let _ = require(`${__dirname}/lib/util`);
-let parseUserText = require(`${__dirname}/lib/parseUserText`);
-let storage = _.getStorage();
-let request = require('request');
+let _             = require('lib/util');
+let request       = require('request');
+let parseUserText = require('lib/parseUserText');
+
 app.get('/', function(req, res){
 	console.log(req.query);
 	let userTextArr = parseUserText(req);
-	/**
-	 * Some command NEED USERNAME
-	 * check it here
-	 * @type {string[]}
-	 */
-	let cmdsDependOnUsername = ['order', 'view', 'delete'];
-	if(!userTextArr['sheet_name'] && cmdsDependOnUsername.includes(userTextArr['cmd'])){
-		slackMsgCmdNeedUserName(userTextArr).then(slackMsg => {
-			res.send(slackMsg);
-		});
-		
-		return;
-	}
 
 	/**
 	 * Base on user cmd, build res

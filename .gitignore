@@ -11,3 +11,4 @@
 /.node-persist
 /manipulate-config.js
 /buildReport.log
+/*.iml
