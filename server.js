@@ -287,15 +287,17 @@ function loadMenu(){
 function getMenuMsgPromise(userTextInfo){
 	let getDateMenusPromise = loadMenu();
 
-	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		let menu = whichMenu(userTextInfo, menus);
+	let slackMsgPromise =
+		getDateMenusPromise
+			.then(menus => {
+				let menu = whichMenu(userTextInfo, menus);
 
-		if(!menu){
-			return new Promise(r => r(slackMsgMenuNotFound(userTextInfo)));
-		}
+				if(!menu){
+					return Promise.resolve(slackMsgMenuNotFound(userTextInfo));
+				}
 
-		return new Promise(resolve => resolve(slackMsgMenuFound(userTextInfo, menu)));
-	})
+				return Promise.resolve(slackMsgMenuFound(userTextInfo, menu));
+			})
 
 	return slackMsgPromise;
 }
@@ -303,25 +305,32 @@ function getMenuMsgPromise(userTextInfo){
 function getOrderMsgPromise(userTextInfo){
 	let getDateMenusPromise = loadMenu();
 
-	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		if(userTextInfo['dishIndex'] == undefined){
-			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextInfo)));
-		}
+	let slackMsgPromise =
+		getDateMenusPromise
+			.then(menus => {
+				// User doesn't specify which [dish index] used
+				if(userTextInfo['dishIndex'] == undefined){
+					return Promise.resolve(slackMsgNoDishIndex(userTextInfo));
+				}
 
-		let menu = whichMenu(userTextInfo, menus);
+				let menu = whichMenu(userTextInfo, menus);
 
-		if(!menu){
-			return new Promise(resolve =>resolve(slackMsgNoMenu(userTextInfo)));
-		}
+				// Can't find out menu, base on user pick day
+				if(!menu){
+					return Promise.resolve(slackMsgMenuNotFound(userTextInfo));
+				}
 
-		let dish = menu.dishes[userTextInfo['dishIndex']];
+				let dish = menu.dishes[userTextInfo['dishIndex']];
 
-		if(!dish){
-			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextInfo)));
-		}
+				// Once again, event submit [dish index]
+				// But it not found in menu
+				if(!dish){
+					return Promise.resolve(slackMsgNoDishIndex(userTextInfo));
+				}
 
-		return new Promise(resolve => resolve(slackMsgOrder(userTextInfo, menu)));
-	});
+				// Best case
+				return Promise.resolve(slackMsgOrder(userTextInfo, menu));
+			});
 
 	return slackMsgPromise;
 }
@@ -329,73 +338,71 @@ function getOrderMsgPromise(userTextInfo){
 function updateOrder(userTextInfo){
 	let getDateMenusPromise = require('./lib/getMenu')(false);
 
-	let updatePromise = getDateMenusPromise.then(dateMenus => {
+	//noinspection JSUnresolvedFunction
+	let updatePromise =
+		getDateMenusPromise
+			.then(dateMenus => {
 
-		let menu = whichMenu(userTextInfo, dateMenus);
+				let menu = whichMenu(userTextInfo, dateMenus);
 
-		if(!menu || !menu.dishes[userTextInfo['dishIndex']]){
-			return new Promise(res => res('Not right case to update order'));
-		}
-
-		/**
-		 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
-		 */
-		let preOrderDishIndexs = [];
-		// Only check ONE TIME
-		// If he append in mutilple row?
-		menu.dishes.forEach((dish, index) => {
-			let removingUserIndexs = [];
-			dish.users.forEach((userName, userIndex) => {
-				if(userName == userTextInfo['sheet_name']){
-					// store which dish need UPDATE
-					if(!preOrderDishIndexs.includes(index) && userTextInfo['dishIndex'] != index)
-						preOrderDishIndexs.push(index);
-					// store which user need REMOVED
-					removingUserIndexs.push(userIndex);
+				if(!menu || !menu.dishes[userTextInfo['dishIndex']]){
+					return Promise.resolve('No menu or no dish found to update');
 				}
+
+				//IN CASE USER UPDATE HIS ORDER, detect from previous, then update
+				let previousOrderDishIndexs = [];
+				// Only check ONE TIME
+				// If he append in mutilple row?
+				menu.dishes.forEach((dish, index) => {
+					let removingUserIndexs = [];
+					dish.users.forEach((userName, userIndex) => {
+						if(userName == userTextInfo['sheet_name']){
+							// store which dish need UPDATE
+							if(!previousOrderDishIndexs.includes(index) && userTextInfo['dishIndex'] != index)
+								previousOrderDishIndexs.push(index);
+							// store which user need REMOVED
+							removingUserIndexs.push(userIndex);
+						}
+					});
+
+					dish.users = dish.users.filter((val, index) => {
+						return !removingUserIndexs.includes(index);
+					});
+				});
+
+				let preOrderDishPromises = [];
+				// Open Google Sheet, update where his name has put on
+				// One user only allow pick up 1 dish a day
+				previousOrderDishIndexs.forEach(dishIndex => {
+					// Build cellAddress, cellVal
+					// Run update in to sheet
+					// NEED PROMISE ALL
+					let previousOrderDish = menu.dishes[dishIndex];
+					let cell              = buildCell(menu, previousOrderDish);
+					let updatePromise     = require('./lib/updateOrderToSheet')(cell);
+					// Store all these promise
+					preOrderDishPromises.push(updatePromise);
+				});
+
+				// ONLY UPDATE NEW ONE after remove user from others
+				return Promise.all(preOrderDishPromises)
+						.then(() => {
+							let dish = menu.dishes[userTextInfo['dishIndex']];
+
+							if(dish.users.includes(userTextInfo['sheet_name'])){
+								// He just re-submit, no thing NEW
+								return Promise.resolve('Your order saved. No need to resubmit');
+							}else{
+								dish.users.push(userTextInfo['sheet_name']);
+								let cell          = buildCell(menu, dish);
+								let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
+								// Update cache file
+								writeCacheFile(dateMenus);
+
+								return updatePromise;
+							}
+						});
 			});
-
-			dish.users = dish.users.filter((val, index) => {
-				return !removingUserIndexs.includes(index);
-			});
-		});
-		console.log('preOrderDishIndexs', preOrderDishIndexs);
-
-		let preOrderDishPromises = [];
-		preOrderDishIndexs.forEach(preOrderDishIndex => {
-			// Build cellAddress, cellVal
-			// Run update in to sheet
-			// NEED PROMISE ALL
-			let preOrderDish = menu.dishes[preOrderDishIndex];
-			let cell = buildCell(menu, preOrderDish);
-
-			let updatePromise = require('./lib/updateOrderToSheet')(cell);
-			// updatePromise
-			// 	.then(msg => console.log(msg))
-			// 	.catch(err => console.log(err));
-
-			preOrderDishPromises.push(updatePromise);
-		});
-
-		// ONLY UPDATE NEW ONE after remove user from others
-
-		return Promise.all(preOrderDishPromises).then(function (){
-			let dish = menu.dishes[userTextInfo['dishIndex']];
-
-			if(dish.users.includes(userTextInfo['sheet_name'])){
-				// He just re-submit, no thing NEW
-				return new Promise(resolve => resolve('Your order saved\nNo need to resubmit'));
-			}else{
-				dish.users.push(userTextInfo['sheet_name']);
-				let cell = buildCell(menu, dish);
-				let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
-
-				writeCacheFile(dateMenus);
-
-				return updatePromise;
-			}
-		});
-	});
 
 	return updatePromise;
 }
@@ -409,82 +416,68 @@ function buildCell(menu, dish){
 	// console.log(col, row, sheetNuiBayUtIt);
 	// ONLY read out the first one A558:AD581
 	// Build up row, col logic
-	/** 
-	 * FALL CASE
-	 * when new_range available, what the heck???
-	 * menu.col still right, BUT, startRow need to change
-	 * @type {[type]}
-	 */
-	let moment = require('moment');
-	//noinspection JSValidateTypes
-	let today = moment().utcOffset(7 * 60);
-	//noinspection JSValidateTypes
-	let menuDate = moment(menu.date, 'D-MMM-YYYY').utcOffset(7 * 60);
-
 	let startRow = state['range'].match(/\d+/)[0];
 	startRow = parseInt(startRow, 10);
-
-	/**
-	 * When new range come, this fail
-	 */
-	console.log(today.format());
-	console.log(menuDate.format());
-
+	// Base on start row, decide row, col
 	row += startRow;
 	col += 2; //col for menu, +2 for userList
 	// Parse to A1 notation
 	let cellAddress = `${_.convertA1Notation(col).toUpperCase()}${row}`;
 	// Build up cellVal, update dish.users
 	let cellVal = dish.users.join(',');
-	console.log('build Cell', cellAddress, cellVal);
-
+	//console.log('build Cell', cellAddress, cellVal);
 	return {cellAddress, cellVal};
 }
 
 function getLastestViewMsgPromise(userTextInfo){
+	// Review order need open Google Sheet to get the lastest info
+	// So... update the cache too
 	let getDateMenusPromise = require('./lib/getMenu')(true);
 
-	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		let  menu = whichMenu(userTextInfo, menus);
+	//noinspection JSUnresolvedFunction
+	let slackMsgPromise =
+		getDateMenusPromise
+			.then(menus => {
+				let  menu = whichMenu(userTextInfo, menus);
 
-		if(!menu){
-			return new Promise(r => r({text: 'No menu found'}));
-		}
-
-		let orderedDish = 'You haven\'t order dish'
-		console.log(userTextInfo['sheet_name']);
-		menu.dishes.forEach(dish => {
-			dish.users.forEach(userName => {
-				// console.log(userName);
-				if(userName == userTextInfo['sheet_name'])
-					orderedDish = `${dish['name']} - ${dish['price']}k`;
-			});
-		});
-
-		let day = userTextInfo['menuDate'].format('dddd, MMM-DD');
-
-		let slackMsg = {
-			text: `Hi @${userTextInfo['user_name']}`,
-			attachments: [
-				{
-					title: `Review order on ${day}`,
-					title_link: `https://tinker.press`,
-					fields: [
-						{
-							value: `${orderedDish}`,
-							short: true
-						}
-					],
-					color: '#3AA3E3',
-					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-					footer_icon: 'https://tinker.press/favicon-64x64.png',
-					ts: Math.floor(new Date().getTime() / 1000)
+				if(!menu){
+					return Promise.resolve(slackMsgMenuNotFound(userTextInfo));
 				}
-			]
-		};
 
-		return new Promise(resolve => resolve(slackMsg));
-	});
+				let orderedDish = 'You haven\'t order dish';
+				// Loop to find out where your booked dish
+				menu.dishes.forEach(dish => {
+					dish.users.forEach(userName => {
+						// See him, should better loop with while
+						if(userName == userTextInfo['sheet_name'])
+							orderedDish = `${dish['name']} - ${dish['price']}k`;
+					});
+				});
+
+				let day = userTextInfo['menuDate'].format('dddd, MMM-DD');
+
+				let slackMsg = {
+					text: `Hi @${userTextInfo['user_name']}`,
+					attachments: [
+						{
+							title: `Review order on ${day}`,
+							title_link: `https://tinker.press`,
+							fields: [
+								{
+									value: `${orderedDish}`,
+									short: true
+								}
+							],
+							color: '#3AA3E3',
+							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+							footer_icon: 'https://tinker.press/favicon-64x64.png',
+							ts: Math.floor(new Date().getTime() / 1000)
+						}
+					]
+				};
+
+				return Promise.resolve(slackMsg);
+			});
 
 	return slackMsgPromise;
 }
@@ -529,7 +522,7 @@ function cancelOrder(userTextInfo){
 					});
 				});
 
-				let preOrderDishPromises = [];
+				let previousOrderDishPromises = [];
 				// Loop throush each one
 				// Open Google Sheet, update at exactly cell
 				preOrderDishIndexs.forEach(preOrderDishIndex => {
@@ -540,20 +533,22 @@ function cancelOrder(userTextInfo){
 					let cell = buildCell(menu, preOrderDish);
 
 					let updatePromise = require('./lib/updateOrderToSheet')(cell);
+					//noinspection JSUnresolvedFunction
 					updatePromise
 						.then(msg => console.log(msg))
 						.catch(err => console.log(err));
 
-					preOrderDishPromises.push(updatePromise);
+					previousOrderDishPromises.push(updatePromise);
 				});
 
 				// ONLY UPDATE NEW ONE after remove user from others
-				return Promise.all(preOrderDishPromises).then(() => {
-					// update cache file
-					writeCacheFile(dateMenus);
+				return Promise.all(previousOrderDishPromises)
+						.then(() => {
+							// update cache file
+							writeCacheFile(dateMenus);
 
-					return Promise.resolve('Remove success');
-				});
+							return Promise.resolve('Remove success');
+						});
 			});
 
 	return updatePromise;
@@ -723,34 +718,33 @@ function getHelpMsgPromise(userTextInfo){
 		]
 	};
 
-	return new Promise(resolve => resolve(slackMsg));
+	return Promise.resolve(slackMsg);
 }
 
 function writeCacheFile(dateMenus){
-	let fs = require('fs');
-	let wstream = fs.createWriteStream(`${__dirname}/menus.json`);
-	// wstream.write(JSON.stringify(dateMenus));
-	// fs.writeFileSync(require(`${__dirname}/menus.json`), JSON.stringify(dateMenus));
-	// console.log('\033[32mWrite cache file SYNC success\033[0m');
-	wstream.once('open', function(fd) {
-		wstream.write(JSON.stringify(dateMenus));
-		wstream.end(function(){
-			console.log('\033[32mWriteStream for cache file success\033[0m');
-		});
+	let fs         = require('fs');
+	let file_path  = _.getPath('menus.json');
+	let wstream    = fs.createWriteStream(file_path);
+	let menus_json = JSON.stringify(dateMenus);
+
+	wstream.once('open', () => {
+		wstream.write(menus_json);
+		wstream.end(() => {console.log('\033[32mWriteStream for cache file success\033[0m');});
 	});
 }
 
 function slackMsgCmdNeedUserName(userTextArr){
 	let slackMsg = {
-		text: `Hi @${userTextArr['user_name']}\nYou've ask for: \`${userTextArr['text']}\``,
+		text: `Hi @${userTextArr['user_name']}`,
 		attachments: [
 			{
-				title: 'Sorry for this inconvenience. Please set name first',
+				title: 'Sorry for this inconvenience. \nPlease set your name in Google Sheet first',
 				title_link: 'https://tinker.press',
 				fields: [
 					{
-						value: `Type /lunch name <name in google sheet>`,
-						short: true
+						title: 'Run command',
+						value: `/lunch name <name in Google Sheet>`,
+						short: false,
 					}
 				],
 				color: '#3AA3E3',
@@ -761,84 +755,7 @@ function slackMsgCmdNeedUserName(userTextArr){
 		]
 	};
 	
-	return new Promise(r => r(slackMsg));
-}
-
-function slackMsgCmdNotFound(userTextArr){
-	return {
-		text: `Hi @${userTextArr['user_name']}`,
-		attachments: [
-			{
-				title: `Command not supported`,
-				title_link: `https://tinker.press`,
-				fields: [
-					{
-						title: 'I hear you, but command not support',
-						value: `Please type /lunch help`,
-						short: true
-					}
-				],
-				color: '#3AA3E3',
-				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-				footer_icon: 'https://tinker.press/favicon-64x64.png',
-				ts: Math.floor(new Date().getTime() / 1000)
-			}
-		]
-	};
-}
-
-function slackMsgBatchFixMenuRangeFail(){
-	return {
-		text: `Please resubmit\nMenu range includes heade`,
-		attachments: [
-			{
-				title: 'Menu range format',
-				title_link: 'https://tinker.press',
-				fields: [
-					{
-						value: `A558:AD581`,
-						short: true
-					}
-				],
-				color: '#3AA3E3',
-				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-				footer_icon: 'https://tinker.press/favicon-64x64.png',
-				ts: Math.floor(new Date().getTime() / 1000)
-			}
-		]
-	}
-}
-
-function slackMsgBatchFixMenuRangeAccepted(menu_range){
-	let fs = require('fs');
-	// Update menu range
-	let nBUIConfig = require(`${__dirname}/lib/nuiBayUtItConfig`);
-	nBUIConfig['menu_range'] = menu_range;
-	fs.writeFileSync(`${__dirname}/lib/nuiBayUtItConfig.json`, JSON.stringify(nBUIConfig));
-	
-	return {text: 'Write nuiBayUtItConfig.json'};
-}
-
-function slackMsgReport(userTextArr){
-	return {
-		text: `Hi @${userTextArr['user_name']}`,
-		attachments: [
-			{
-				title: 'Build report',
-				title_link: 'https://tinker.press',
-				fields: [
-					{
-						value: `${userTextArr['report_msg']}`,
-						short: true
-					}
-				],
-				color: '#3AA3E3',
-				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-				footer_icon: 'https://tinker.press/favicon-64x64.png',
-				ts: Math.floor(new Date().getTime() / 1000)
-			}
-		]
-	};
+	return Promise.resolve(slackMsg);
 }
 
 function whichMenu(userTextArr, menus){
@@ -855,15 +772,22 @@ function whichMenu(userTextArr, menus){
 	return menu;
 }
 
-function slackMsgMenuNotFound(userTextArr){
+function slackMsgMenuNotFound(userTextInfo){
+	let day = userTextInfo['menuDate'].format('dddd, MMM-DD');
+
 	return {
-		text: `Hi @${userTextArr['user_name']}`,
+		text: `Hi @${userTextInfo['user_name']}`,
 		attachments:[
 			{
 				title: `Menu not found`,
 				title_link: `https://tinker.press`,
-				text: `Menu on ${userTextArr['menuDate'].toString().substr(0,10)} not exist`,
-				color: 'danger',
+				fields: [
+					{
+						value: `Menu on ${day} not exist`,
+						short: false,
+					}
+				],
+				color: '#3AA3E3',
 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
@@ -872,7 +796,27 @@ function slackMsgMenuNotFound(userTextArr){
 	}
 }
 
-function slackMsgMenuFound(userTextArr, menu){
+function slackMsgMenuFound(userTextInfo, menu){
+	let day = userTextInfo['menuDate'].format('dddd, MMM-DD');
+
+	return {
+		text: `Hi, @${userTextInfo['user_name']}`,
+		attachments: [
+			{
+				title: `Menu on ${day}`,
+				title_link: 'https://tinker.press/good-food-good-life.jpg',
+				fields: dishNamePriceFields(menu),
+				color: '#3AA3E3',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	};
+}
+
+function dishNamePriceFields(menu){
+	// Build out slack msg field for dish name => price
 	let dishesV2 = [];
 	menu.dishes.forEach((dish, index) =>{
 		let tmp = {
@@ -888,22 +832,7 @@ function slackMsgMenuFound(userTextArr, menu){
 		dishesV2.push(tmp);
 	});
 
-	// let today = new Date();
-	return {
-		// text: `Hi, @${userTextArr['user_name']}, menu for ${userTextArr[1]}`,
-		text: `Hi, @${userTextArr['user_name']}`,
-		attachments: [
-			{
-				title: `Menu on ${menu.date}`,
-				title_link: 'https://tinker.press/good-food-good-life.jpg',
-				fields: dishesV2,
-				color: '#3AA3E3',
-				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-				footer_icon: 'https://tinker.press/favicon-64x64.png',
-				ts: Math.floor(new Date().getTime() / 1000)
-			}
-		]
-	};
+	return dishesV2;
 }
 
 function slackMsgNoDishIndex(userTextArr){
@@ -911,16 +840,16 @@ function slackMsgNoDishIndex(userTextArr){
 		text: `Hi @${userTextArr['user_name']}`,
 		attachments:[
 			{
-				title: `Order error`,
+				title: `No dish at your submited index`,
 				title_link: `https://tinker.press`,
 				fields: [
 					{
-						title: `Please type /lunch order [mon|tue] [dish-num]`,
-						value: `[dish-num]: required`,
+						title: `Run command`,
+						value: `/lunch order [dish-num]\n[dish-num]: required`,
 						short: true
 					}
 				],
-				color: 'danger',
+				color: '#3AA3E3',
 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
@@ -931,45 +860,25 @@ function slackMsgNoDishIndex(userTextArr){
 	return slackMsg;
 }
 
-function slackMsgNoMenu(userTextArr){
-	let day = userTextArr['menuDate'].format('dddd, MMM-DD');
-	let slackMsg = {
-		text: `Hi @${userTextArr['user_name']}`,
-		attachments:[
-			{
-				title: `Menu error`,
-				title_link: `https://tinker.press`,
-				text: `Menu on ${day} not exist`,
-				color: 'danger',
-				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-				footer_icon: 'https://tinker.press/favicon-64x64.png',
-				ts: Math.floor(new Date().getTime() / 1000)
-			}
-		]
-	}
-
-	return slackMsg;
-}
-
-function slackMsgOrder(userTextArr, menu){
+function slackMsgOrder(userTextInfo, menu){
 	let otherUsersBookDish = 'No one';
 	// Improve info by REMOVE him from his self
-	let dish = menu.dishes[userTextArr['dishIndex']];
-	let otherUsersBookDishArr = dish.users.filter(userName => userName != userTextArr['sheet_name']);
+	let dish = menu.dishes[userTextInfo['dishIndex']];
+	// Info about other uses also book this dish
+	let otherUsersBookDishArr = dish.users.filter(userName => userName != userTextInfo['sheet_name']);
+	// Build back to string of other users
 	if(otherUsersBookDishArr.length > 0)
 		otherUsersBookDish = otherUsersBookDishArr.join(', ');
 
+	let day = userTextInfo['menuDate'].format('dddd, MMM-DD');
+
 	let slackMsg = {
-		text: `Hi @${userTextArr['user_name']}`,
+		text: `Hi @${userTextInfo['user_name']}`,
 		attachments: [
 			{
-				title: `Order on ${menu.date}`,
+				title: `You've ordered on ${day}`,
 				title_link: 'https://tinker.press/good-food-good-life.jpg',
 				fields: [
-					{
-						title: `You've ordered`,
-						short: false
-					},
 					{
 						value: `${dish['name']}`,
 						short: true
