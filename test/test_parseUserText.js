@@ -1,4 +1,4 @@
-let parseUserText = require('./../lib/parseUserText');
+let parseUserText = require('../lib/parseUserText');
 
 let req = {};
 

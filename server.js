@@ -13,9 +13,9 @@ app.listen(3000, function(){console.log('Server listening on port 3000!');});
 /**
  * Listen to command
  */
-let _             = require('lib/util');
+let _             = require('./lib/util');
 let request       = require('request');
-let parseUserText = require('lib/parseUserText');
+let parseUserText = require('./lib/parseUserText');
 
 app.get('/', function(req, res){
 	console.log(req.query);
@@ -78,42 +78,42 @@ app.get('/', function(req, res){
 		case 'help':
 			resPromise = getHelpMsgPromise(userTextArr);
 			break;
-		case 'report':
-			userTextArr['report_msg'] =
-				userTextArr['isAllowedRunReport'] ? 'I\'m building report' : 'Sorry, you don\'t have permission to build report';
-
-			resPromise = new Promise(r => r(slackMsgReport(userTextArr)));
-
-			if(userTextArr['isAllowedRunReport']){
-				let buildReportPromise = buildReport();
-				buildReportPromise.then(() => {console.log('Build report success')})
-			}
-			break;
-		case 'email':
-			let buildEmailLink = require(`${__dirname}/sheetToEmail`);
-			let emailInfo = buildEmailLink(userTextArr);
-			let slackMsg = {
-				text: `Hi @${userTextArr['user_name']}`,
-				attachments:[
-					{
-						title: `Email for menu on ${emailInfo.sendForDay.toString().substr(0,10)}`,
-						// title_link: `https://tinker.press`,
-						fields: [
-							{
-								value: `Please <${emailInfo.link}|click here> to confirm`,
-								short: true
-							}
-						],
-						color: 'danger',
-						footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-						footer_icon: 'https://tinker.press/favicon-64x64.png',
-						ts: Math.floor(new Date().getTime() / 1000)
-					}
-				]
-			}
-			resPromise = new Promise(resolve => resolve(slackMsg));
-
-			break;
+		// case 'report':
+		// 	userTextArr['report_msg'] =
+		// 		userTextArr['isAllowedRunReport'] ? 'I\'m building report' : 'Sorry, you don\'t have permission to build report';
+		//
+		// 	resPromise = new Promise(r => r(slackMsgReport(userTextArr)));
+		//
+		// 	if(userTextArr['isAllowedRunReport']){
+		// 		let buildReportPromise = buildReport();
+		// 		buildReportPromise.then(() => {console.log('Build report success')})
+		// 	}
+		// 	break;
+		// case 'email':
+		// 	let buildEmailLink = require(`${__dirname}/sheetToEmail`);
+		// 	let emailInfo = buildEmailLink(userTextArr);
+		// 	let slackMsg = {
+		// 		text: `Hi @${userTextArr['user_name']}`,
+		// 		attachments:[
+		// 			{
+		// 				title: `Email for menu on ${emailInfo.sendForDay.toString().substr(0,10)}`,
+		// 				// title_link: `https://tinker.press`,
+		// 				fields: [
+		// 					{
+		// 						value: `Please <${emailInfo.link}|click here> to confirm`,
+		// 						short: true
+		// 					}
+		// 				],
+		// 				color: 'danger',
+		// 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+		// 				footer_icon: 'https://tinker.press/favicon-64x64.png',
+		// 				ts: Math.floor(new Date().getTime() / 1000)
+		// 			}
+		// 		]
+		// 	}
+		// 	resPromise = new Promise(resolve => resolve(slackMsg));
+		//
+		// 	break;
 		default:
 			resPromise = new Promise(resolve => resolve(slackMsgCmdNotFound(userTextArr)));
 
@@ -125,9 +125,22 @@ app.get('/', function(req, res){
 	});
 });
 
+function loadMenu(){
+	let fs = require('fs');
+
+	if(fs.existsSync(_.getPath('menus.json'))){
+		let menus = JSON.parse( fs.readFileSync( _.getPath('menus.json') ) );
+		return new Promise(resolve => resolve(menus));
+	}
+
+	let getMenu = require('./lib/getMenu')(true);
+
+	return getMenu;
+}
+
 
 function getMenuMsgPromise(userTextArr){
-	let getDateMenusPromise = Promise.resolve(_.getState().menus);
+	let getDateMenusPromise = loadMenu();
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		let menu = whichMenu(userTextArr, menus);
@@ -138,42 +151,14 @@ function getMenuMsgPromise(userTextArr){
 
 		return new Promise(resolve => resolve(slackMsgMenuFound(userTextArr, menu)));
 	})
-	.catch(err => {
-		// console.log(err);
-		if(err == 'nuiBayUtItConfig.json is outOfDate'){
-			let slackMsg = {
-				text: 'Menu not updated',
-				attachments: [
-					{
-						title: 'For admin',
-						title_link: 'https://tinker.press',
-						fields: [
-							{
-								value: 'Type /lunch batchFix <menu range>, to update menu',
-								short: true,
-								color: 'danger',
-								footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-								footer_icon: 'https://tinker.press/favicon-64x64.png',
-								ts: Math.floor(new Date().getTime() / 1000)
-							}
-						]
-					}
-				]
-			};
-
-			return new Promise(resolve => resolve(slackMsg));
-		}
-	});
 
 	return slackMsgPromise;
 }
 
 function getOrderMsgPromise(userTextArr){
-	let getDateMenusPromise = Promise.resolve(_.getState().menus);
+	let getDateMenusPromise = loadMenu();
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		// let dayOfWeek = new Date().getDay() - 1;
-		console.log('dishIndex', userTextArr['dishIndex']);
 		if(userTextArr['dishIndex'] == undefined){
 			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextArr)));
 		}
@@ -184,7 +169,6 @@ function getOrderMsgPromise(userTextArr){
 			return new Promise(resolve =>resolve(slackMsgNoMenu(userTextArr)));
 		}
 
-		// LOGIC ON CASE order mon 19
 		let dish = menu.dishes[userTextArr['dishIndex']];
 
 		if(!dish){
@@ -198,14 +182,16 @@ function getOrderMsgPromise(userTextArr){
 }
 
 function updateOrder(userTextArr){
-	let getDateMenusPromise = require(`${__dirname}/lib/getMenu`)(false);
+	let getDateMenusPromise = require('./lib/getMenu')(false);
 
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 
 		let menu = whichMenu(userTextArr, dateMenus);
+
 		if(!menu || !menu.dishes[userTextArr['dishIndex']]){
 			return new Promise(res => res('Not right case to update order'));
 		}
+
 		/**
 		 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
 		 */
@@ -249,8 +235,6 @@ function updateOrder(userTextArr){
 		// ONLY UPDATE NEW ONE after remove user from others
 
 		return Promise.all(preOrderDishPromises).then(function (){
-			console.log('Remove user from others book success');
-
 			let dish = menu.dishes[userTextArr['dishIndex']];
 
 			if(dish.users.includes(userTextArr['sheet_name'])){
@@ -276,7 +260,7 @@ function buildCell(menu, dish){
 	let row = dish.row;
 	// Build cell address, base on dish-row, menu-col
 	// Read out basic info from config
-	let sheetNuiBayUtIt = storage.getItemSync('sheetNuiBayUtIt');
+	let state = _.getState();
 	// console.log(col, row, sheetNuiBayUtIt);
 	// ONLY read out the first one A558:AD581
 	// Build up row, col logic
@@ -287,10 +271,12 @@ function buildCell(menu, dish){
 	 * @type {[type]}
 	 */
 	let moment = require('moment');
+	//noinspection JSValidateTypes
 	let today = moment().utcOffset(7 * 60);
+	//noinspection JSValidateTypes
 	let menuDate = moment(menu.date, 'D-MMM-YYYY').utcOffset(7 * 60);
 
-	let startRow = sheetNuiBayUtIt['menuRange'].match(/\d+/)[0];
+	let startRow = state['range'].match(/\d+/)[0];
 	startRow = parseInt(startRow, 10);
 
 	/**
@@ -298,15 +284,18 @@ function buildCell(menu, dish){
 	 */
 	console.log(today.format());
 	console.log(menuDate.format());
-	if(!menuDate.isSame(today, 'isoWeek')){
-		console.log('Different week');
-		startRow = sheetNuiBayUtIt['newMenuRange'].match(/\d+/)[0];
-		startRow = parseInt(startRow, 10);
 
-		if(!menuDate.isSame(today, 'isoWeek')){
-			console.log(`Menu date not match ANYTHING`);
-		}
+	if(!menuDate.isSame(today, 'isoWeek')){
+		console.log(`Menu date not match ANYTHING`);
+		// console.log('Different week');
+		// startRow = state['newMenuRange'].match(/\d+/)[0];
+		// startRow = parseInt(startRow, 10);
+		//
+		// if(!menuDate.isSame(today, 'isoWeek')){
+		// 	console.log(`Menu date not match ANYTHING`);
+		// }
 	}
+
 	row += startRow;
 	col += 2; //col for menu, +2 for userList
 	// Parse to A1 notation
@@ -323,12 +312,18 @@ function getViewMsgPromise(userTextArr){
 		text: `Hi @${userTextArr['user_name']}`,
 		attachments: [
 			{
-				title: `...looking to Google Sheet`,
-				title_link: `https://tinker.press`,
+				// title: `...looking to Google Sheet`,
+				// title_link: `https://tinker.press`,
+				// fields: [
+				// 	{
+				// 		value: '',
+				// 		short: true
+				// 	}
+				// ],
 				fields: [
 					{
-						value: '',
-						short: true
+						value: '...looking to Google Sheet',
+						short: false
 					}
 				],
 				// color: '#3AA3E3',
@@ -346,7 +341,7 @@ function getViewMsgPromise(userTextArr){
 }
 
 function getLastestViewMsgPromise(userTextArr){
-	let getDateMenusPromise = require(`${__dirname}/lib/getMenu`)(true);
+	let getDateMenusPromise = require('./lib/getMenu')(true);
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		let  menu = whichMenu(userTextArr, menus);
@@ -568,12 +563,11 @@ function getNameMsgPromise(userTextArr){
 
 function storeName(userTextArr){
 	if(userTextArr['new_name'] != ''){
-		let mapName = storage.getItemSync('mapName');
-		console.log('mapname', userTextArr);
-		mapName[userTextArr['user_name']] = userTextArr['new_name'];
+		let state = _.getState()
+		let users = state.users;
+		users[userTextArr['user_name']] = userTextArr['new_name'];
 
-		storage.setItemSync('mapName', mapName);
-
+		_.saveState(state);
 		return new Promise(res => res('Store name success'));
 	}
 
@@ -590,50 +584,50 @@ function getHelpMsgPromise(userTextArr){
 				title_link: 'https://tinker.press',
 				fields: [
 					{
-						title: `Menu today`,
-						value: `Type ${cmd} menu`,
+						title: `To view tomorrow menu`,
+						value: `${cmd} menu`,
 						short: true
 					},
 					{
-						title: `Menu on [day]`,
-						value: `Type ${cmd} menu [mon|tue|..]`,
+						title: `To view menu on specific day, include day in command`,
+						value: `${cmd} menu [mon|tue|..]`,
 						short: true
 					},
 					{
-						title: `Order dish`,
-						value: `Type ${cmd} order [dish num]\n[dish num]: dish's order in menu`,
+						title: `To order dish`,
+						value: `${cmd} order [dish num]\n'[dish num]: dish's order in menu'`,
 						short: true
 					},
 					{
-						title: `Order dish on [day]`,
-						value: `Type ${cmd} order [mon|tue..] [dish num]`,
+						title: `To drder dish on specific day, include day in command`,
+						value: `${cmd} order [mon|tue..] [dish num]`,
 						short: true
 					},
 					{
-						title: `Review order`,
-						value: `Type ${cmd} view [mon|tue..]`,
+						title: `To review which dish booked`,
+						value: `${cmd} view [mon|tue..]`,
 						short: true
 					},
 					{
-						title: `Delete order`,
+						title: `To delete or cancel order`,
 						value: `Type ${cmd} delete|cancel`,
 						short: true
 					},
 					{
-						title: `Set name`,
-						value: `Type ${cmd} name [name in google sheet]`,
+						title: `To set name for Google Sheet Menu`,
+						value: `${cmd} name \n'Your name in Google Sheet Menu'`,
 						short: true
 					},
 					{
-						title: `View name`,
-						value: `Type ${cmd} name`,
+						title: `To view your name in Google Sheet`,
+						value: `${cmd} name`,
 						short: true
 					},
-					{
-						title: `Build report`,
-						value: `Type ${cmd} report`,
-						short: true
-					},
+					// {
+					// 	title: `Build report`,
+					// 	value: `Type ${cmd} report`,
+					// 	short: true
+					// },
 				],
 				// color: '#3AA3E3',
 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
