@@ -23,14 +23,15 @@ app.get('/', function(req, res){
 		// No need specify who is calling this cmd
 		case 'menu':
 		case 'name':
-		case 'help':
+		case 'help': {
 			break;
+		}
 		// Need to know who he is
 		// His name in Google Sheet
 		case 'order':
 		case 'view':
 		case 'delete':
-		case 'cancel':{
+		case 'cancel': {
 			if(!userTextInfo['sheet_name']){
 				let state      = _.getState();
 				let resPromise = slackMsgCmdNeedUserName(userTextInfo);
@@ -50,8 +51,9 @@ app.get('/', function(req, res){
 			}
 			break;
 		}
-		default:
+		default: {
 			break;
+		}
 
 	}
 
@@ -106,10 +108,12 @@ function handleCmd(userTextInfo){
 	let resPromise;
 
 	switch(userTextInfo['cmd']){
-		case 'menu':
+		case 'menu': {
 			resPromise = getMenuMsgPromise(userTextInfo);
 			break;
-		case 'order':
+		}
+		case 'order': {
+
 			// Quick reponse with cache data
 			resPromise = getOrderMsgPromise(userTextInfo);
 			// Open Google SHeet, update data
@@ -143,7 +147,8 @@ function handleCmd(userTextInfo){
 				});
 			}
 			break;
-		case 'view':
+		}
+		case 'view': {
 			// Looking to Google Sheet
 			let slackMsg = {
 				attachments: [
@@ -179,8 +184,9 @@ function handleCmd(userTextInfo){
 				});
 			}
 			break;
+		}
 		case 'cancel':
-		case 'delete':
+		case 'delete': {
 			// Quick reply to user that
 			// We are calling Google Sheet API
 			let slackMsg = {
@@ -227,13 +233,16 @@ function handleCmd(userTextInfo){
 				});
 			}
 			break;
-		case 'name':
+		}
+		case 'name': {
 			resPromise = getNameMsgPromise(userTextInfo);
 			break;
-		case 'help':
+		}
+		case 'help': {
 			resPromise = getHelpMsgPromise(userTextInfo);
 			break;
-		default:
+		}
+		default: {
 			let slackMsg = {
 				text: `Hi @${userTextInfo['user_name']}`,
 				attachments: [
@@ -257,6 +266,7 @@ function handleCmd(userTextInfo){
 
 			resPromise = Promise.resolve(slackMsg);
 			break;
+		}
 	}
 	
 	return resPromise;
