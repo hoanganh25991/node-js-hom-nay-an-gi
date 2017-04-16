@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha",
-    "start": "pm2 pm2.config.js"
+    "start": "node server",
+    "serve": "pm2 start pm2.config.js"
   },
   "author": "Anh Le Hoang",
   "license": "MIT",
