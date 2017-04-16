@@ -574,15 +574,15 @@ function getNameMsgPromise(userTextInfo){
 		text: `Hi @${userTextInfo['user_name']}`,
 		attachments: [
 			{
-				title: 'Unknown case',
+				title: 'Set name success',
 				title_link: 'https://tinker.press',
 				fields: [
 					{
-						value: `Your command`,
+						value: `Thank you, your name in google sheet`,
 						short: true
 					},
 					{
-						value: `${userTextInfo['text']}`,
+						value: `${userTextInfo['new_name']}`,
 						short: true
 					}
 				],
@@ -592,40 +592,15 @@ function getNameMsgPromise(userTextInfo){
 				ts: Math.floor(new Date().getTime() / 1000)
 			}
 		]
-	};
-	// Best case, user submit sheet_name right
-	if(!no_new_name && has_sheet_name){
-		slackMsg = {
-			text: `Hi @${userTextInfo['user_name']}`,
-			attachments: [
-				{
-					title: 'Set name success',
-					title_link: 'https://tinker.press',
-					fields: [
-						{
-							value: `Thank you, your name in google sheet`,
-							short: true
-						},
-						{
-							value: `${userTextInfo['new_name']}`,
-							short: true
-						}
-					],
-					color: '#3AA3E3',
-					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-					footer_icon: 'https://tinker.press/favicon-64x64.png',
-					ts: Math.floor(new Date().getTime() / 1000)
-				}
-			]
-		}
 	}
+
 	// User just want to review his name
 	if(no_new_name && has_sheet_name){
 		slackMsg = {
 			text: `Hi @${userTextInfo['user_name']}`,
 			attachments: [
 				{
-					title: 'Review name in google sheet',
+					title: 'Review name in Google Sheet',
 					title_link: 'https://tinker.press',
 					fields: [
 						{
