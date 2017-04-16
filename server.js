@@ -24,7 +24,7 @@ app.get('/', function(req, res){
 	let userTextArr = parseUserText(req);
 	
 	if(typeof userTextArr.sheet_name == 'undefined'){
-		res.send( slackMsgCmdNeedUserName() );
+		res.send( slackMsgCmdNeedUserName(userTextArr) );
 		
 		state[userTextArr.user_name].last_cmd = userTextArr['text'];
 	}
