@@ -1,82 +1,102 @@
-let checkMenuUpdate = require('./lib/checkMenuUpdate');
+// Self loop check menu
+require('./lib/checkMenuUpdate')();
 
-setInterval(function(){
-	checkMenuUpdate();
-}, 10 * 60000);
-
-/**
- * Create server
- */
+// Create server
 let app = require('express')();
-app.use(require('body-parser').json()); // for parsing application/json
+app.use(require('body-parser').json());
 app.listen(3000, function(){console.log('Server listening on port 3000!');});
 
-/**
- * Listen to command
- */
+// Listen to command
 let _             = require('./lib/util');
-let parseUserText = require('./lib/parseUserText');
 let request       = require('request');
+let parseUserText = require('./lib/parseUserText');
 
 app.get('/', function(req, res){
-	console.log(req.query);
+	//console.log(req.query);
 	let userTextInfo = parseUserText(req);
-	
-	if(typeof userTextInfo['sheet_name'] == 'undefined' && userTextInfo['cmd'] != 'name'){
-		let state         = _.getState();
+	// Should move on or break workflow
+	// To ask user more info
+	let move_on = true;
 
-		let resPromise = slackMsgCmdNeedUserName(userTextInfo);
+	switch(userTextInfo['cmd']){
+		// General command
+		// No need specify who is calling this cmd
+		case 'menu':
+		case 'name':
+		case 'help':
+			break;
+		// Need to know who he is
+		// His name in Google Sheet
+		case 'order':
+		case 'view':
+		case 'delete':
+		case 'cancel':{
+			if(!userTextInfo['sheet_name']){
+				let state      = _.getState();
+				let resPromise = slackMsgCmdNeedUserName(userTextInfo);
+				// Ask user name in Google Sheet
+				resPromise.then(slackMsg => res.send(slackMsg));
+				// Store user last cmd
+				// For better experience
+				// After ask user name
+				// Can auto execute back this cmd
+				let user_note         = state[userTextInfo['user_name']] || {[userTextInfo['user_name']]: {}};
+				user_note['last_cmd'] = userTextInfo['text'];
+				// Save state
+				Object.assign(state, user_note);
+				_.saveState(state);
 
-		resPromise.then(slackMsg => {
-			res.send(slackMsg);
-		});
-
-		if(!state[userTextInfo['user_name']]){
-			state[userTextInfo['user_name']] = {};
+				move_on = false;
+			}
+			break;
 		}
+		default:
+			break;
 
-		state[userTextInfo['user_name']].last_cmd = userTextInfo['text'];
-		_.saveState(state);
-
-		return;
 	}
 
-	/**
-	 * Base on user cmd, build res
-	 */
+	if(!move_on)
+		return;
+
+	//Base on user cmd, build res
 	let resPromise = handleCmd(userTextInfo);
 
 	resPromise.then(slackMsg => {
+		// Send slack msg
 		res.send(slackMsg);
-		//_.saveState(state);
+		// Check last cmd
+		// If need execute, do it
+		let state       = _.getState();
+		let user_note   = state[userTextInfo['user_name']];
+		let should_exec = user_note.last_cmd;
 
-		let state         = _.getState();
-
-		if(state[userTextInfo['user_name']].last_cmd){
-			req.query['text'] = state[userTextInfo['user_name']].last_cmd;
-
+		if(should_exec){
+			req.query['text']    = user_note.last_cmd;
 			let lastUserTextInfo = parseUserText(req);
+			let response_url     = lastUserTextInfo['response_url'];
 
-			state[lastUserTextInfo['user_name']].last_cmd = null;
-			_.saveState(state);
-
-			if(lastUserTextInfo['response_url']){
+			if(response_url){
+				// Get response promise with slack msg
 				let resPromise = handleCmd(lastUserTextInfo);
 
 				resPromise.then(slackMsg => {
 					var options = {
-						method: 'POST',
-						url: lastUserTextInfo['response_url'],
-						body: JSON.stringify(slackMsg)
+						method : 'POST',
+						url    : response_url,
+						body   : JSON.stringify(slackMsg)
 					};
-
-					request(options, function (error, response, body) {
-						if (error) throw new Error(error);
+					// Push back msg to user base on reponse_url of slack
+					request(options, function (err, response, body) {
+						if (err) throw err;
 						console.log(body);
 					});
-
-					//_.saveState(state);
 				});
+
+				// Reset it
+				user_note.last_cmd = null;
+				Object.assign(state, user_note);
+				// Save state
+				_.saveState(state);
 			}
 		}
 	});
@@ -84,39 +104,76 @@ app.get('/', function(req, res){
 
 function handleCmd(userTextInfo){
 	let resPromise;
+
 	switch(userTextInfo['cmd']){
 		case 'menu':
 			resPromise = getMenuMsgPromise(userTextInfo);
 			break;
 		case 'order':
+			// Quick reponse with cache data
 			resPromise = getOrderMsgPromise(userTextInfo);
+			// Open Google SHeet, update data
 			let updatePromise = updateOrder(userTextInfo);
-			updatePromise.then(()=>{console.log('Update order success')});
-			break;
-		case 'batchFix':
-			let menu_range = userTextInfo[1];
-			// Check right menu_range format
-			if(menu_range && menu_range.match(/[a-zA-Z]+\d+:[a-zA-Z]+\d+/)){
-				resPromise = new Promise(r => r(slackMsgBatchFixMenuRangeAccepted(menu_range)));
-			}else{
-				resPromise = new Promise(resolve =>resolve(slackMsgBatchFixMenuRangeFail()));
+			// When success, notify user
+			let response_url = userTextInfo['response_url'];
+			if(response_url){
+				updatePromise.then(()=>{
+					let slackMsg = {
+						attachments: [
+							{
+								title: `Saved to Goolge Sheet`,
+								title_link: `https://tinker.press`,
+								fields: [],
+								color: '#3AA3E3',
+								ts: Math.floor(new Date().getTime() / 1000)
+							}
+						]
+					};
+
+					var options = {
+						method : 'POST',
+						url    : response_url,
+						body   : JSON.stringify(slackMsg)
+					};
+					// Push back msg to user base on reponse_url of slack
+					request(options, function (err, response, body) {
+						if (err) throw err;
+						console.log(body);
+					});
+				});
 			}
 			break;
 		case 'view':
-			resPromise = getViewMsgPromise(userTextInfo);
-			console.log(userTextInfo['response_url']);
-			if(userTextInfo['response_url']){
+			// Looking to Google Sheet
+			let slackMsg = {
+				attachments: [
+					{
+						title: 'Looking to Google Sheet...',
+						title_link: `https://tinker.press`,
+						fields: [],
+						color: '#3AA3E3',
+						ts: Math.floor(new Date().getTime() / 1000)
+					}
+				]
+			};
+
+			resPromise = Promise.resolve(slackMsg);
+			// Open Google Sheet, to check which dish booked
+			let response_url = userTextInfo['response_url'];
+
+			if(response_url){
+				// Build msg
 				let latestViewMsgPromise = getLastestViewMsgPromise(userTextInfo);
+
 				latestViewMsgPromise.then(slackMsg => {
 					var options = {
-						method: 'POST',
-						url: userTextInfo['response_url'],
-						body: JSON.stringify(slackMsg)
+						method : 'POST',
+						url    : response_url,
+						body   : JSON.stringify(slackMsg)
 					};
-
-					request(options, function (error, response, body) {
-						if (error) throw new Error(error);
-
+					// Push back msg to user
+					request(options, function (err, response, body) {
+						if (err) throw err;
 						console.log(body);
 					});
 				});
@@ -124,47 +181,81 @@ function handleCmd(userTextInfo){
 			break;
 		case 'cancel':
 		case 'delete':
-			resPromise = getDeleteMsgPromise(userTextInfo);
-			// Now update delete order int sheet
+			// Quick reply to user that
+			// We are calling Google Sheet API
+			let slackMsg = {
+				attachments: [
+					{
+						title: 'Canceling order...',
+						title_link: 'https://tinker.press',
+						color: '#3AA3E3',
+						ts: Math.floor(new Date().getTime() / 1000)
+					}
+				]
+			};
+			resPromise = Promise.resolve(slackMsg);
+			// Open Google Sheet, update data
 			let deleteOrderPromise = cancelOrder(userTextInfo);
-			deleteOrderPromise.then(() => {
-				let slackMsg =  {
-					// text: `Hi @${userTextInfo['user_name']}`,
-					attachments: [
-						{
-							title: `Cancel order success`,
-							title_link: `https://tinker.press`,
-							fields: [],
-							color: '#3AA3E3',
-							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-							footer_icon: 'https://tinker.press/favicon-64x64.png',
-							ts: Math.floor(new Date().getTime() / 1000)
-						}
-					]
-				};
+			let response_url       = userTextInfo['response_url'];
+			if(response_url){
+				deleteOrderPromise.then(() => {
+					let slackMsg =  {
+						text: `Hi @${userTextInfo['user_name']}`,
+						attachments: [
+							{
+								title: `Cancel order success`,
+								title_link: `https://tinker.press`,
+								fields: [],
+								color: '#3AA3E3',
+								footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+								footer_icon: 'https://tinker.press/favicon-64x64.png',
+								ts: Math.floor(new Date().getTime() / 1000)
+							}
+						]
+					};
 
-				var options = {
-					method: 'POST',
-					url: userTextInfo['response_url'],
-					body: JSON.stringify(slackMsg)
-				};
-
-				request(options, function (error, response, body) {
-					if (error) throw new Error(error);
-					console.log(body);
+					var options = {
+						method : 'POST',
+						url    : response_url,
+						body   : JSON.stringify(slackMsg)
+					};
+					// Push back msg to user
+					request(options, function (err, response, body) {
+						if (err) throw err;
+						console.log(body);
+					});
 				});
-			});
+			}
 			break;
 		case 'name':
 			resPromise = getNameMsgPromise(userTextInfo);
-			let storeNamePromise = storeName(userTextInfo);
-			storeNamePromise.then(msg => console.log(msg));
 			break;
 		case 'help':
 			resPromise = getHelpMsgPromise(userTextInfo);
 			break;
 		default:
-			resPromise = new Promise(resolve => resolve(slackMsgCmdNotFound(userTextInfo)));
+			let slackMsg = {
+				text: `Hi @${userTextInfo['user_name']}`,
+				attachments: [
+					{
+						title: `Command not supported`,
+						title_link: `https://tinker.press`,
+						fields: [
+							{
+								title: 'I hear you, but command not support',
+								value: `Please type /lunch help`,
+								short: true
+							}
+						],
+						color: '#3AA3E3',
+						footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+						footer_icon: 'https://tinker.press/favicon-64x64.png',
+						ts: Math.floor(new Date().getTime() / 1000)
+					}
+				]
+			};
+
+			resPromise = Promise.resolve(slackMsg);
 			break;
 	}
 	
@@ -173,12 +264,20 @@ function handleCmd(userTextInfo){
 
 function loadMenu(){
 	let fs = require('fs');
-
-	if(fs.existsSync(_.getPath('menus.json'))){
-		let menus = JSON.parse( fs.readFileSync( _.getPath('menus.json') ) );
-		return new Promise(resolve => resolve(menus));
+	let file_path = _.getPath('menus.json');
+	let has_file  = fs.existsSync(file_path);
+	// Only read if has file
+	if(has_file){
+		let menus_json = fs.readFileSync( _.getPath('menus.json'));
+		try{
+			let menus = JSON.parse(menus_json);
+			// Return promise with menus data
+			return Promise.resolve(menus);
+		}catch(e){}
 	}
 
+	// When no menu found in cache
+	// Rebuild as first time
 	let getMenu = require('./lib/getMenu')(true);
 
 	return getMenu;
@@ -331,17 +430,6 @@ function buildCell(menu, dish){
 	console.log(today.format());
 	console.log(menuDate.format());
 
-	if(!menuDate.isSame(today, 'isoWeek')){
-		console.log(`Menu date not match ANYTHING`);
-		// console.log('Different week');
-		// startRow = state['newMenuRange'].match(/\d+/)[0];
-		// startRow = parseInt(startRow, 10);
-		//
-		// if(!menuDate.isSame(today, 'isoWeek')){
-		// 	console.log(`Menu date not match ANYTHING`);
-		// }
-	}
-
 	row += startRow;
 	col += 2; //col for menu, +2 for userList
 	// Parse to A1 notation
@@ -351,24 +439,6 @@ function buildCell(menu, dish){
 	console.log('build Cell', cellAddress, cellVal);
 
 	return {cellAddress, cellVal};
-}
-
-function getViewMsgPromise(userTextInfo){
-	let slackMsg = {
-		text: `Hi @${userTextInfo['user_name']}`,
-		attachments: [
-			{
-				title: 'Looking to Google Sheet...',
-				title_link: `https://tinker.press`,
-				fields: [],
-				color: '#3AA3E3',
-			}
-		]
-	};
-
-	let slackMsgPromise = Promise.resolve(slackMsg);
-
-	return slackMsgPromise;
 }
 
 function getLastestViewMsgPromise(userTextInfo){
@@ -419,95 +489,134 @@ function getLastestViewMsgPromise(userTextInfo){
 	return slackMsgPromise;
 }
 
-function getDeleteMsgPromise(userTextInfo){
-	let slackMsg = {
-		text: `Hi @${userTextInfo['user_name']}`,
-		attachments: [
-			{
-				title: 'Canceling order...',
-				title_link: 'https://tinker.press',
-				color: '#3AA3E3',
-			}
-		]
-	}
-
-	return new Promise(resolve => resolve(slackMsg));
-}
-
 function cancelOrder(userTextInfo){
-	let getDateMenusPromise = require(`${__dirname}/lib/getMenu`)(false);
+	// Load menu from Google Sheet API, but not save it
+	// Only after data updated, save cache
+	let getDateMenusPromise = require('./lib/getMenu')(false);
 
-	let updatePromise = getDateMenusPromise.then(dateMenus => {
-		let menu = whichMenu(userTextInfo, dateMenus);
+	//noinspection JSUnresolvedFunction
+	let updatePromise =
+		getDateMenusPromise
+			.then(dateMenus => {
+				let menu = whichMenu(userTextInfo, dateMenus);
 
-		if(!menu){
-			return new Promise(r => r('No menu found'));
-		}
-
-		/**
-		 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
-		 */
-		let preOrderDishIndexs = [];
-		// Only check ONE TIME
-		// If he append in mutilple row?
-		menu.dishes.forEach((dish, index) => {
-			let removingUserIndexs = [];
-			dish.users.forEach((userName, userIndex) => {
-				if(userName == userTextInfo['sheet_name']){
-					// store which dish need UPDATE
-					// check include because, on that row
-					// userName may appear more than one
-					if(!preOrderDishIndexs.includes(index))
-						preOrderDishIndexs.push(index);
-					// store which user need REMOVED
-					removingUserIndexs.push(userIndex);
+				if(!menu){
+					return new Promise(r => r('No menu found'));
 				}
+
+				/**
+				 * IN CASE USER UPDATE HIS ORDER, detect from previous, then update
+				 */
+				let preOrderDishIndexs = [];
+				// Only check ONE TIME
+				// If he append in mutilple row?
+				menu.dishes.forEach((dish, index) => {
+					let removingUserIndexs = [];
+					dish.users.forEach((userName, userIndex) => {
+						if(userName == userTextInfo['sheet_name']){
+							// store which dish need UPDATE
+							// check include because, on that row
+							// userName may appear more than one
+							if(!preOrderDishIndexs.includes(index))
+								preOrderDishIndexs.push(index);
+							// store which user need REMOVED
+							removingUserIndexs.push(userIndex);
+						}
+					});
+
+					dish.users = dish.users.filter((val, index) => {
+						return !removingUserIndexs.includes(index);
+					});
+				});
+
+				let preOrderDishPromises = [];
+				// Loop throush each one
+				// Open Google Sheet, update at exactly cell
+				preOrderDishIndexs.forEach(preOrderDishIndex => {
+					// Build cellAddress, cellVal
+					// Run update in to sheet
+					// NEED PROMISE ALL
+					let preOrderDish = menu.dishes[preOrderDishIndex];
+					let cell = buildCell(menu, preOrderDish);
+
+					let updatePromise = require('./lib/updateOrderToSheet')(cell);
+					updatePromise
+						.then(msg => console.log(msg))
+						.catch(err => console.log(err));
+
+					preOrderDishPromises.push(updatePromise);
+				});
+
+				// ONLY UPDATE NEW ONE after remove user from others
+				return Promise.all(preOrderDishPromises).then(() => {
+					// update cache file
+					writeCacheFile(dateMenus);
+
+					return Promise.resolve('Remove success');
+				});
 			});
-
-			dish.users = dish.users.filter((val, index) => {
-				return !removingUserIndexs.includes(index);
-			});
-		});
-		console.log('preOrderDishIndexs', preOrderDishIndexs);
-
-		let preOrderDishPromises = [];
-		preOrderDishIndexs.forEach(preOrderDishIndex => {
-			// Build cellAddress, cellVal
-			// Run update in to sheet
-			// NEED PROMISE ALL
-			let preOrderDish = menu.dishes[preOrderDishIndex];
-			let cell = buildCell(menu, preOrderDish);
-
-			let updatePromise = require('./lib/updateOrderToSheet')(cell);
-			updatePromise
-				.then(msg => console.log(msg))
-				.catch(err => console.log(err));
-
-			preOrderDishPromises.push(updatePromise);
-		});
-
-		// ONLY UPDATE NEW ONE after remove user from others
-		return Promise.all(preOrderDishPromises).then(function (){
-			console.log('Remove user from others book success');
-
-			// update cache file
-			writeCacheFile(dateMenus);
-
-			return new Promise(resolve => resolve('Remove success'));
-
-
-		});
-	});
 
 	return updatePromise;
 }
 
 function getNameMsgPromise(userTextInfo){
-	/**
-	 * CASE YOUR JUST WANT TO REVIEW
-	 */
-	if(userTextInfo['new_name'] == '' && userTextInfo['sheet_name']){
-		let slackMsg = {
+	// Actually save user name
+	storeName(userTextInfo);
+	let no_new_name    = userTextInfo['new_name'] == '';
+	let has_sheet_name = userTextInfo['sheet_name'];
+	// Default msg
+	let slackMsg = {
+		text: `Hi @${userTextInfo['user_name']}`,
+		attachments: [
+			{
+				title: 'Unknown case',
+				title_link: 'https://tinker.press',
+				fields: [
+					{
+						value: `Your command`,
+						short: true
+					},
+					{
+						value: `${userTextInfo['text']}`,
+						short: true
+					}
+				],
+				color: '#3AA3E3',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
+	};
+	// Best case, user submit sheet_name right
+	if(!no_new_name && has_sheet_name){
+		slackMsg = {
+			text: `Hi @${userTextInfo['user_name']}`,
+			attachments: [
+				{
+					title: 'Set name success',
+					title_link: 'https://tinker.press',
+					fields: [
+						{
+							value: `Thank you, your name in google sheet`,
+							short: true
+						},
+						{
+							value: `${userTextInfo['new_name']}`,
+							short: true
+						}
+					],
+					color: '#3AA3E3',
+					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+					footer_icon: 'https://tinker.press/favicon-64x64.png',
+					ts: Math.floor(new Date().getTime() / 1000)
+				}
+			]
+		}
+	}
+	// User just want to review his name
+	if(no_new_name && has_sheet_name){
+		slackMsg = {
 			text: `Hi @${userTextInfo['user_name']}`,
 			attachments: [
 				{
@@ -523,82 +632,57 @@ function getNameMsgPromise(userTextInfo){
 							short: true
 						}
 					],
-					color: '3AA3E3',
+					color: '#3AA3E3',
 					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 					footer_icon: 'https://tinker.press/favicon-64x64.png',
 					ts: Math.floor(new Date().getTime() / 1000)
 				}
 			]
 		}
-
-		return new Promise(resolve => resolve(slackMsg));
 	}
 
-
-	if(userTextInfo['new_name'] == '' && !userTextInfo['sheet_name']){
-		let slackMsg = {
+	// User submit sheet_name wrong
+	if(no_new_name && !has_sheet_name){
+		slackMsg = {
 			text: `Hi @${userTextInfo['user_name']}`,
 			attachments: [
 				{
-					title: 'Set name',
+					title: 'Please give us your name in Google Sheet',
 					title_link: 'https://tinker.press',
 					fields: [
 						{
-							title: `To set name for google sheet`,
-							value: `Please type /lunch name <your name>`,
+							title: `command to run`,
+							value: `/lunch name <your name>`,
 							short: true
 						}
 					],
-					color: 'danger',
+					color: '#3AA3E3',
 					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 					footer_icon: 'https://tinker.press/favicon-64x64.png',
 					ts: Math.floor(new Date().getTime() / 1000)
 				}
 			]
 		}
-
-		return new Promise(resolve => resolve(slackMsg));
 	}
 
-	let slackMsg = {
-		text: `Hi @${userTextInfo['user_name']}`,
-		attachments: [
-			{
-				title: 'Set name success',
-				title_link: 'https://tinker.press',
-				fields: [
-					{
-						value: `Thank you, your name in google sheet`,
-						short: true
-					},
-					{
-						value: `${userTextInfo['new_name']}`,
-						short: true
-					}
-				],
-				color: '#3AA3E3',
-				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-				footer_icon: 'https://tinker.press/favicon-64x64.png',
-				ts: Math.floor(new Date().getTime() / 1000)
-			}
-		]
-	}
-
-	return new Promise(resolve => resolve(slackMsg));
+	return Promise.resolve(slackMsg);
 }
 
 function storeName(userTextInfo){
 	if(userTextInfo['new_name'] != ''){
 		let state = _.getState()
 		let users = state.users;
-		users[userTextInfo['user_name']] = userTextInfo['new_name'];
-
+		// Update user name in Google Sheet
+		Object.assign(users, {
+			[userTextInfo['user_name']]: userTextInfo['new_name']
+		})
+		// Save it
 		_.saveState(state);
 
-		return new Promise(res => res('Store name success'));
+		return Promise.resolve('Store name success');
 	}
 
-	return new Promise(res => res('No new_name to storeName'));
+	return Promise.resolve('No new_name to storeName');
 }
 
 function getHelpMsgPromise(userTextInfo){
