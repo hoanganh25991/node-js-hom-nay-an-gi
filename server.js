@@ -15,16 +15,54 @@ app.listen(3000, function(){console.log('Server listening on port 3000!');});
  * Listen to command
  */
 let _             = require('./lib/util');
+let state         = _.getState();
 let parseUserText = require('./lib/parseUserText');
 let request       = require('request');
 
 app.get('/', function(req, res){
 	console.log(req.query);
 	let userTextArr = parseUserText(req);
+	
+	if(typeof userTextArr.sheet_name == 'undefined'){
+		res.send( slackMsgCmdNeedUserName() );
+		
+		state[userTextArr.user_name].last_cmd = userTextArr['text'];
+	}
 
 	/**
 	 * Base on user cmd, build res
 	 */
+	let resPromise = handleCmd();
+
+	resPromise.then(slackMsg => {
+		res.send(slackMsg);
+	});
+	
+	if(state[userTextArr.user_name].last_cmd){
+		userTextArr['text'] = state[userTextArr.user_name].last_cmd;
+		state[userTextArr.user_name].last_cmd = null;
+		
+		if(userTextArr['response_url']){
+			let resPromise = handleCmd(userTextArr);
+			
+			resPromise.then(slackMsg => {
+				var options = {
+					method: 'POST',
+					url: userTextArr['response_url'],
+					body: JSON.stringify(slackMsg)
+				};
+
+				request(options, function (error, response, body) {
+					if (error) throw new Error(error);
+
+					console.log(body);
+				});
+			});
+		}
+	}
+});
+
+function handleCmd(userTextArr){
 	let resPromise;
 	switch(userTextArr['cmd']){
 		case 'menu':
@@ -120,11 +158,9 @@ app.get('/', function(req, res){
 
 			break;
 	}
-
-	resPromise.then(slackMsg => {
-		res.send(slackMsg);
-	});
-});
+	
+	return resPromise;
+}
 
 function loadMenu(){
 	let fs = require('fs');
@@ -225,7 +261,7 @@ function updateOrder(userTextArr){
 			let preOrderDish = menu.dishes[preOrderDishIndex];
 			let cell = buildCell(menu, preOrderDish);
 
-			let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
+			let updatePromise = require('./lib/updateOrderToSheet')(cell);
 			// updatePromise
 			// 	.then(msg => console.log(msg))
 			// 	.catch(err => console.log(err));

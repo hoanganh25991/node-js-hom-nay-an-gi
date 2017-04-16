@@ -4,7 +4,6 @@ let state = {
 	"range": "A325:352",
 	"update_range_menu": false,
 	"users": {
-		"hoanganh25991": "OUS anh",
 		"torinnguyen": "OUS torin"
 	}
 }
