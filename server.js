@@ -41,10 +41,11 @@ app.get('/', function(req, res){
 				// For better experience
 				// After ask user name
 				// Can auto execute back this cmd
-				let user_note         = state[userTextInfo['user_name']] || {[userTextInfo['user_name']]: {}};
+				let user_note         = state[userTextInfo['user_name']] || {};
+				// Store last cmd
 				user_note['last_cmd'] = userTextInfo['text'];
 				// Save state
-				Object.assign(state, user_note);
+				Object.assign(state, {[userTextInfo['user_name']] : user_note});
 				_.saveState(state);
 
 				move_on = false;
@@ -69,7 +70,7 @@ app.get('/', function(req, res){
 		// Check last cmd
 		// If need execute, do it
 		let state       = _.getState();
-		let user_note   = state[userTextInfo['user_name']];
+		let user_note   = state[userTextInfo['user_name']] || {};
 		let should_exec = user_note.last_cmd;
 
 		if(should_exec){
