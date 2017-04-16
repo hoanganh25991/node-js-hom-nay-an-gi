@@ -125,14 +125,9 @@ app.get('/', function(req, res){
 	});
 });
 
-function loadMenu(){
-	let fs = require('fs');
-
-	return new Promise(resolve => resolve(JSON.parse(fs.readFileSync(`${__dirname}/menus.json`).toString())));
-}
 
 function getMenuMsgPromise(userTextArr){
-	let getDateMenusPromise = loadMenu();
+	let getDateMenusPromise = Promise.resolve(_.getState().menus);
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		let menu = whichMenu(userTextArr, menus);
@@ -174,7 +169,7 @@ function getMenuMsgPromise(userTextArr){
 }
 
 function getOrderMsgPromise(userTextArr){
-	let getDateMenusPromise = loadMenu();
+	let getDateMenusPromise = Promise.resolve(_.getState().menus);
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
 		// let dayOfWeek = new Date().getDay() - 1;
@@ -292,8 +287,8 @@ function buildCell(menu, dish){
 	 * @type {[type]}
 	 */
 	let moment = require('moment');
-	let today = moment().utcOffset(storage.getItemSync('timezone') * 60);
-	let menuDate = moment(menu.date, 'D-MMM-YYYY').utcOffset(storage.getItemSync('timezone') * 60);
+	let today = moment().utcOffset(7 * 60);
+	let menuDate = moment(menu.date, 'D-MMM-YYYY').utcOffset(7 * 60);
 
 	let startRow = sheetNuiBayUtIt['menuRange'].match(/\d+/)[0];
 	startRow = parseInt(startRow, 10);

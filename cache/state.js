@@ -6,5 +6,5 @@ let state = {
 		"hoanganh25991": "OUS anh",
 		"torinnguyen": "OUS torin"
 	},
-	menu: {}
+	menus: {}
 }
