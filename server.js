@@ -356,16 +356,10 @@ function getViewMsgPromise(userTextInfo){
 		text: `Hi @${userTextInfo['user_name']}`,
 		attachments: [
 			{
-				fields: [
-					{
-						value: 'Looking to Google Sheet...',
-						short: false
-					}
-				],
+				title: 'Looking to Google Sheet...',
+				title_link: `https://tinker.press`,
+				fields: [],
 				color: '#3AA3E3',
-				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-				footer_icon: 'https://tinker.press/favicon-64x64.png',
-				ts: Math.floor(new Date().getTime() / 1000)
 			}
 		]
 	};
@@ -395,11 +389,13 @@ function getLastestViewMsgPromise(userTextInfo){
 			});
 		});
 
+		let day = userTextInfo['menuDate'].format('dddd, MMM-DD');
+
 		let slackMsg = {
 			text: `Hi @${userTextInfo['user_name']}`,
 			attachments: [
 				{
-					title: `Review order on ${menu.date}`,
+					title: `Review order on ${day}`,
 					title_link: `https://tinker.press`,
 					fields: [
 						{
@@ -407,8 +403,7 @@ function getLastestViewMsgPromise(userTextInfo){
 							short: true
 						}
 					],
-					// color: '#3AA3E3',
-					// footer: 'Type /lunch order [dish num], to order',
+					color: '#3AA3E3',
 					footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 					footer_icon: 'https://tinker.press/favicon-64x64.png',
 					ts: Math.floor(new Date().getTime() / 1000)
@@ -428,17 +423,17 @@ function getDeleteMsgPromise(userTextInfo){
 		attachments: [
 			{
 				title: 'Canceling order...',
-				title_link: 'https://tinker.press',
-				fields: [
-					{
-						value: `I'm canceling your order`,
-						short: true
-					}
-				],
+				// title_link: 'https://tinker.press',
+				// fields: [
+				// 	{
+				// 		value: `I'm canceling your order`,
+				// 		short: true
+				// 	}
+				// ],
 				color: '#3AA3E3',
-				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-				footer_icon: 'https://tinker.press/favicon-64x64.png',
-				ts: Math.floor(new Date().getTime() / 1000)
+				// footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				// footer_icon: 'https://tinker.press/favicon-64x64.png',
+				// ts: Math.floor(new Date().getTime() / 1000)
 			}
 		]
 	}
@@ -490,7 +485,7 @@ function cancelOrder(userTextInfo){
 			let preOrderDish = menu.dishes[preOrderDishIndex];
 			let cell = buildCell(menu, preOrderDish);
 
-			let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
+			let updatePromise = require('./lib/updateOrderToSheet')(cell);
 			updatePromise
 				.then(msg => console.log(msg))
 				.catch(err => console.log(err));
@@ -859,6 +854,7 @@ function slackMsgNoDishIndex(userTextArr){
 }
 
 function slackMsgNoMenu(userTextArr){
+	let day = userTextArr['menuDate'].format('dddd, MMM-DD');
 	let slackMsg = {
 		text: `Hi @${userTextArr['user_name']}`,
 		attachments:[
