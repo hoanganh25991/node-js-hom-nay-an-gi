@@ -592,6 +592,7 @@ function storeName(userTextInfo){
 		users[userTextInfo['user_name']] = userTextInfo['new_name'];
 
 		_.saveState(state);
+
 		return new Promise(res => res('Store name success'));
 	}
 
