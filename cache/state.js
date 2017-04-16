@@ -3,9 +3,7 @@ let state = {
 	"active_sheet": '2017',
 	"range": "A325:352",
 	"update_range_menu": false,
-	"users": {
-		"torinnguyen": "OUS torin"
-	}
+	"users": {}
 }
 
 module.exports = state;
