@@ -8,3 +8,5 @@ let state = {
 		"torinnguyen": "OUS torin"
 	}
 }
+
+module.exports = state;

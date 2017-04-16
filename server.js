@@ -15,8 +15,8 @@ app.listen(3000, function(){console.log('Server listening on port 3000!');});
  * Listen to command
  */
 let _             = require('./lib/util');
-let request       = require('request');
 let parseUserText = require('./lib/parseUserText');
+let request       = require('request');
 
 app.get('/', function(req, res){
 	console.log(req.query);
@@ -26,7 +26,7 @@ app.get('/', function(req, res){
 	 * Base on user cmd, build res
 	 */
 	let resPromise;
-	switch(userTextArr[0]){
+	switch(userTextArr['cmd']){
 		case 'menu':
 			resPromise = getMenuMsgPromise(userTextArr);
 			break;
@@ -774,7 +774,7 @@ function slackMsgMenuNotFound(userTextArr){
 		text: `Hi @${userTextArr['user_name']}`,
 		attachments:[
 			{
-				title: `Menu error`,
+				title: `Menu not found`,
 				title_link: `https://tinker.press`,
 				text: `Menu on ${userTextArr['menuDate'].toString().substr(0,10)} not exist`,
 				color: 'danger',
