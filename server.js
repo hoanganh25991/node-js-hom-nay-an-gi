@@ -21,20 +21,20 @@ let request       = require('request');
 
 app.get('/', function(req, res){
 	console.log(req.query);
-	let userTextArr = parseUserText(req);
+	let userTextInfo = parseUserText(req);
 	
-	if(typeof userTextArr.sheet_name == 'undefined' && userTextArr.cmd != 'name'){
-		let resPromise = slackMsgCmdNeedUserName(userTextArr);
+	if(typeof userTextInfo['sheet_name'] == 'undefined' && userTextInfo['cmd'] != 'name'){
+		let resPromise = slackMsgCmdNeedUserName(userTextInfo);
 
 		resPromise.then(slackMsg => {
 			res.send(slackMsg);
 		});
 
-		if(!state[userTextArr.user_name]){
-			state[userTextArr.user_name] = {};
+		if(!state[userTextInfo['user_name']]){
+			state[userTextInfo['user_name']] = {};
 		}
 
-		state[userTextArr.user_name].last_cmd = userTextArr.text;
+		state[userTextInfo['user_name']].last_cmd = userTextInfo['text'];
 		_.saveState(state);
 
 		return;
@@ -43,28 +43,28 @@ app.get('/', function(req, res){
 	/**
 	 * Base on user cmd, build res
 	 */
-	let resPromise = handleCmd(userTextArr);
+	let resPromise = handleCmd(userTextInfo);
 
 	resPromise.then(slackMsg => {
 		res.send(slackMsg);
 		//_.saveState(state);
 	});
 	
-	if(state[userTextArr.user_name].last_cmd){
-		req.query['text'] = state[userTextArr.user_name].last_cmd;
+	if(state[userTextInfo['user_name']].last_cmd){
+		req.query['text'] = state[userTextInfo['user_name']].last_cmd;
 
-		let new_userTextArr = parseUserText(req);
+		let lastUserTextInfo = parseUserText(req);
 
-		state[new_userTextArr.user_name].last_cmd = null;
+		state[lastUserTextInfo['user_name']].last_cmd = null;
 		_.saveState(state);
 		
-		if(new_userTextArr['response_url']){
-			let resPromise = handleCmd(new_userTextArr);
+		if(lastUserTextInfo['response_url']){
+			let resPromise = handleCmd(lastUserTextInfo);
 			
 			resPromise.then(slackMsg => {
 				var options = {
 					method: 'POST',
-					url: new_userTextArr['response_url'],
+					url: lastUserTextInfo['response_url'],
 					body: JSON.stringify(slackMsg)
 				};
 
@@ -80,19 +80,19 @@ app.get('/', function(req, res){
 
 });
 
-function handleCmd(userTextArr){
+function handleCmd(userTextInfo){
 	let resPromise;
-	switch(userTextArr['cmd']){
+	switch(userTextInfo['cmd']){
 		case 'menu':
-			resPromise = getMenuMsgPromise(userTextArr);
+			resPromise = getMenuMsgPromise(userTextInfo);
 			break;
 		case 'order':
-			resPromise = getOrderMsgPromise(userTextArr);
-			let updatePromise = updateOrder(userTextArr);
+			resPromise = getOrderMsgPromise(userTextInfo);
+			let updatePromise = updateOrder(userTextInfo);
 			updatePromise.then(()=>{console.log('Update order success')});
 			break;
 		case 'batchFix':
-			let menu_range = userTextArr[1];
+			let menu_range = userTextInfo[1];
 			// Check right menu_range format
 			if(menu_range && menu_range.match(/[a-zA-Z]+\d+:[a-zA-Z]+\d+/)){
 				resPromise = new Promise(r => r(slackMsgBatchFixMenuRangeAccepted(menu_range)));
@@ -101,14 +101,14 @@ function handleCmd(userTextArr){
 			}
 			break;
 		case 'view':
-			resPromise = getViewMsgPromise(userTextArr);
-			console.log(userTextArr['response_url']);
-			if(userTextArr['response_url']){
-				let latestViewMsgPromise = getLastestViewMsgPromise(userTextArr);
+			resPromise = getViewMsgPromise(userTextInfo);
+			console.log(userTextInfo['response_url']);
+			if(userTextInfo['response_url']){
+				let latestViewMsgPromise = getLastestViewMsgPromise(userTextInfo);
 				latestViewMsgPromise.then(slackMsg => {
 					var options = {
 						method: 'POST',
-						url: userTextArr['response_url'],
+						url: userTextInfo['response_url'],
 						body: JSON.stringify(slackMsg)
 					};
 
@@ -122,58 +122,47 @@ function handleCmd(userTextArr){
 			break;
 		case 'cancel':
 		case 'delete':
-			resPromise = getDeleteMsgPromise(userTextArr);
+			resPromise = getDeleteMsgPromise(userTextInfo);
 			// Now update delete order int sheet
-			let deleteOrderPromise = deleteOrder(userTextArr);
-			deleteOrderPromise.then(()=>{console.log('Delete order success')});
+			let deleteOrderPromise = cancelOrder(userTextInfo);
+			deleteOrderPromise.then(() => {
+				let slackMsg =  {
+					// text: `Hi @${userTextInfo['user_name']}`,
+					attachments: [
+						{
+							title: `Cancel order success`,
+							title_link: `https://tinker.press`,
+							fields: [],
+							color: '#3AA3E3',
+							footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+							footer_icon: 'https://tinker.press/favicon-64x64.png',
+							ts: Math.floor(new Date().getTime() / 1000)
+						}
+					]
+				};
+
+				var options = {
+					method: 'POST',
+					url: userTextInfo['response_url'],
+					body: JSON.stringify(slackMsg)
+				};
+
+				request(options, function (error, response, body) {
+					if (error) throw new Error(error);
+					console.log(body);
+				});
+			});
 			break;
 		case 'name':
-			resPromise = getNameMsgPromise(userTextArr);
-			let storeNamePromise = storeName(userTextArr);
+			resPromise = getNameMsgPromise(userTextInfo);
+			let storeNamePromise = storeName(userTextInfo);
 			storeNamePromise.then(msg => console.log(msg));
 			break;
 		case 'help':
-			resPromise = getHelpMsgPromise(userTextArr);
+			resPromise = getHelpMsgPromise(userTextInfo);
 			break;
-		// case 'report':
-		// 	userTextArr['report_msg'] =
-		// 		userTextArr['isAllowedRunReport'] ? 'I\'m building report' : 'Sorry, you don\'t have permission to build report';
-		//
-		// 	resPromise = new Promise(r => r(slackMsgReport(userTextArr)));
-		//
-		// 	if(userTextArr['isAllowedRunReport']){
-		// 		let buildReportPromise = buildReport();
-		// 		buildReportPromise.then(() => {console.log('Build report success')})
-		// 	}
-		// 	break;
-		// case 'email':
-		// 	let buildEmailLink = require(`${__dirname}/sheetToEmail`);
-		// 	let emailInfo = buildEmailLink(userTextArr);
-		// 	let slackMsg = {
-		// 		text: `Hi @${userTextArr['user_name']}`,
-		// 		attachments:[
-		// 			{
-		// 				title: `Email for menu on ${emailInfo.sendForDay.toString().substr(0,10)}`,
-		// 				// title_link: `https://tinker.press`,
-		// 				fields: [
-		// 					{
-		// 						value: `Please <${emailInfo.link}|click here> to confirm`,
-		// 						short: true
-		// 					}
-		// 				],
-		// 				color: 'danger',
-		// 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-		// 				footer_icon: 'https://tinker.press/favicon-64x64.png',
-		// 				ts: Math.floor(new Date().getTime() / 1000)
-		// 			}
-		// 		]
-		// 	}
-		// 	resPromise = new Promise(resolve => resolve(slackMsg));
-		//
-		// 	break;
 		default:
-			resPromise = new Promise(resolve => resolve(slackMsgCmdNotFound(userTextArr)));
-
+			resPromise = new Promise(resolve => resolve(slackMsgCmdNotFound(userTextInfo)));
 			break;
 	}
 	
@@ -194,56 +183,56 @@ function loadMenu(){
 }
 
 
-function getMenuMsgPromise(userTextArr){
+function getMenuMsgPromise(userTextInfo){
 	let getDateMenusPromise = loadMenu();
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		let menu = whichMenu(userTextArr, menus);
+		let menu = whichMenu(userTextInfo, menus);
 
 		if(!menu){
-			return new Promise(r => r(slackMsgMenuNotFound(userTextArr)));
+			return new Promise(r => r(slackMsgMenuNotFound(userTextInfo)));
 		}
 
-		return new Promise(resolve => resolve(slackMsgMenuFound(userTextArr, menu)));
+		return new Promise(resolve => resolve(slackMsgMenuFound(userTextInfo, menu)));
 	})
 
 	return slackMsgPromise;
 }
 
-function getOrderMsgPromise(userTextArr){
+function getOrderMsgPromise(userTextInfo){
 	let getDateMenusPromise = loadMenu();
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		if(userTextArr['dishIndex'] == undefined){
-			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextArr)));
+		if(userTextInfo['dishIndex'] == undefined){
+			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextInfo)));
 		}
 
-		let menu = whichMenu(userTextArr, menus);
+		let menu = whichMenu(userTextInfo, menus);
 
 		if(!menu){
-			return new Promise(resolve =>resolve(slackMsgNoMenu(userTextArr)));
+			return new Promise(resolve =>resolve(slackMsgNoMenu(userTextInfo)));
 		}
 
-		let dish = menu.dishes[userTextArr['dishIndex']];
+		let dish = menu.dishes[userTextInfo['dishIndex']];
 
 		if(!dish){
-			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextArr)));
+			return new Promise(resolve => resolve(slackMsgNoDishIndex(userTextInfo)));
 		}
 
-		return new Promise(resolve => resolve(slackMsgOrder(userTextArr, menu)));
+		return new Promise(resolve => resolve(slackMsgOrder(userTextInfo, menu)));
 	});
 
 	return slackMsgPromise;
 }
 
-function updateOrder(userTextArr){
+function updateOrder(userTextInfo){
 	let getDateMenusPromise = require('./lib/getMenu')(false);
 
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
 
-		let menu = whichMenu(userTextArr, dateMenus);
+		let menu = whichMenu(userTextInfo, dateMenus);
 
-		if(!menu || !menu.dishes[userTextArr['dishIndex']]){
+		if(!menu || !menu.dishes[userTextInfo['dishIndex']]){
 			return new Promise(res => res('Not right case to update order'));
 		}
 
@@ -256,9 +245,9 @@ function updateOrder(userTextArr){
 		menu.dishes.forEach((dish, index) => {
 			let removingUserIndexs = [];
 			dish.users.forEach((userName, userIndex) => {
-				if(userName == userTextArr['sheet_name']){
+				if(userName == userTextInfo['sheet_name']){
 					// store which dish need UPDATE
-					if(!preOrderDishIndexs.includes(index) && userTextArr['dishIndex'] != index)
+					if(!preOrderDishIndexs.includes(index) && userTextInfo['dishIndex'] != index)
 						preOrderDishIndexs.push(index);
 					// store which user need REMOVED
 					removingUserIndexs.push(userIndex);
@@ -290,13 +279,13 @@ function updateOrder(userTextArr){
 		// ONLY UPDATE NEW ONE after remove user from others
 
 		return Promise.all(preOrderDishPromises).then(function (){
-			let dish = menu.dishes[userTextArr['dishIndex']];
+			let dish = menu.dishes[userTextInfo['dishIndex']];
 
-			if(dish.users.includes(userTextArr['sheet_name'])){
+			if(dish.users.includes(userTextInfo['sheet_name'])){
 				// He just re-submit, no thing NEW
 				return new Promise(resolve => resolve('Your order saved\nNo need to resubmit'));
 			}else{
-				dish.users.push(userTextArr['sheet_name']);
+				dish.users.push(userTextInfo['sheet_name']);
 				let cell = buildCell(menu, dish);
 				let updatePromise = require(`${__dirname}/lib/updateOrderToSheet`)(cell);
 
@@ -362,27 +351,18 @@ function buildCell(menu, dish){
 	return {cellAddress, cellVal};
 }
 
-function getViewMsgPromise(userTextArr){
+function getViewMsgPromise(userTextInfo){
 	let slackMsg = {
-		text: `Hi @${userTextArr['user_name']}`,
+		text: `Hi @${userTextInfo['user_name']}`,
 		attachments: [
 			{
-				// title: `...looking to Google Sheet`,
-				// title_link: `https://tinker.press`,
-				// fields: [
-				// 	{
-				// 		value: '',
-				// 		short: true
-				// 	}
-				// ],
 				fields: [
 					{
-						value: '...looking to Google Sheet',
+						value: 'Looking to Google Sheet...',
 						short: false
 					}
 				],
-				// color: '#3AA3E3',
-				// footer: 'Type /lunch order [dish num], to order',
+				color: '#3AA3E3',
 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
@@ -395,28 +375,28 @@ function getViewMsgPromise(userTextArr){
 	return slackMsgPromise;
 }
 
-function getLastestViewMsgPromise(userTextArr){
+function getLastestViewMsgPromise(userTextInfo){
 	let getDateMenusPromise = require('./lib/getMenu')(true);
 
 	let slackMsgPromise = getDateMenusPromise.then(menus => {
-		let  menu = whichMenu(userTextArr, menus);
+		let  menu = whichMenu(userTextInfo, menus);
 
 		if(!menu){
 			return new Promise(r => r({text: 'No menu found'}));
 		}
 
 		let orderedDish = 'You haven\'t order dish'
-		console.log(userTextArr['sheet_name']);
+		console.log(userTextInfo['sheet_name']);
 		menu.dishes.forEach(dish => {
 			dish.users.forEach(userName => {
 				// console.log(userName);
-				if(userName == userTextArr['sheet_name'])
+				if(userName == userTextInfo['sheet_name'])
 					orderedDish = `${dish['name']} - ${dish['price']}k`;
 			});
 		});
 
 		let slackMsg = {
-			text: `Hi @${userTextArr['user_name']}`,
+			text: `Hi @${userTextInfo['user_name']}`,
 			attachments: [
 				{
 					title: `Review order on ${menu.date}`,
@@ -442,20 +422,21 @@ function getLastestViewMsgPromise(userTextArr){
 	return slackMsgPromise;
 }
 
-function getDeleteMsgPromise(userTextArr){
+function getDeleteMsgPromise(userTextInfo){
 	let slackMsg = {
-		text: `Hi @${userTextArr['user_name']}`,
+		text: `Hi @${userTextInfo['user_name']}`,
 		attachments: [
 			{
-				title: 'Delete order',
+				title: 'Canceling order...',
 				title_link: 'https://tinker.press',
 				fields: [
 					{
-						value: `I'm deleting your order`,
+						value: `I'm canceling your order`,
 						short: true
 					}
 				],
-				// color: '#3AA3E3',
+				color: '#3AA3E3',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
 			}
@@ -465,11 +446,11 @@ function getDeleteMsgPromise(userTextArr){
 	return new Promise(resolve => resolve(slackMsg));
 }
 
-function deleteOrder(userTextArr){
+function cancelOrder(userTextInfo){
 	let getDateMenusPromise = require(`${__dirname}/lib/getMenu`)(false);
 
 	let updatePromise = getDateMenusPromise.then(dateMenus => {
-		let menu = whichMenu(userTextArr, dateMenus);
+		let menu = whichMenu(userTextInfo, dateMenus);
 
 		if(!menu){
 			return new Promise(r => r('No menu found'));
@@ -484,7 +465,7 @@ function deleteOrder(userTextArr){
 		menu.dishes.forEach((dish, index) => {
 			let removingUserIndexs = [];
 			dish.users.forEach((userName, userIndex) => {
-				if(userName == userTextArr['sheet_name']){
+				if(userName == userTextInfo['sheet_name']){
 					// store which dish need UPDATE
 					// check include because, on that row
 					// userName may appear more than one
@@ -525,19 +506,21 @@ function deleteOrder(userTextArr){
 			writeCacheFile(dateMenus);
 
 			return new Promise(resolve => resolve('Remove success'));
+
+
 		});
 	});
 
 	return updatePromise;
 }
 
-function getNameMsgPromise(userTextArr){
+function getNameMsgPromise(userTextInfo){
 	/**
 	 * CASE YOUR JUST WANT TO REVIEW
 	 */
-	if(userTextArr['new_name'] == '' && userTextArr['sheet_name']){
+	if(userTextInfo['new_name'] == '' && userTextInfo['sheet_name']){
 		let slackMsg = {
-			text: `Hi @${userTextArr['user_name']}`,
+			text: `Hi @${userTextInfo['user_name']}`,
 			attachments: [
 				{
 					title: 'Review name in google sheet',
@@ -548,7 +531,7 @@ function getNameMsgPromise(userTextArr){
 							short: true
 						},
 						{
-							value: `${userTextArr['sheet_name']}`,
+							value: `${userTextInfo['sheet_name']}`,
 							short: true
 						}
 					],
@@ -564,9 +547,9 @@ function getNameMsgPromise(userTextArr){
 	}
 
 
-	if(userTextArr['new_name'] == '' && !userTextArr['sheet_name']){
+	if(userTextInfo['new_name'] == '' && !userTextInfo['sheet_name']){
 		let slackMsg = {
-			text: `Hi @${userTextArr['user_name']}`,
+			text: `Hi @${userTextInfo['user_name']}`,
 			attachments: [
 				{
 					title: 'Set name',
@@ -590,7 +573,7 @@ function getNameMsgPromise(userTextArr){
 	}
 
 	let slackMsg = {
-		text: `Hi @${userTextArr['user_name']}`,
+		text: `Hi @${userTextInfo['user_name']}`,
 		attachments: [
 			{
 				title: 'Set name',
@@ -601,11 +584,11 @@ function getNameMsgPromise(userTextArr){
 						short: true
 					},
 					{
-						value: `${userTextArr['new_name']}`,
+						value: `${userTextInfo['new_name']}`,
 						short: true
 					}
 				],
-				// color: '#3AA3E3',
+				color: '#3AA3E3',
 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
@@ -616,11 +599,11 @@ function getNameMsgPromise(userTextArr){
 	return new Promise(resolve => resolve(slackMsg));
 }
 
-function storeName(userTextArr){
-	if(userTextArr['new_name'] != ''){
+function storeName(userTextInfo){
+	if(userTextInfo['new_name'] != ''){
 		let state = _.getState()
 		let users = state.users;
-		users[userTextArr['user_name']] = userTextArr['new_name'];
+		users[userTextInfo['user_name']] = userTextInfo['new_name'];
 
 		_.saveState(state);
 		return new Promise(res => res('Store name success'));
@@ -629,62 +612,37 @@ function storeName(userTextArr){
 	return new Promise(res => res('No new_name to storeName'));
 }
 
-function getHelpMsgPromise(userTextArr){
-	let cmd = userTextArr['command'];
+function getHelpMsgPromise(userTextInfo){
+	let cmd = userTextInfo['command'];
 	let slackMsg = {
-		text: `Hi @${userTextArr['user_name']}`,
+		text: `Hi @${userTextInfo['user_name']}`,
 		attachments: [
 			{
-				title: 'Lunch help',
+				title: 'List command',
 				title_link: 'https://tinker.press',
 				fields: [
 					{
-						title: `To view tomorrow menu`,
+						title: `Xem menu`,
 						value: `${cmd} menu`,
 						short: true
 					},
 					{
-						title: `To view menu on specific day, include day in command`,
-						value: `${cmd} menu [mon|tue|..]`,
+						title: `Xem lại`,
+						value: `${cmd} view`,
 						short: true
 					},
 					{
-						title: `To order dish`,
-						value: `${cmd} order [dish num]\n'[dish num]: dish's order in menu'`,
-						short: true
+						title: `Đặt món`,
+						value: `${cmd} order [dish num]`,
+						short: true,
 					},
 					{
-						title: `To drder dish on specific day, include day in command`,
-						value: `${cmd} order [mon|tue..] [dish num]`,
+						title: `Hủy đặt`,
+						value: `${cmd} cancel`,
 						short: true
 					},
-					{
-						title: `To review which dish booked`,
-						value: `${cmd} view [mon|tue..]`,
-						short: true
-					},
-					{
-						title: `To delete or cancel order`,
-						value: `Type ${cmd} delete|cancel`,
-						short: true
-					},
-					{
-						title: `To set name for Google Sheet Menu`,
-						value: `${cmd} name \n'Your name in Google Sheet Menu'`,
-						short: true
-					},
-					{
-						title: `To view your name in Google Sheet`,
-						value: `${cmd} name`,
-						short: true
-					},
-					// {
-					// 	title: `Build report`,
-					// 	value: `Type ${cmd} report`,
-					// 	short: true
-					// },
 				],
-				// color: '#3AA3E3',
+				color: '#3AA3E3',
 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
@@ -714,7 +672,7 @@ function slackMsgCmdNeedUserName(userTextArr){
 		text: `Hi @${userTextArr['user_name']}\nYou've ask for: \`${userTextArr['text']}\``,
 		attachments: [
 			{
-				title: 'Sorry for this inconvenience.\n Please set name first',
+				title: 'Sorry for this inconvenience. Please set name first',
 				title_link: 'https://tinker.press',
 				fields: [
 					{
@@ -722,7 +680,7 @@ function slackMsgCmdNeedUserName(userTextArr){
 						short: true
 					}
 				],
-				// color: '#3AA3E3',
+				color: '#3AA3E3',
 				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
 				footer_icon: 'https://tinker.press/favicon-64x64.png',
 				ts: Math.floor(new Date().getTime() / 1000)
@@ -736,22 +694,23 @@ function slackMsgCmdNeedUserName(userTextArr){
 function slackMsgCmdNotFound(userTextArr){
 	return {
 		text: `Hi @${userTextArr['user_name']}`,
-			attachments: [
-		{
-			title: `Command not supported`,
-			title_link: `https://tinker.press`,
-			fields: [
-				{
-					title: 'I hear you',
-					value: `Please type /lunch help, to review commands`,
-					short: true
-				}
-			],
-			footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-			footer_icon: 'https://tinker.press/favicon-64x64.png',
-			ts: Math.floor(new Date().getTime() / 1000)
-		}
-	]
+		attachments: [
+			{
+				title: `Command not supported`,
+				title_link: `https://tinker.press`,
+				fields: [
+					{
+						title: 'I hear you, but command not support',
+						value: `Please type /lunch help`,
+						short: true
+					}
+				],
+				color: '#3AA3E3',
+				footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
+				footer_icon: 'https://tinker.press/favicon-64x64.png',
+				ts: Math.floor(new Date().getTime() / 1000)
+			}
+		]
 	};
 }
 
