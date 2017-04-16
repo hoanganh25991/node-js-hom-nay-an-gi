@@ -15,7 +15,6 @@ app.listen(3000, function(){console.log('Server listening on port 3000!');});
  * Listen to command
  */
 let _             = require('./lib/util');
-let state         = _.getState();
 let parseUserText = require('./lib/parseUserText');
 let request       = require('request');
 
@@ -24,6 +23,8 @@ app.get('/', function(req, res){
 	let userTextInfo = parseUserText(req);
 	
 	if(typeof userTextInfo['sheet_name'] == 'undefined' && userTextInfo['cmd'] != 'name'){
+		let state         = _.getState();
+
 		let resPromise = slackMsgCmdNeedUserName(userTextInfo);
 
 		resPromise.then(slackMsg => {
@@ -48,6 +49,8 @@ app.get('/', function(req, res){
 	resPromise.then(slackMsg => {
 		res.send(slackMsg);
 		//_.saveState(state);
+
+		let state         = _.getState();
 
 		if(state[userTextInfo['user_name']].last_cmd){
 			req.query['text'] = state[userTextInfo['user_name']].last_cmd;
