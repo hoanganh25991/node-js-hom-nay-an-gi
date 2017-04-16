@@ -272,7 +272,7 @@ function handleCmd(userTextInfo){
 	return resPromise;
 }
 
-function loadMenu(){
+function loadMenu(userTextInfo){
 	let fs = require('fs');
 	let file_path = _.getPath('menus.json');
 	let has_file  = fs.existsSync(file_path);
@@ -290,12 +290,48 @@ function loadMenu(){
 	// Rebuild as first time
 	let getMenu = require('./lib/getMenu')(true);
 
+	// When getMenu in this way
+	// Realy take time for rebuild menu
+	let response_url     = userTextInfo['response_url'];
+	// Notify user about this case
+	// Ask him for waiting
+	if(response_url){
+		// Get response promise with slack msg
+		let slackMsg = {
+			attachments: [
+				{
+					title: `Rebuilding menu...`,
+					title_link: `https://tinker.press`,
+					fields: [
+						{
+							value: 'Please wait for few seconds',
+							short: true
+						}
+					],
+					color: '#3AA3E3',
+					ts: Math.floor(new Date().getTime() / 1000)
+				}
+			]
+		};
+
+		var options = {
+			method : 'POST',
+			url    : response_url,
+			body   : JSON.stringify(slackMsg)
+		};
+		// Push back msg to user base on reponse_url of slack
+		request(options, function (err, response, body) {
+			if (err) throw err;
+			console.log(body);
+		});
+	}
+
 	return getMenu;
 }
 
 
 function getMenuMsgPromise(userTextInfo){
-	let getDateMenusPromise = loadMenu();
+	let getDateMenusPromise = loadMenu(userTextInfo);
 
 	let slackMsgPromise =
 		getDateMenusPromise
