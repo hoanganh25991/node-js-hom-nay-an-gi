@@ -423,17 +423,8 @@ function getDeleteMsgPromise(userTextInfo){
 		attachments: [
 			{
 				title: 'Canceling order...',
-				// title_link: 'https://tinker.press',
-				// fields: [
-				// 	{
-				// 		value: `I'm canceling your order`,
-				// 		short: true
-				// 	}
-				// ],
+				title_link: 'https://tinker.press',
 				color: '#3AA3E3',
-				// footer: 'Chúc bạn ngon miệng ᕕ( ᐛ )ᕗ',
-				// footer_icon: 'https://tinker.press/favicon-64x64.png',
-				// ts: Math.floor(new Date().getTime() / 1000)
 			}
 		]
 	}
@@ -571,7 +562,7 @@ function getNameMsgPromise(userTextInfo){
 		text: `Hi @${userTextInfo['user_name']}`,
 		attachments: [
 			{
-				title: 'Set name',
+				title: 'Set name success',
 				title_link: 'https://tinker.press',
 				fields: [
 					{
@@ -889,7 +880,11 @@ function slackMsgOrder(userTextArr, menu){
 				title_link: 'https://tinker.press/good-food-good-life.jpg',
 				fields: [
 					{
-						value: `You've ordered: \`${dish['name']}\``,
+						title: `You've ordered`,
+						short: false
+					},
+					{
+						value: `${dish['name']}`,
 						short: true
 					},
 					{

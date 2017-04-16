@@ -9,8 +9,8 @@ module.exports = {
 			name        : "order_lunch",
 			script      : "server.js",
 			interpreter : "node",
-			instances   : 4,
-			exec_mode   : "cluster"
+			// instances   : 1,
+			// exec_mode   : "cluster"
 		},
 	],
 }
