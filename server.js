@@ -23,43 +23,61 @@ app.get('/', function(req, res){
 	console.log(req.query);
 	let userTextArr = parseUserText(req);
 	
-	if(typeof userTextArr.sheet_name == 'undefined'){
-		res.send( slackMsgCmdNeedUserName(userTextArr) );
-		
-		state[userTextArr.user_name].last_cmd = userTextArr['text'];
+	if(typeof userTextArr.sheet_name == 'undefined' && userTextArr.cmd != 'name'){
+		let resPromise = slackMsgCmdNeedUserName(userTextArr);
+
+		resPromise.then(slackMsg => {
+			res.send(slackMsg);
+		});
+
+		if(!state[userTextArr.user_name]){
+			state[userTextArr.user_name] = {};
+		}
+
+		state[userTextArr.user_name].last_cmd = userTextArr.text;
+		_.saveState(state);
+
+		return;
 	}
 
 	/**
 	 * Base on user cmd, build res
 	 */
-	let resPromise = handleCmd();
+	let resPromise = handleCmd(userTextArr);
 
 	resPromise.then(slackMsg => {
 		res.send(slackMsg);
+		//_.saveState(state);
 	});
 	
 	if(state[userTextArr.user_name].last_cmd){
-		userTextArr['text'] = state[userTextArr.user_name].last_cmd;
-		state[userTextArr.user_name].last_cmd = null;
+		req.query['text'] = state[userTextArr.user_name].last_cmd;
+
+		let new_userTextArr = parseUserText(req);
+
+		state[new_userTextArr.user_name].last_cmd = null;
+		_.saveState(state);
 		
-		if(userTextArr['response_url']){
-			let resPromise = handleCmd(userTextArr);
+		if(new_userTextArr['response_url']){
+			let resPromise = handleCmd(new_userTextArr);
 			
 			resPromise.then(slackMsg => {
 				var options = {
 					method: 'POST',
-					url: userTextArr['response_url'],
+					url: new_userTextArr['response_url'],
 					body: JSON.stringify(slackMsg)
 				};
 
 				request(options, function (error, response, body) {
 					if (error) throw new Error(error);
-
 					console.log(body);
 				});
+
+				//_.saveState(state);
 			});
 		}
 	}
+
 });
 
 function handleCmd(userTextArr){
