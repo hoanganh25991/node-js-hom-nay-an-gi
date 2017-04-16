@@ -48,36 +48,35 @@ app.get('/', function(req, res){
 	resPromise.then(slackMsg => {
 		res.send(slackMsg);
 		//_.saveState(state);
-	});
-	
-	if(state[userTextInfo['user_name']].last_cmd){
-		req.query['text'] = state[userTextInfo['user_name']].last_cmd;
 
-		let lastUserTextInfo = parseUserText(req);
+		if(state[userTextInfo['user_name']].last_cmd){
+			req.query['text'] = state[userTextInfo['user_name']].last_cmd;
 
-		state[lastUserTextInfo['user_name']].last_cmd = null;
-		_.saveState(state);
-		
-		if(lastUserTextInfo['response_url']){
-			let resPromise = handleCmd(lastUserTextInfo);
-			
-			resPromise.then(slackMsg => {
-				var options = {
-					method: 'POST',
-					url: lastUserTextInfo['response_url'],
-					body: JSON.stringify(slackMsg)
-				};
+			let lastUserTextInfo = parseUserText(req);
 
-				request(options, function (error, response, body) {
-					if (error) throw new Error(error);
-					console.log(body);
+			state[lastUserTextInfo['user_name']].last_cmd = null;
+			_.saveState(state);
+
+			if(lastUserTextInfo['response_url']){
+				let resPromise = handleCmd(lastUserTextInfo);
+
+				resPromise.then(slackMsg => {
+					var options = {
+						method: 'POST',
+						url: lastUserTextInfo['response_url'],
+						body: JSON.stringify(slackMsg)
+					};
+
+					request(options, function (error, response, body) {
+						if (error) throw new Error(error);
+						console.log(body);
+					});
+
+					//_.saveState(state);
 				});
-
-				//_.saveState(state);
-			});
+			}
 		}
-	}
-
+	});
 });
 
 function handleCmd(userTextInfo){
