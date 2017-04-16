@@ -1,17 +1,17 @@
 let assert = require('assert');
 let _ = require('../lib/util');
 
-describe('googleSheetAuthPromise', function() {
+describe('googleAuth', function() {
 	describe('#getAuthSuccess', function() {
 		let googleSheetAuthPromise = require(`${_.getPath('lib')}/googleSheetAuth`)();
-		it('promise should resolve(auth)', function cb(){
+		it('promise should resolve(googleAuth)', function cb(){
 			googleSheetAuthPromise
 				.then(auth => {
-					// console.log(auth);
+					// console.log(googleAuth);
 					assert.equal(true, true, 'VKL the nhi');
 				})
 				.catch(()=>{
-					assert.equal(false, true, 'Fail auth');
+					assert.equal(false, true, 'Fail googleAuth');
 				})
 		});
 	});

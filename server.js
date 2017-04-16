@@ -1,4 +1,5 @@
-let checkMenuUpdate = require(`${__dirname}/lib/checkMenuUpdate`);
+let checkMenuUpdate = require('./lib/checkMenuUpdate');
+
 setInterval(function(){
 	checkMenuUpdate();
 }, 10 * 60000);
