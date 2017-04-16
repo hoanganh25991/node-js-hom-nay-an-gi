@@ -5,6 +5,5 @@ let state = {
 	"users": {
 		"hoanganh25991": "OUS anh",
 		"torinnguyen": "OUS torin"
-	},
-	menus: {}
+	}
 }
