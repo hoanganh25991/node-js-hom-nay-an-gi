@@ -1,3 +1,5 @@
+require('@risingstack/trace');
+// your application's code
 // Self loop check menu
 require('./lib/checkMenuUpdate')();
 
