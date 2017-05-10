@@ -1,1 +1,0 @@
-let loadNewMenu = require('./lib/loadNewMenu').buildLoadMenu();
